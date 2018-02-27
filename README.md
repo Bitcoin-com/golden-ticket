@@ -15,7 +15,7 @@ This scaffold is a React app build w/ [Facebook's `create-react-app`](https://gi
 4. Create empty directory for your new app
   * `mkdir BCH4all && cd BCH4all`
 5. Scaffold a React app w/ BITBOX web bindings
-  * `bitbox scaffold react`
+  * `bitbox scaffold --framework react`
 6. Install dependencies
   * `npm install`
 7. Start the app
