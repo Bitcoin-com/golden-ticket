@@ -35,7 +35,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    BITBOX.getinfo()
+    BITBOX.Control.getInfo()
     .then((result) => {
       this.setState({
         version: result.version,
