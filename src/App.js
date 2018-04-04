@@ -11,6 +11,23 @@ let BITBOX = new BITBOXCli({
   password: ''
 });
 
+let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists().korean)
+let rootSeedHex = BITBOX.Mnemonic.mnemonicToSeedHex(mnemonic)
+let masterHDNode = BITBOX.HDNode.fromSeedHex(rootSeedHex)
+let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/0")
+let cashAddress = BITBOX.HDNode.toCashAddress(childNode)
+let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
+let keyPair = childNode.keyPair;
+let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
+transactionBuilder.addInput(txid, 1, keyPair);
+let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
+let originalAmount = 3678031;
+let sendAmount = originalAmount - byteCount; 
+transactionBuilder.addOutput('qpq57nsrhje3725fzxfjdqzdngep3cfk2sfmy8yexj', sendAmount);
+transactionBuilder.sign(0, originalAmount);
+let tx = transactionBuilder.build();
+let hex = tx.toHex(); 
+
 
 class App extends Component {
   constructor(props) {
@@ -30,7 +47,10 @@ class App extends Component {
       keypoolsize: '',
       paytxfee: '',
       relayfee: '',
-      errors: ''
+      errors: '',
+      mnemonic: mnemonic,
+      cashaddress: cashAddress,
+      hex: hex,
     }
   }
 
@@ -52,7 +72,10 @@ class App extends Component {
         keypoolsize: result.keypoolsize,
         paytxfee: result.paytxfee,
         relayfee:result.relayfee,
-        errors: result.errors
+        errors: result.errors,
+        mnemonic: result.mnemonic,
+        cashaddress: result.cashaddress,
+        hex: result.hex
       });
     }, (err) => { console.log(err);
     });
@@ -114,6 +137,9 @@ class App extends Component {
                 errors: {this.state.errors}
             </li>
             </ul>
+           <h2>mnemonic:</h2> <p>{this.state.mnemonic}</p>
+           <h2>cashaddress:</h2> <p>{this.state.cashaddress}</p>
+           <h2>hex:</h2> <p>{this.state.hex}</p>
         </div>
       </div>
     );
