@@ -2,10 +2,6 @@
   text-align: center;
 }
 
-p{
-    text-align:left;
-}
-
 .App-logo {
   height: 80px;
 }
@@ -28,6 +24,7 @@ p{
 
 .App-content {
   padding-left: 20px;
+  text-align:left;
 }
 
 .App ul, .App h2 {

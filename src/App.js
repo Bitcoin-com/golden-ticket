@@ -11,77 +11,77 @@ let BITBOX = new BITBOXCli({
   password: ''
 });
 
-let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists().korean)
-let rootSeedHex = BITBOX.Mnemonic.mnemonicToSeedHex(mnemonic)
-let masterHDNode = BITBOX.HDNode.fromSeedHex(rootSeedHex)
-let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/0")
-let cashAddress = BITBOX.HDNode.toCashAddress(childNode)
-let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
-let keyPair = childNode.keyPair;
-let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
-transactionBuilder.addInput(txid, 1, keyPair);
-let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
-let originalAmount = 3678031;
-let sendAmount = originalAmount - byteCount; 
-transactionBuilder.addOutput('qpq57nsrhje3725fzxfjdqzdngep3cfk2sfmy8yexj', sendAmount);
-transactionBuilder.sign(0, originalAmount);
-let tx = transactionBuilder.build();
-let hex = tx.toHex(); 
+let langs = [
+  'english',
+  'chinese_simplified',
+  'chinese_traditional',
+  'korean',
+  'japanese',
+  'french',
+  'italian',
+  'spanish'
+]
 
+let lang = langs[Math.floor(Math.random()*langs.length)];
+
+// create 256 bit BIP39 mnemonic
+let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists()[lang])
+
+// mnemonic to BIP32 root seed encoded as hex
+let rootSeedHex = BITBOX.Mnemonic.mnemonicToSeedHex(mnemonic)
+
+// root seed to BIP32 master HD Node
+let masterHDNode = BITBOX.HDNode.fromSeedHex(rootSeedHex)
+
+// derive BIP 44 external receive address
+let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/0")
+
+// instance of transaction builder
+let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
+
+// keypair of BIP44 receive address
+let keyPair = childNode.keyPair;
+
+// txid of utxo
+let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
+
+// add input txid, vin 1 and keypair
+transactionBuilder.addInput(txid, 1, keyPair);
+
+// calculate fee @ 1 sat/B
+let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
+
+// subtract fee from original amount
+let originalAmount = 3678031;
+
+let sendAmount = originalAmount - byteCount;
+
+// add receive address and send amount
+transactionBuilder.addOutput('qpq57nsrhje3725fzxfjdqzdngep3cfk2sfmy8yexj', sendAmount);
+
+// sign tx
+transactionBuilder.sign(0, originalAmount);
+
+// build it and raw hex
+let tx = transactionBuilder.build();
+let hex = tx.toHex();
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      version: '',
-      protocolversion: '',
-      walletversion: '',
-      balance: '',
-      blocks: '',
-      timeoffset: '',
-      connections: '',
-      proxy: '',
-      difficulty: '',
-      testnet: '',
-      keypoololdest: '',
-      keypoolsize: '',
-      paytxfee: '',
-      relayfee: '',
-      errors: '',
       mnemonic: mnemonic,
-      cashaddress: cashAddress,
+      lang: lang,
       hex: hex,
     }
   }
 
-  componentDidMount() {
-    BITBOX.Control.getInfo()
-    .then((result) => {
-      this.setState({
-        version: result.version,
-        protocolversion: result.protocolversion,
-        walletversion: result.walletversion,
-        balance: result.balance,
-        blocks: result.blocks,
-        timeoffset: result.timeoffset,
-        connections: result.connections,
-        proxy: result.proxy,
-        difficulty: result.difficulty,
-        testnet: result.testnet,
-        keypoololdest: result.keypoololdest,
-        keypoolsize: result.keypoolsize,
-        paytxfee: result.paytxfee,
-        relayfee:result.relayfee,
-        errors: result.errors,
-        mnemonic: result.mnemonic,
-        cashaddress: result.cashaddress,
-        hex: result.hex
-      });
-    }, (err) => { console.log(err);
-    });
-  }
-
   render() {
+    let addresses = [];
+    for(let i = 0; i < 10; i++) {
+      let childNode = masterHDNode.derivePath(`m/44'/145'/0'/0/${i}`);
+      addresses.push(<li>m/44&rsquo;/145&rsquo;/0&rsquo;/0/{i}: {BITBOX.HDNode.toCashAddress(childNode)}</li>);
+    }
     return (
       <div className="App">
         <header className="App-header">
@@ -89,57 +89,21 @@ class App extends Component {
           <h1 className="App-title">Hello BITBOX</h1>
         </header>
         <div className='App-content'>
-          <h2><code>getinfo</code></h2>
+          <h2>BIP44 $BCH Wallet</h2>
+          <h3>256 bit {lang} BIP39 Mnemonic:</h3> <p>{this.state.mnemonic}</p>
+          <h3>BIP44 Account</h3>
+          <p>
+            <code>
+            "m/44'/145'/0'"
+            </code>
+          </p>
+          <h3>BIP44 external change addresses</h3>
           <ul>
-            <li>
-                version: {this.state.version},
-            </li>
-            <li>
-                protocolversion: {this.state.protocolversion},
-            </li>
-            <li>
-                walletversion: {this.state.walletversion},
-            </li>
-            <li>
-                balance: {this.state.balance},
-            </li>
-            <li>
-                blocks: {this.state.blocks},
-            </li>
-            <li>
-                timeoffset: {this.state.timeoffset},
-            </li>
-            <li>
-                connections: {this.state.connections},
-            </li>
-            <li>
-                proxy: {this.state.proxy},
-            </li>
-            <li>
-                difficulty: {this.state.difficulty},
-            </li>
-            <li>
-                testnet: {this.state.testnet},
-            </li>
-            <li>
-                keypoololdest: {this.state.keypoololdest},
-            </li>
-            <li>
-                keypoolsize: {this.state.keypoolsize},
-            </li>
-            <li>
-                paytxfee: {this.state.paytxfee},
-            </li>
-            <li>
-                relayfee:{this.state.relayfee},
-            </li>
-            <li>
-                errors: {this.state.errors}
-            </li>
-            </ul>
-           <h2>mnemonic:</h2> <p>{this.state.mnemonic}</p>
-           <h2>cashaddress:</h2> <p>{this.state.cashaddress}</p>
-           <h2>hex:</h2> <p>{this.state.hex}</p>
+            {addresses}
+          </ul>
+          <p>{this.state.cashaddress}</p>
+          <h3>Transaction raw hex</h3>
+          <p>{this.state.hex}</p>
         </div>
       </div>
     );
