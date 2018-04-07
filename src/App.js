@@ -28,13 +28,13 @@ let lang = langs[Math.floor(Math.random()*langs.length)];
 let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists()[lang])
 
 // mnemonic to BIP32 root seed encoded as hex
-let rootSeedHex = BITBOX.Mnemonic.mnemonicToSeedHex(mnemonic)
+let rootSeed = BITBOX.Mnemonic.mnemonicToSeed(mnemonic)
 
 // root seed to BIP32 master HD Node
-let masterHDNode = BITBOX.HDNode.fromSeedHex(rootSeedHex)
+let masterHDNode = BITBOX.HDNode.fromSeed(rootSeed)
 
 // derive BIP 44 external receive address
-let childNode = masterHDNode.derivePath("m/44'/145'/0'/0/0")
+let childNode = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'/0/0")
 
 // instance of transaction builder
 let transactionBuilder = new BITBOX.TransactionBuilder('bitcoincash');
