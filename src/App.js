@@ -25,10 +25,10 @@ let langs = [
 let lang = langs[Math.floor(Math.random()*langs.length)];
 
 // create 256 bit BIP39 mnemonic
-let mnemonic = BITBOX.Mnemonic.generateMnemonic(256, BITBOX.Mnemonic.mnemonicWordLists()[lang])
+let mnemonic = BITBOX.Mnemonic.generate(256, BITBOX.Mnemonic.wordLists()[lang])
 
 // mnemonic to BIP32 root seed encoded as hex
-let rootSeed = BITBOX.Mnemonic.mnemonicToSeed(mnemonic)
+let rootSeed = BITBOX.Mnemonic.toSeed(mnemonic)
 
 // root seed to BIP32 master HD Node
 let masterHDNode = BITBOX.HDNode.fromSeed(rootSeed)
