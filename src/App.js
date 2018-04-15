@@ -49,7 +49,7 @@ let txid = '5699610b1db28d77b1021ed457d5d9010900923143757bc8698083fa796b3307';
 let originalAmount = 3678031;
 
 // add input txid, vin 1 and keypair
-transactionBuilder.addInput(txid, 1, originalAmount);
+transactionBuilder.addInput(txid, 1);
 
 // calculate fee @ 1 sat/B
 let byteCount = BITBOX.BitcoinCash.getByteCount({ P2PKH: 1 }, { P2PKH: 1 });
@@ -60,11 +60,14 @@ let sendAmount = originalAmount - byteCount;
 transactionBuilder.addOutput('bitcoincash:qpuax2tarq33f86wccwlx8ge7tad2wgvqgjqlwshpw', sendAmount);
 
 // sign tx
-transactionBuilder.sign(0, keyPair);
+let redeemScript;
+transactionBuilder.sign(0, keyPair, redeemScript, transactionBuilder.hashTypes.SIGHASH_ALL, originalAmount);
 
 // build it and raw hex
 let tx = transactionBuilder.build();
 let hex = tx.toHex();
+BITBOX.RawTransactions.sendRawTransaction(hex).then((result) => { console.log("Broadcast Result: "+result); }, (err) => { console.log("Broadcast Error: "+err); });
+
 
 class App extends Component {
   constructor(props) {
