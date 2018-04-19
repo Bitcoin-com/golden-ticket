@@ -8,7 +8,8 @@ let BITBOX = new BITBOXCli({
   host: '127.0.0.1',
   port: 8332,
   username: '',
-  password: ''
+  password: '',
+  corsproxy: false
 });
 
 let langs = [
@@ -83,7 +84,7 @@ class App extends Component {
     let addresses = [];
     for(let i = 0; i < 10; i++) {
       let childNode = masterHDNode.derivePath(`m/44'/145'/0'/0/${i}`);
-      addresses.push(<li>m/44&rsquo;/145&rsquo;/0&rsquo;/0/{i}: {BITBOX.HDNode.toCashAddress(childNode)}</li>);
+      addresses.push(<li key={i}>m/44&rsquo;/145&rsquo;/0&rsquo;/0/{i}: {BITBOX.HDNode.toCashAddress(childNode)}</li>);
     }
     return (
       <div className="App">
