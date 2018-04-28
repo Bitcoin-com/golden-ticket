@@ -9,7 +9,7 @@ let BITBOX = new BITBOXCli({
   port: 8332,
   username: '',
   password: '',
-  corsproxy: false
+  corsproxy: 'remote'
 });
 
 let langs = [
