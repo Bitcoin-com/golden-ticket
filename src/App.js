@@ -19,8 +19,7 @@ let langs = [
 let lang = langs[Math.floor(Math.random()*langs.length)];
 
 // create 256 bit BIP39 mnemonic
-// let mnemonic = BITBOX.Mnemonic.generate(256, BITBOX.Mnemonic.wordLists()[lang])
-let mnemonic = 'enfado aval estufa pirata vena ira oficio materia fauna sueño secreto gacela tender faja joya sidra brisa hijo rígido petróleo venda hamaca cubrir rápido'
+let mnemonic = BITBOX.Mnemonic.generate(256, BITBOX.Mnemonic.wordLists()[lang])
 
 // root seed buffer
 let rootSeed = BITBOX.Mnemonic.toSeed(mnemonic);
