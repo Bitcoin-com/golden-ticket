@@ -1,6 +1,6 @@
 {
   "name": "BITBOX-React-Scaffold",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "node-sass": "^4.9.0",
@@ -16,6 +16,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "bitbox-cli": "0.9.7"
+    "bitbox-cli": "1.0.0"
   }
 }
