@@ -16,6 +16,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "bitbox-cli": "1.0.1"
+    "bitbox-cli": "1.0.3"
   }
 }
