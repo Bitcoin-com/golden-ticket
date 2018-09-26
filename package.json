@@ -17,6 +17,7 @@
     "touch": "^3.1.0"
   },
   "scripts": {
+    "generate-mnemonic": "node generate-mnemonic.js",
     "show-funder-cashaddr": "node show-funder-cashaddr.js",
     "create-addresses": "node create-addresses.js",
     "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js"
