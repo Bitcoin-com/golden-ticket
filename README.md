@@ -1,18 +1,13 @@
-## BITBOX Scaffold React
+## Golden Ticket
 
-## Setup
+Event paper wallet generator
 
-1. [Install `bitbox-cli`](https://www.npmjs.com/package/bitbox-cli) globally
-    * `npm install bitbox-cli --global`
-2. Scaffold an Angular app w/ BITBOX web bindings
-    * `bitbox new myApp --scaffold react`
-3. `cd` in to the newly created app
-    * `cd myApp`
-4. Install dependencies
-    * `npm install`
-5. Start the app
-    * `npm start`
-6. Open a browser to `http://localhost:3000/`
-7. Win
+### Setup
 
-[![Build Status](https://travis-ci.org/Bitcoin-com/bitbox-scaffold-react.svg?branch=master)](https://travis-ci.org/Bitcoin-com/bitbox-scaffold-react)
+1. Clone the repo
+
+- `git clone https://github.com/Bitcoin-com/golden-ticket.git`
+
+2. Install the dependencies
+
+- `cd golden-ticket && npm install`
