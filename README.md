@@ -15,5 +15,4 @@ Event paper wallet generator
 ### Create addresses
 
 1. Open `create-addresses.js` and add your mnemonic
-
-`npm run create-addresses`
+2. `npm run create-addresses`. This will create `n` paper wallets w/ cashAddr and privkeyWIF. This will also create `addresses.csv` for importing in to a spreadsheet.

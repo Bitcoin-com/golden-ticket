@@ -1,9 +1,9 @@
 {
-  "name": "BITBOX-React-Scaffold",
+  "name": "golden-ticket",
   "license": "MIT",
-  "description": "Basic react app w/ BITBOX bindings",
+  "description": "Event paper wallet generator",
   "author": "Gabriel Cardona @ Bitcoin.com",
-  "version": "1.7.0",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "json-2-csv": "^2.3.1",
@@ -16,7 +16,8 @@
     "sass-loader": "^7.0.1"
   },
   "scripts": {
-    "create-addresses": "node create-addresses.js"
+    "create-addresses": "node create-addresses.js",
+    "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js"
   },
   "devDependencies": {
     "bitbox-cli": "1.7.0",
