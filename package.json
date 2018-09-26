@@ -16,11 +16,7 @@
     "sass-loader": "^7.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "webpack",
-    "test": "nyc --reporter=text mocha --require babel-core/register --timeout 5000",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "coverage:report": "nyc --reporter=html mocha --require babel-core/register --timeout 5000"
+    "create-addresses": "node create-addresses.js"
   },
   "devDependencies": {
     "bitbox-cli": "1.7.0",

@@ -6,7 +6,8 @@ let touch = require("touch");
 const fs = require("fs");
 
 let addresses = [];
-// create 256 bit BIP39 mnemonic
+
+// add your mnemonic here
 const mnemonic = BITBOX.Mnemonic.generate(256);
 
 // root seed buffer

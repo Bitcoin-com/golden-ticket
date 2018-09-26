@@ -11,3 +11,9 @@ Event paper wallet generator
 2. Install the dependencies
 
 - `cd golden-ticket && npm install`
+
+### Create addresses
+
+1. Open `create-addresses.js` and add your mnemonic
+
+`npm run create-addresses`
