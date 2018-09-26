@@ -12,6 +12,16 @@ Event paper wallet generator
 
 - `cd golden-ticket && npm install`
 
+3. Generate a mnemonic and store it somewhere safely
+
+- `BITBOX.Mnemonic.generate(256)`
+
+### Fund main address
+
+1. Open `show-funder-address.js` and add your mnemonic
+2. `npm run show-funder-address`. This will display your funder's cashAddr and a QR code
+3. Scan QR code and send funds
+
 ### Create addresses
 
 1. Open `create-addresses.js` and add your mnemonic
