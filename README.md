@@ -14,12 +14,14 @@ Event paper wallet generator
 
 3. Generate a mnemonic and store it somewhere safely
 
-- `BITBOX.Mnemonic.generate(256)`
+### Generate mnemonic
+
+1. `npm run generate-mnemonic`. This will create an English 256 bit mnemonic of 24 words.
 
 ### Fund main address
 
-1. Open `show-funder-address.js` and add your mnemonic
-2. `npm run show-funder-address`. This will display your funder's cashAddr and a QR code
+1. Open `show-funder-cashaddr.js` and add your mnemonic
+2. `npm run show-funder-cashaddr`. This will display your funder's cashAddr and a QR code
 3. Scan QR code and send funds
 
 ### Create addresses
