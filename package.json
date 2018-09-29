@@ -7,7 +7,9 @@
   "private": true,
   "dependencies": {
     "chalk": "^2.4.1",
+    "html-pdf": "^2.2.0",
     "json-2-csv": "^2.3.1",
+    "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
     "node-sass": "^4.9.0",
     "qrcode": "^1.2.0",
