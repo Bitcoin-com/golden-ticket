@@ -2,9 +2,13 @@ const BITBOXCli = require("bitbox-cli/lib/bitbox-cli").default;
 const BITBOX = new BITBOXCli();
 const fs = require("fs");
 const qrcode = require("qrcode-terminal");
+const emoji = require("node-emoji");
+const chalk = require("chalk");
+
+console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
 
 let mnemonic = BITBOX.Mnemonic.generate(256);
-console.log(`Your mnemonic is: ${mnemonic}`);
+console.log(`Your mnemonic is: ${chalk.red(mnemonic)}`);
 
 // root seed buffer
 const rootSeed = BITBOX.Mnemonic.toSeed(mnemonic);
@@ -31,5 +35,5 @@ fs.writeFile("mnemonic.json", JSON.stringify(mnemonicObj, null, 2), function(
   err
 ) {
   if (err) return console.error(err);
-  console.log(`mnemonic.json written successfully.`);
+  console.log(emoji.get(":rocket:"), `mnemonic.json written successfully.`);
 });
