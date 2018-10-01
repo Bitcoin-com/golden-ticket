@@ -22,10 +22,10 @@ This will next generate the funder's address at HD path: `m/44'/145'/0'/1/0`. It
 
 ### Create addresses
 
-1. Open `create-addresses.js` and add your mnemonic
-2. `npm run create-addresses`. This will create `n` paper wallets w/ cashAddr and privkeyWIF. This will also create `addresses.csv` for importing in to a spreadsheet.
+Run `npm run create-addresses`.
+
+This will create `n` privkeyWIFs as a QR code saved to a PDF.
 
 ### Redeem Unclaimed Funds
 
-1. Open `redeem-unclaimed-funds.js` and add your mnemonic
-2. `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
+Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
