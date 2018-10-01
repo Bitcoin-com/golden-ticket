@@ -12,17 +12,13 @@ Event paper wallet generator
 
 - `cd golden-ticket && npm install`
 
-3. Generate a mnemonic and store it somewhere safely
-
 ### Generate mnemonic
 
-1. `npm run generate-mnemonic`. This will create an English 256 bit mnemonic of 24 words.
+1. Create an English 256 bit mnemonic of 24 words.
 
-### Fund main address
+- `npm run generate-mnemonic`
 
-1. Open `show-funder-cashaddr.js` and add your mnemonic
-2. `npm run show-funder-cashaddr`. This will display your funder's cashAddr and a QR code
-3. Scan QR code and send funds
+This will next generate the funder's address at HD path: `m/44'/145'/0'/1/0`. It will also show the funder's address as a QR code and save the mnemonic and funder address to `mnemonic.js`.
 
 ### Create addresses
 

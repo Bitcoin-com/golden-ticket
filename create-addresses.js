@@ -10,6 +10,7 @@ const pdf = require("html-pdf");
 const emoji = require("node-emoji");
 const chalk = require("chalk");
 let addresses = [];
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 let json2csvCallback = (err, csv) => {
   if (err) throw err;
@@ -20,97 +21,124 @@ let json2csvCallback = (err, csv) => {
 };
 
 // Open the wallet generated with create-wallet.
-let mnemonicObj;
-try {
-  mnemonicObj = require(`./mnemonic.json`);
-} catch (err) {
-  console.log(
-    `Could not open mnemonic.json. Generate a mnemonic with generate-mnemonic first.
-    Exiting.`
-  );
-  process.exit(0);
-}
-
-mkdirp(`./html`, err => {});
-mkdirp(`./html/cashAddresses`, err => {});
-mkdirp(`./html/privKeyWIFs`, err => {});
-mkdirp(`./pdf`, err => {});
-mkdirp(`./pdf/cashAddresses`, err => {});
-mkdirp(`./pdf/privKeyWIFs`, err => {});
-
-const funderAddress = mnemonicObj.funderAddress;
-console.log(funderAddress);
-// return false;
-let addressCount = 20;
-// root seed buffer
-const rootSeed = BITBOX.Mnemonic.toSeed(mnemonicObj.mnemonic);
-
-// master HDNode
-const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
-
-// HDNode of BIP44 account
-const account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'");
-
-for (let i = 0; i < addressCount; i++) {
-  // derive the ith external change address HDNode
-  const node = BITBOX.HDNode.derivePath(account, `0/${i}`);
-
-  // get the cash address
-  const cashAddress = BITBOX.HDNode.toCashAddress(node);
-  const wif = BITBOX.HDNode.toWIF(node);
-  addresses.push({
-    cashAddr: cashAddress,
-    wif: wif
-  });
-  console.log(cashAddress, wif);
-  touch(`./html/cashAddresses/paper-wallet-cashAddr-${i}.html`);
-  QRCode.toDataURL(cashAddress, (err, addressQR) => {
-    fs.writeFileSync(
-      `./html/cashAddresses/paper-wallet-cashAddr-${i}.html`,
-      `
-      <div>
-        <p><img src='${addressQR}' /></p>
-      </div>
-    `
+let main = async () => {
+  let mnemonicObj;
+  try {
+    mnemonicObj = require(`./mnemonic.json`);
+  } catch (err) {
+    console.log(
+      `Could not open mnemonic.json. Generate a mnemonic with generate-mnemonic first.
+      Exiting.`
     );
-  });
+    process.exit(0);
+  }
 
-  let cashAddressesHtml = fs.readFileSync(
-    `./html/cashAddresses/paper-wallet-cashAddr-${i}.html`,
-    "utf8"
-  );
-  let options = { format: "Letter" };
-  pdf
-    .create(cashAddressesHtml, options)
-    .toFile(
-      `./pdf/cashAddresses/paper-wallet-cashAddr-${i}.pdf`,
-      (err, res) => {
-        if (err) return console.log(err);
-      }
-    );
+  // create needed directory structure
+  mkdirp(`./html`, err => {});
+  // mkdirp(`./html/cashAddresses`, err => {});
+  mkdirp(`./html/privKeyWIFs`, err => {});
+  mkdirp(`./pdf`, err => {});
+  // mkdirp(`./pdf/cashAddresses`, err => {});
+  mkdirp(`./pdf/privKeyWIFs`, err => {});
 
-  touch(`./html/privKeyWIFs/paper-wallet-wif-${i}.html`);
-  QRCode.toDataURL(wif, (err, wifQR) => {
-    fs.writeFileSync(
-      `./html/privKeyWIFs/paper-wallet-wif-${i}.html`,
-      `
-      <div>
-        <p><img src='${wifQR}' /></p>
-      </div>
-    `
-    );
-  });
+  // address count
+  let addressCount = 2000;
 
-  let privKeyWIFsHtml = fs.readFileSync(
-    `./html/privKeyWIFs/paper-wallet-wif-${i}.html`,
-    "utf8"
-  );
-  pdf
-    .create(privKeyWIFsHtml, options)
-    .toFile(`./pdf/privKeyWIFs/paper-wallet-wif-${i}.pdf`, (err, res) => {
-      if (err) return console.log(err);
+  // root seed buffer
+  const rootSeed = BITBOX.Mnemonic.toSeed(mnemonicObj.mnemonic);
+
+  // master HDNode
+  const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
+
+  // HDNode of BIP44 account
+  const account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'");
+
+  for (let i = 0; i < addressCount; i++) {
+    console.log(`html: ${i}`);
+    await sleep(100);
+    // derive the ith external change address HDNode
+    const node = BITBOX.HDNode.derivePath(account, `0/${i}`);
+
+    // get the cash address
+    const cashAddress = BITBOX.HDNode.toCashAddress(node);
+
+    // get the priv key in wallet import format
+    const wif = BITBOX.HDNode.toWIF(node);
+    addresses.push({
+      wif: wif
     });
-}
 
-console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
-console.log(emoji.get(":rocket:"), `html and pdfs written successfully.`);
+    // console.log(cashAddress, wif );
+
+    // create empty html file
+    // touch(`./html/cashAddresses/paper-wallet-cashAddr-${i}.html`);
+    //
+    // // create qr code for cashAddr
+    // QRCode.toDataURL(cashAddress, (err, addressQR) => {
+    //   // save to html file
+    //   fs.writeFileSync(
+    //     `./html/cashAddresses/paper-wallet-cashAddr-${i}.html`,
+    //     `
+    //     <div>
+    //       <p><img src='${addressQR}' /></p>
+    //     </div>
+    //     `
+    //   );
+    // });
+    //
+    // create empty html file
+    touch(`./html/privKeyWIFs/paper-wallet-wif-${i}.html`);
+
+    // create qr code
+    QRCode.toDataURL(wif, (err, wifQR) => {
+      // save to html file
+      fs.writeFileSync(
+        `./html/privKeyWIFs/paper-wallet-wif-${i}.html`,
+        `
+        <div>
+          <p><img src='${wifQR}' /></p>
+        </div>
+      `
+      );
+    });
+  }
+
+  for (let i = 0; i < addressCount; i++) {
+    console.log(`pdf: ${i}`);
+    await sleep(250);
+    // get html file
+    // let cashAddressesHtml = fs.readFileSync(
+    //   `./html/cashAddresses/paper-wallet-cashAddr-${i}.html`,
+    //   "utf8"
+    // );
+
+    // save to pdf
+    let options = { format: "Letter" };
+    // pdf
+    //   .create(cashAddressesHtml, options)
+    //   .toFile(
+    //     `./pdf/cashAddresses/paper-wallet-cashAddr-${i}.pdf`,
+    //     (err, res) => {
+    //       if (err) return console.log(err);
+    //     }
+    //   );
+
+    // get html file
+    let privKeyWIFsHtml = fs.readFileSync(
+      `./html/privKeyWIFs/paper-wallet-wif-${i}.html`,
+      "utf8"
+    );
+
+    // save to pdf
+    pdf
+      .create(privKeyWIFsHtml, options)
+      .toFile(`./pdf/privKeyWIFs/paper-wallet-wif-${i}.pdf`, (err, res) => {
+        if (err) return console.log(err);
+      });
+  }
+  // converter.json2csv(addresses, json2csvCallback);
+  console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
+  console.log(emoji.get(":rocket:"), `html and pdfs written successfully.`);
+};
+
+main();

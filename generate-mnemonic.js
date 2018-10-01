@@ -19,21 +19,24 @@ const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
 // HDNode of BIP44 account
 const account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'");
 
-// first internal change address
+// HDNode of first internal change address
 const funder = BITBOX.HDNode.derivePath(account, `1/0`);
 
+// funder HDNode to cashAddr
 const funderAddress = BITBOX.HDNode.toCashAddress(funder);
+
+// show funder address qr code
 console.log(`Send funds to: ${funderAddress}`);
 qrcode.generate(funderAddress);
+
+// mnemonic and funder address to save in basic wallet
 let mnemonicObj = {
   mnemonic: mnemonic,
   funderAddress: funderAddress
 };
 
-// Write out the basic information into a json file for other apps to use.
-fs.writeFile("mnemonic.json", JSON.stringify(mnemonicObj, null, 2), function(
-  err
-) {
+// Write out the basic wallet into a json file for other scripts  to use.
+fs.writeFile("mnemonic.json", JSON.stringify(mnemonicObj, null, 2), err => {
   if (err) return console.error(err);
   console.log(emoji.get(":rocket:"), `mnemonic.json written successfully.`);
 });
