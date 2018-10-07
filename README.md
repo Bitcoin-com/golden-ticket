@@ -33,7 +33,7 @@ Create a 256 bit mnemonic in any of the following languages
 - chinese_simplified
 - chinese_traditional
 
-`npm run generate-mnemonic`
+`npm run generate-wallet`
 
 You'll be prompted for a language. You can enter any of the 8 listed above. If you don't enter a language Golden Ticket will default to English.
 
@@ -45,7 +45,7 @@ Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mo
 
 Lastly Golden Ticket will show you a QR code of your mothership address. The HD math for the mother ship address is `hdpath/1/0`.
 
-![generate-mnemonic](images/generate-mnemonic.png)
+![generate-wallet](images/generate-wallet.png)
 
 ## Create addresses
 
