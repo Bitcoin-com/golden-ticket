@@ -14,7 +14,9 @@ let main = async () => {
   prompt.get(["language", "hdpath"], (err, result) => {
     let mnemonic = BITBOX.Mnemonic.generate(
       256,
-      BITBOX.Mnemonic.wordLists()[result.language ? result.language : "english"]
+      BITBOX.Mnemonic.wordLists()[
+        result.language ? result.language.toLowerCase() : "english"
+      ]
     );
     console.log(`Your mnemonic is: ${chalk.red(mnemonic)}`);
 

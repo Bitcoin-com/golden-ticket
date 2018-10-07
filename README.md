@@ -2,32 +2,47 @@
 
 ![Golden Ticket](images/golden-ticket.jpg)
 
-Event paper wallet generator
+Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) Event paper wallet generator. Use it to create amazing golden tickets for your next event.
 
-### Setup
+## Features
 
-1. Clone the repo
+- Generates mnemonic in 8 languages w/ custom HDPath
 
-- `git clone https://github.com/Bitcoin-com/golden-ticket.git`
+## Setup
 
-2. Install the dependencies
+Clone the repo
 
-- `cd golden-ticket && npm install`
+`git clone https://github.com/Bitcoin-com/golden-ticket.git`
 
-### Generate mnemonic
+Install the dependencies
 
-1. Create an English 256 bit mnemonic of 24 words.
+`cd golden-ticket && npm install`
 
-- `npm run generate-mnemonic`
+## Generate mnemonic
+
+Create a 256 bit mnemonic in any of the following languages
+
+- english
+- spanish
+- french
+- italian
+- japanese
+- korean
+- chinese_simplified
+- chinese_traditional
+
+`npm run generate-mnemonic`
+
+You'll be prompted for a languag. You can enter any of the 8 listed above. If you don't enter a language Golden Ticket will default to English.
 
 This will next generate the funder's address at HD path: `m/44'/145'/0'/1/0`. It will also show the funder's address as a QR code and save the mnemonic and funder address to `mnemonic.js`.
 
-### Create addresses
+## Create addresses
 
 Run `npm run create-addresses`.
 
 This will create `n` privkeyWIFs as a QR code saved to a PDF.
 
-### Redeem Unclaimed Funds
+## Redeem Unclaimed Funds
 
 Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
