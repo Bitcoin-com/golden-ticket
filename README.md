@@ -2,7 +2,9 @@
 
 ![Golden Ticket](images/golden-ticket.jpg)
 
-Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) Event paper wallet generator. Use it to create amazing golden tickets for your next event.
+Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) event paper wallet generator. Use it to create amazing golden tickets for your next event.
+
+Not only does Golden Ticket let you chose a custom mnemonic language or hdpath but it also generates html, pdf and a spreadsheet mapping cashAddr, privKey, index and claimed status of each golden ticket.
 
 ## Features
 
