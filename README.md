@@ -41,6 +41,8 @@ Next you'll be promted for an HDpath. If you enter nothing Golden Ticket will de
 
 Then you'll be prompted for the number of tickets that you intend to fund. It will default to 100.
 
+You'll also be prompted for your tiers. This is how much $ you want to give to `n` number of addresses. For example if you want to give $1 to 99 tickets and $10 to 1 goldend ticket your tiers would be `[[1, 99], [10, 1]]`
+
 Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mothership address and number of tickets.
 
 Lastly Golden Ticket will show you a QR code of your mothership address. The HD math for the mother ship address is `hdpath/1/0`.

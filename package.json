@@ -23,6 +23,7 @@
   },
   "scripts": {
     "generate-wallet": "node generate-wallet.js",
+    "create-csv": "node create-csv.js",
     "show-funder-cashaddr": "node show-funder-cashaddr.js",
     "create-addresses": "node create-addresses.js",
     "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js"
