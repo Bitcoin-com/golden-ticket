@@ -5,7 +5,8 @@
 npm-debug.log*
 .console_history
 
-addresses.csv
+*.csv
+*.swp
 
 mnemonic.json
 wallet.json

@@ -1,5 +1,7 @@
 ## Golden Ticket
 
+![Golden Ticket](images/golden-ticket.jpg)
+
 Event paper wallet generator
 
 ### Setup
