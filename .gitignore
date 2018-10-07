@@ -8,6 +8,7 @@ npm-debug.log*
 addresses.csv
 
 mnemonic.json
+wallet.json
 
 html/*
 pdf/*

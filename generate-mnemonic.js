@@ -4,39 +4,60 @@ const fs = require("fs");
 const qrcode = require("qrcode-terminal");
 const emoji = require("node-emoji");
 const chalk = require("chalk");
+const prompt = require("prompt");
 
 console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
 
-let mnemonic = BITBOX.Mnemonic.generate(256);
-console.log(`Your mnemonic is: ${chalk.red(mnemonic)}`);
+let main = async () => {
+  prompt.start();
 
-// root seed buffer
-const rootSeed = BITBOX.Mnemonic.toSeed(mnemonic);
+  prompt.get(["language", "hdpath"], (err, result) => {
+    let mnemonic = BITBOX.Mnemonic.generate(
+      256,
+      BITBOX.Mnemonic.wordLists()[result.language ? result.language : "english"]
+    );
+    console.log(`Your mnemonic is: ${chalk.red(mnemonic)}`);
 
-// master HDNode
-const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
+    // root seed buffer
+    const rootSeed = BITBOX.Mnemonic.toSeed(mnemonic);
 
-// HDNode of BIP44 account
-const account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'");
+    // master HDNode
+    const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed);
 
-// HDNode of first internal change address
-const funder = BITBOX.HDNode.derivePath(account, `1/0`);
+    let hdpath;
+    if (result.hdpath) {
+      hdpath = result.hdpath;
+    } else {
+      hdpath = "m/44'/145'/0'";
+    }
 
-// funder HDNode to cashAddr
-const funderAddress = BITBOX.HDNode.toCashAddress(funder);
+    console.log(`Your account's HDPath is ${hdpath}`);
+    // HDNode of BIP44 account
+    const account = BITBOX.HDNode.derivePath(masterHDNode, hdpath);
 
-// show funder address qr code
-console.log(`Send funds to: ${funderAddress}`);
-qrcode.generate(funderAddress);
+    // HDNode of first internal change address
+    const mothership = BITBOX.HDNode.derivePath(account, `1/0`);
+    console.log(`Your mothership's HDPath is ${hdpath}/1/0`);
 
-// mnemonic and funder address to save in basic wallet
-let mnemonicObj = {
-  mnemonic: mnemonic,
-  funderAddress: funderAddress
+    // mothership HDNode to cashAddr
+    const mothershipAddress = BITBOX.HDNode.toCashAddress(mothership);
+
+    // show mothership address qr code
+    console.log(`Fund the mothership at: ${mothershipAddress}\n`);
+    qrcode.generate(mothershipAddress);
+
+    // mnemonic and mothership address to save in basic wallet
+    let mnemonicObj = {
+      mnemonic: mnemonic,
+      mothershipAddress: mothershipAddress
+    };
+
+    // Write out the basic wallet into a json file for other scripts  to use.
+    fs.writeFile("wallet.json", JSON.stringify(mnemonicObj, null, 2), err => {
+      if (err) return console.error(err);
+      console.log(emoji.get(":rocket:"), `wallet.json written successfully.`);
+    });
+  });
 };
 
-// Write out the basic wallet into a json file for other scripts  to use.
-fs.writeFile("mnemonic.json", JSON.stringify(mnemonicObj, null, 2), err => {
-  if (err) return console.error(err);
-  console.log(emoji.get(":rocket:"), `mnemonic.json written successfully.`);
-});
+main();
