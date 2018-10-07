@@ -4,7 +4,7 @@
 
 Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) event paper wallet generator. Use it to create amazing golden tickets for your next event.
 
-Not only does Golden Ticket let you chose a custom mnemonic language or hdpath but it also generates html, pdf and a spreadsheet mapping cashAddr, privKey, index and claimed status of each golden ticket.
+Not only does Golden Ticket let you chose a custom mnemonic language or hdpath but it also generates html, pdf and a spreadsheet mapping cashAddr, privKey, index and swept status of each golden ticket as well as generating stats.
 
 ## Features
 
@@ -45,9 +45,9 @@ Then you'll be prompted for the number of tickets that you intend to fund. It wi
 
 You'll also be prompted for your tiers. This is how much $ you want to give to `n` number of addresses. For example if you want to give $1 to 99 tickets and $10 to 1 goldend ticket your tiers would be `[[1, 99], [10, 1]]`
 
-Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mothership address and number of tickets.
+Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mothership address, number of tickets and HD path.
 
-Lastly Golden Ticket will show you a QR code of your mothership address. The HD math for the mother ship address is `hdpath/1/0`.
+Lastly Golden Ticket will show you a QR code of your mothership address. The HD path for the mother ship address is `hdpath/1/0`.
 
 ![generate-wallet](images/generate-wallet.png)
 
@@ -57,7 +57,7 @@ Run `npm run create-addresses`.
 
 This will create `n` privkeyWIFs as a QR code saved to a PDF.
 
-## Redeem Unclaimed Funds
+## Redeem Unswept Funds
 
 Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
 
