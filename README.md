@@ -35,9 +35,15 @@ Create a 256 bit mnemonic in any of the following languages
 
 `npm run generate-mnemonic`
 
-You'll be prompted for a languag. You can enter any of the 8 listed above. If you don't enter a language Golden Ticket will default to English.
+You'll be prompted for a language. You can enter any of the 8 listed above. If you don't enter a language Golden Ticket will default to English.
 
-This will next generate the funder's address at HD path: `m/44'/145'/0'/1/0`. It will also show the funder's address as a QR code and save the mnemonic and funder address to `mnemonic.js`.
+Next you'll be promted for an HDpath. If you enter nothing Golden Ticket will default to the first BIP44 account of your mnemonic. ie: `m/44'/145'/0'`
+
+Then you'll be prompted for the number of tickets that you intend to fund. It will default to 100.
+
+Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mothership address and number of tickets.
+
+Lastly Golden Ticket will show you a QR code of your mothership address. The HD math for the mother ship address is `hdpath/1/0`.
 
 ## Create addresses
 

@@ -11,7 +11,7 @@ console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
 let main = async () => {
   prompt.start();
 
-  prompt.get(["language", "hdpath"], (err, result) => {
+  prompt.get(["language", "hdpath", "numberOfTickets"], (err, result) => {
     let mnemonic = BITBOX.Mnemonic.generate(
       256,
       BITBOX.Mnemonic.wordLists()[
@@ -51,7 +51,8 @@ let main = async () => {
     // mnemonic and mothership address to save in basic wallet
     let mnemonicObj = {
       mnemonic: mnemonic,
-      mothershipAddress: mothershipAddress
+      mothershipAddress: mothershipAddress,
+      numberOfTickets: result.numberOfTickets ? result.numberOfTickets : 100
     };
 
     // Write out the basic wallet into a json file for other scripts  to use.
