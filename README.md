@@ -60,3 +60,14 @@ This will create `n` privkeyWIFs as a QR code saved to a PDF.
 ## Redeem Unclaimed Funds
 
 Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
+
+## Generate Stats
+
+Run `npm run generate-stats` to generate basic stats about your event.
+
+```
+Ticket count: Total 100, claimed 75, unclaimed 25
+$1 breakdown: claimed 80, unclaimed 19
+$10 breakdown: claimed 1, unclaimed 0
+Total funds claimed: claimed 81, unclaimed 19
+```

@@ -27,7 +27,8 @@
     "create-csv": "node create-csv.js",
     "show-funder-cashaddr": "node show-funder-cashaddr.js",
     "create-addresses": "node create-addresses.js",
-    "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js"
+    "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js",
+    "generate-stats": "node generate-stats.js"
   },
   "devDependencies": {
     "bitbox-cli": "1.7.0",
