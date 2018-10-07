@@ -45,6 +45,8 @@ Golden Ticket will create a `wallet.json` file and write to it your mnemonic, mo
 
 Lastly Golden Ticket will show you a QR code of your mothership address. The HD math for the mother ship address is `hdpath/1/0`.
 
+![generate-mnemonic](images/generate-mnemonic.jpg)
+
 ## Create addresses
 
 Run `npm run create-addresses`.
