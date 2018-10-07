@@ -51,6 +51,7 @@ let main = async () => {
     // mnemonic and mothership address to save in basic wallet
     let mnemonicObj = {
       mnemonic: mnemonic,
+      hdpath: hdpath,
       mothershipAddress: mothershipAddress,
       numberOfTickets: result.numberOfTickets ? result.numberOfTickets : 100
     };
