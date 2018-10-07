@@ -12,6 +12,8 @@ Not only does Golden Ticket let you chose a custom mnemonic language or hdpath b
 
 ## Setup
 
+Install [NodeJS](http://nodejs.org/) LTS version 8.x.
+
 Clone the repo
 
 `git clone https://github.com/Bitcoin-com/golden-ticket.git`
