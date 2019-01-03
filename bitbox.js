@@ -7,4 +7,4 @@ exports.config = {
       restURL: "https://rest.bitcoin.com/v1/"
     }
   }
-};
+}
