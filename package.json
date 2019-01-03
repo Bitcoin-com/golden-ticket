@@ -4,7 +4,6 @@
   "description": "Event paper wallet generator",
   "author": "Gabriel Cardona @ Bitcoin.com",
   "version": "0.0.1",
-  "private": true,
   "dependencies": {
     "chalk": "^2.4.1",
     "csvtojson": "^2.0.8",
