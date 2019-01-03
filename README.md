@@ -49,6 +49,14 @@ Lastly Golden Ticket will show you a QR code of your mothership address. The HD 
 
 ![generate-wallet](images/generate-wallet.png)
 
+## Fund Mothership
+
+You'll need to reload funds to the mothership more than once to fund all generated addresses. For this you can `npm run fund-mothership`.
+
+This will show your mothership address and a QR code to easily fund.
+
+![generate-wallet](images/fund-mothership.png)
+
 ## Create addresses
 
 Run `npm run create-addresses`.
