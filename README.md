@@ -65,9 +65,16 @@ Lastly Golden Ticket will show you a QR code of your mothership address. The HD 
 
 ## Create addresses
 
-Run `npm run create-addresses`.
+This will create `n` privkeyWIFs as a QR code saved to a PDF. First you'll need to take the .png of your design and change it to base64 using an online tool such as: https://www.base64-image.de/. Paste the base64 in to line 83.
 
-This will create `n` privkeyWIFs as a QR code saved to a PDF.
+When you run `npm run create-addresses` you'll be prompted for eventName, hdAccount and addressCount
+
+First this will create the following directories:
+
+- ./html/${eventName}/privKeyWIFs
+- ./pdf/${eventName}/privKeyWIFs
+
+**Note** if you changed your wallet's filename to anything other than `goldenTicketWallet.json` in the `generate-wallet` step you'll need to update that on line 25.
 
 ## Create CSV
 
