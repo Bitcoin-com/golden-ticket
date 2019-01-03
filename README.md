@@ -47,6 +47,8 @@ Finally you'll be prompted for a wallet name. Don't include the file extension. 
 
 Lastly Golden Ticket will show you a QR code of your mothership address. The HD path for the mother ship address is `hdpath/1/0`. The mothership address is the address which you intially fund which then funds all the generated addresses.
 
+**Note** if you changed your wallet's filename to anything other than `goldenTicketWallet.json` in the `generate-wallet` step you'll need to update that on line 8.
+
 ![generate-wallet](images/generate-wallet.png)
 
 ## Fund Mothership
