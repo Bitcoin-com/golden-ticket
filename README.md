@@ -22,6 +22,18 @@ Install the dependencies
 
 `cd golden-ticket && npm install`
 
+## Workflow
+
+A typical workflow is
+
+1. `generate-wallet`
+2. `create-addresses`
+3. `create-csv`
+4. `fund-mothership`
+5. `fund-addresses`
+6. `generate-stats`
+7. `reclaim-funds`
+
 ## Generate Wallet
 
 Create a 256 bit mnemonic and BIP44 BCH address
@@ -51,24 +63,32 @@ Lastly Golden Ticket will show you a QR code of your mothership address. The HD 
 
 ![generate-wallet](images/generate-wallet.png)
 
-## Fund Mothership
-
-You'll need to reload funds to the mothership more than once to fund all generated addresses. For this you can `npm run fund-mothership`.
-
-This will show your mothership address and a QR code to easily fund.
-
-![generate-wallet](images/fund-mothership.png)
-
 ## Create addresses
 
 Run `npm run create-addresses`.
 
 This will create `n` privkeyWIFs as a QR code saved to a PDF.
 
-## Redeem Unswept Funds
+## Create CSV
 
-Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
+3. `npm run create-csv`
+
+## Fund Mothership
+
+You'll need to reload funds to the mothership more than once to fund all generated addresses. For this you can `npm run fund-mothership`.
+
+This will show your mothership address and a QR code to easily fund.
+
+![fund-mothership](images/fund-mothership.png)
+
+## Fund Addresses
+
+`npm run fund-addresses`
 
 ## Generate Stats
 
 Run `npm run generate-stats` to generate basic stats about your event.
+
+## Redeem Unswept Funds
+
+Run `npm run redeem-unclaimed-funds` to have funds sent back to the funders cashAddr
