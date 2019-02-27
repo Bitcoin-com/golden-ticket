@@ -23,11 +23,12 @@
   },
   "scripts": {
     "generate-wallet": "node generate-wallet.js",
-    "fund-mothership": "node fund-mothership.js",
-    "create-csv": "node create-csv.js",
-    "show-funder-cashaddr": "node show-funder-cashaddr.js",
     "create-addresses": "node create-addresses.js",
-    "redeem-unclaimed-funds": "node redeem-unclaimed-funds.js",
+    "create-csv": "node create-csv.js",
+    "fund-mothership": "node fund-mothership.js",
+    "fund-addresses": "node fund-addresses.js",
+    "check-addresses": "node check-addresses.js",
+    "reclaim-funds": "node reclaim-funds.js",
     "generate-stats": "node generate-stats.js"
   },
   "devDependencies": {
