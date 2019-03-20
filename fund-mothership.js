@@ -15,6 +15,6 @@ try {
 }
 
 // show funder address qr code
-console.log(`Send funds to: ${mnemonicObj.mothershipAddress}`)
-qrcode.generate(mnemonicObj.mothershipAddress)
+console.log(`Send funds to: ${mnemonicObj.mothership.address}`)
+qrcode.generate(mnemonicObj.mothership.address)
 console.log(chalk.green("All done."), emoji.get(":white_check_mark:"))
