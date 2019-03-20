@@ -1,6 +1,6 @@
 "use strict"
-const BITBOXCli = require("bitbox-cli/lib/bitbox-cli").default
-const BITBOX = new BITBOXCli()
+const BITBOXSDK = require("bitbox-sdk")
+const BITBOX = new BITBOXSDK()
 const fs = require("fs")
 const qrcode = require("qrcode-terminal")
 const emoji = require("node-emoji")

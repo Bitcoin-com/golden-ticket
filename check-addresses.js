@@ -1,6 +1,6 @@
 "use strict"
-const BITBOXCli = require("bitbox-cli/lib/bitbox-cli").default
-const BITBOX = new BITBOXCli()
+const BITBOXSDK = require("bitbox-sdk")
+const BITBOX = new BITBOXSDK()
 const converter = require("json-2-csv")
 const fs = require("fs")
 const prompt = require("prompt")
