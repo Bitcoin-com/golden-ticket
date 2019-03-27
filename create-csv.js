@@ -1,6 +1,6 @@
 "use strict"
-const BITBOXCli = require("bitbox-cli/lib/bitbox-cli").default
-const BITBOX = new BITBOXCli()
+const BITBOXSDK = require("bitbox-sdk")
+const BITBOX = new BITBOXSDK()
 const converter = require("json-2-csv")
 const fs = require("fs")
 const emoji = require("node-emoji")
@@ -46,13 +46,13 @@ const main = async () => {
       // master HDNode
       const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed)
 
-      // HDNode of BIP44 account
-      const account = BITBOX.HDNode.derivePath(masterHDNode, mnemonicObj.hdpath)
+      // BIP44
+      const bip44 = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'")
 
       for (let i = 0; i < result.addressCount; i++) {
         const node = BITBOX.HDNode.derivePath(
-          account,
-          `${result.hdAccount}/${i}`
+          bip44,
+          `${result.hdAccount}'/0/${i}`
         )
 
         // get the cash address
@@ -67,11 +67,11 @@ const main = async () => {
           claimed: false
         }
 
-        if (i <= 2425) obj.value = 1
-        else if (i >= 2426 && i <= 2474) obj.value = 2
-        else if (i >= 2475 && i <= 2494) obj.value = 10
-        else if (i >= 2495 && i <= 2497) obj.value = 100
-        else if (i >= 2498 && i <= 2499) obj.value = 500
+        if (i <= 918) obj.value = 1
+        else if (i >= 919 && i <= 968) obj.value = 2
+        else if (i >= 969 && i <= 988) obj.value = 5
+        else if (i >= 989 && i <= 998) obj.value = 10
+        else if (i === 999) obj.value = 500
 
         addresses.push(obj)
         console.log(i, cashAddress, wif, obj.value, obj.claimed)
