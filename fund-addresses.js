@@ -39,7 +39,7 @@ const main = async () => {
     // HDNode of BIP44 account
     const account = BITBOX.HDNode.derivePath(
       masterHDNode,
-      `m/44'/145'/${result.hdAccount}'`
+      `m/44'/145'/${result.hdAccount ? result.hdAccount : 0}'`
     )
 
     const utxos = await BITBOX.Address.utxo(mothershipAddress)
@@ -67,9 +67,9 @@ const main = async () => {
     // const changeAmount = sendAmount - 9764550
 
     // transactionBuilder.addOutput(mothershipAddress, sendAmount)
-    const foo = 269
+    const iterator = 0
     console.log("address count", addressCount)
-    for (let i = foo; i < Number(addressCount) + foo; i++) {
+    for (let i = iterator; i < Number(addressCount) + iterator; i++) {
       // derive the ith external change address HDNode
       const node = BITBOX.HDNode.derivePath(account, `0/${i}`)
 
