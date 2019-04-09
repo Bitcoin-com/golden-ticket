@@ -16,11 +16,20 @@ const main = async () => {
   prompt.get(
     ["eventName", "hdAccount", "addressCount"],
     async (err, result) => {
+      // eventName
+      const eventName = result.eventName
+
+      // hdAccount
+      const hdAccount = result.hdAccount
+
+      // address count
+      const addressCount = result.addressCount
+
       const json2csvCallback = (err, csv) => {
         if (err) throw err
-        fs.writeFile(`${result.eventName}-final.csv`, csv, err => {
+        fs.writeFile(`${eventName}-final.csv`, csv, err => {
           if (err) return console.error(err)
-          console.log(`${result.eventName}-final.csv written successfully.`)
+          console.log(`${eventName}-final.csv written successfully.`)
         })
       }
       let mnemonicObj
@@ -34,9 +43,6 @@ const main = async () => {
         process.exit(0)
       }
 
-      // address count
-      const addressCount = result.addressCount
-
       // root seed buffer
       const rootSeed = BITBOX.Mnemonic.toSeed(mnemonicObj.mnemonic)
 
@@ -44,14 +50,11 @@ const main = async () => {
       const masterHDNode = BITBOX.HDNode.fromSeed(rootSeed)
 
       // HDNode of BIP44 account
-      const account = BITBOX.HDNode.derivePath(masterHDNode, "m/44'/145'/0'")
+      const bip44 = BITBOX.HDNode.derivePath(masterHDNode, `m/44'/145'`)
       for (let i = 0; i <= addressCount; i++) {
         await sleep(1100)
         // derive the ith external change address HDNode
-        const node = BITBOX.HDNode.derivePath(
-          account,
-          `${result.hdAccount}/${i}`
-        )
+        const node = BITBOX.HDNode.derivePath(bip44, `${hdAccount}'/0/${i}`)
 
         // get the cash address
         const cashAddress = BITBOX.HDNode.toCashAddress(node)
@@ -60,11 +63,11 @@ const main = async () => {
         const wif = BITBOX.HDNode.toWIF(node)
 
         let value
-        if (i <= 2426) value = 1
-        else if (i >= 2427 && i <= 2476) value = 2
-        else if (i >= 2477 && i <= 2496) value = 10
-        else if (i >= 2497 && i <= 2498) value = 100
-        else if (i === 2500) value = 500
+        if (i <= 918) value = 1
+        else if (i >= 919 && i <= 968) value = 2
+        else if (i >= 969 && i <= 988) value = 5
+        else if (i >= 989 && i <= 998) value = 10
+        else if (i === 999) value = 500
 
         const obj = {
           cashAddress: cashAddress,

@@ -11,6 +11,7 @@ npm-debug.log*
 mnemonic.json
 wallet.json
 wallet-backup.json
+goldenTicketWallet.json
 
 html/*
 pdf/*

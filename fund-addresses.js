@@ -15,7 +15,7 @@ const main = async () => {
       mnemonicObj = require(`./goldenTicketWallet.json`)
     } catch (err) {
       console.log(
-        `Could not open mnemonic.json. Generate a mnemonic with generate-wallet first.
+        `Could not open goldenTicketWallet.json. Generate a mnemonic with generate-wallet first.
       Exiting.`
       )
       process.exit(0)
@@ -60,15 +60,10 @@ const main = async () => {
       { P2PKH: 1 },
       { P2PKH: addressCount }
     )
-    console.log("BYTE COUNT", byteCount)
 
     const sendAmount = originalAmount - byteCount
-    // console.log("byte count", byteCount)
-    // const changeAmount = sendAmount - 9764550
 
-    // transactionBuilder.addOutput(mothershipAddress, sendAmount)
     const iterator = 0
-    console.log("address count", addressCount)
     for (let i = iterator; i < Number(addressCount) + iterator; i++) {
       // derive the ith external change address HDNode
       const node = BITBOX.HDNode.derivePath(account, `0/${i}`)

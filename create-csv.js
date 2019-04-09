@@ -67,11 +67,9 @@ const main = async () => {
           claimed: false
         }
 
-        if (i <= 918) obj.value = 1
-        else if (i >= 919 && i <= 968) obj.value = 2
-        else if (i >= 969 && i <= 988) obj.value = 5
-        else if (i >= 989 && i <= 998) obj.value = 10
-        else if (i === 999) obj.value = 500
+        if (i <= 199) obj.value = 0.005
+        else if (i >= 200 && i <= 349) obj.value = 0.006
+        else if (i >= 350 && i <= 399) obj.value = 0.02
 
         addresses.push(obj)
         console.log(i, cashAddress, wif, obj.value, obj.claimed)
