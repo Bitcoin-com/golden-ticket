@@ -1,5 +1,15 @@
 # Fund Tickets
 
+Now you are ready to fund your Golden Tickets. It's best to do this in batches of up to 50 tickets at a time. Also it's best to not mix tiers. For example if you have 10 tickets which you're funding w/ $1 and 5 tickets which you're funding w/ $5 you want to first run `fund-mothership` and send the mothership \$10. Next run `fund-tickets` and fund all 10 tickets w/ \$1. Then you'll want to run `fund-mothership` again and send the mothership $25. Finally you'll run `fund-tickets` again and fund the remaining 5 tickets w/ $5 each.
+
+`fund-tickets` will prompt you for `hdAccount`, `ticketCount` and `iterator`. `hdAccount` and `ticketCount` should be the same that you used in `create-tickets` and `create-csv`.
+
+`iterator` is the golden ticket number which you want to start funding. This is useful if you're funding many tickets over multiple rounds.
+
+For example in `create-tickets` we created 3 $1 tickets, 1 $5 ticket and 1 \$10 ticket. To fund these tickets we would run `fund-mothership` and then `fund-tickets` 3 times.
+
+First we'll fund the \$1 tickets. Note the `iterator` is 0 because we want to start w/ the first ticket. As `fund-tickets` runs it will log the index count, cash address and wif to the console. This is convenient so you can confirm which tickets are getting funded w/ each command.
+
 ```
 npm run fund-tickets
 
@@ -13,6 +23,8 @@ Success! TXID:  49ba56bc38878617d63d78675085cb7c18a38b7b00cc82b376ec7d5d6494da27
 Check your transaction on the explorer: https://explorer.bitcoin.com/bch/tx/49ba56bc38878617d63d78675085cb7c18a38b7b00cc82b376ec7d5d6494da27
 ```
 
+Next we run `fund-mothership` and send it \$5. Note the `iterator` is 3 because the index count of the last ticket funded in the previous `fund-tickets` was 2.
+
 ```
 npm run fund-tickets
 
@@ -23,6 +35,8 @@ prompt: iterator:  3
 Success! TXID:  7eef105725a0e9a00447752b944917a7c4d80f8390fa657897e02e462581fe23
 Check your transaction on the explorer: https://explorer.bitcoin.com/bch/tx/7eef105725a0e9a00447752b944917a7c4d80f8390fa657897e02e462581fe23
 ```
+
+Finally we run `fund-mothership` and send it \$10 to fund the final ticket. Note the `iterator` is 4 because the index count of the last ticket funded in the previous `fund-tickets` was 3.
 
 ```
 npm run fund-tickets
