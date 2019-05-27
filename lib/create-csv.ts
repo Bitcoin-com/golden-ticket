@@ -69,7 +69,7 @@ const main: any = async (): Promise<any> => {
           const obj: CSV = {
             cashAddress: cashAddress,
             wif: wif,
-            claimed: false
+            claimed: "false"
           }
 
           if (i <= 199) obj.value = 0.005

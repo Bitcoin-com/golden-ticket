@@ -14,6 +14,10 @@ export interface CreateAddressesResult extends AddressesCommon {
   eventName: string
 }
 
+export interface GenerateStats {
+  eventName: string
+}
+
 export interface Wallet {
   mnemonic: string
   hdpath: string
@@ -34,6 +38,6 @@ export interface CheckAddresses extends CreateAddressesResult {}
 export interface CSV {
   cashAddress: string
   wif: string
-  claimed: boolean
+  claimed: string
   value?: number
 }

@@ -16,7 +16,6 @@
     "json-2-csv": "^2.3.1",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
-    "node-sass": "^4.9.0",
     "prompt": "^1.0.0",
     "qrcode": "^1.2.0",
     "qrcode-terminal": "^0.12.0",
@@ -27,11 +26,11 @@
     "build": "tsc",
     "generate-wallet": "node lib/generate-wallet.js",
     "fund-mothership": "node lib/fund-mothership.js",
-    "create-addresses": "node create-addresses.js",
-    "create-csv": "node create-csv.js",
-    "fund-addresses": "node fund-addresses.js",
-    "check-addresses": "node check-addresses.js",
-    "reclaim-funds": "node reclaim-funds.js",
-    "generate-stats": "node generate-stats.js"
+    "create-addresses": "node lib/create-addresses.js",
+    "create-csv": "node lib/create-csv.js",
+    "fund-addresses": "node lib/fund-addresses.js",
+    "check-addresses": "node lib/check-addresses.js",
+    "generate-stats": "node generate-stats.js",
+    "reclaim-funds": "node lib/reclaim-funds.js"
   }
 }

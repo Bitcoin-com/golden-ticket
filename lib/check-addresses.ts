@@ -83,10 +83,11 @@ const main: any = async (): Promise<any> => {
             else if (i >= 989 && i <= 998) value = 10
             else if (i === 999) value = 500
 
+            let claimed = details.balance === 0
             const csv: CSV = {
               cashAddress: cashAddress,
               wif: wif,
-              claimed: details.balance === 0
+              claimed: claimed.toString()
             }
             csv.value = value
 
