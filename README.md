@@ -8,7 +8,7 @@ Not only does Golden Ticket let you chose a custom mnemonic language or hdpath b
 
 ## Features
 
-- Generate mnemonic in 1 of 8 languages (english, japanese, chinese_simplified, chinese_traditional, french, italian, japanese, korean, spanish)
+- Generate mnemonic in 1 of 8 languages (english, japanese, chinese_simplified, chinese_traditional, french, italian, korean, spanish)
 - Generate basic BIP44 wallet
 - Create Golden Tickets in html and pdf format for printing.
 - Create .csv file w/ cash address, wif and ticket tier breakdown
