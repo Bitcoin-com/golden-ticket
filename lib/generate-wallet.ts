@@ -5,10 +5,10 @@ import * as fs from "fs"
 import { GenerateWalletResult } from "./interfaces/GoldenTicketInterfaces"
 
 // consts
-const bitbox = new BITBOX()
-const emoji = require("node-emoji")
-const chalk = require("chalk")
-const prompt = require("prompt")
+const bitbox: BITBOX = new BITBOX()
+const emoji: any = require("node-emoji")
+const chalk: any = require("chalk")
+const prompt: any = require("prompt")
 
 const main: any = async (): Promise<any> => {
   // start the prompt to get user input
