@@ -127,7 +127,9 @@ const main: any = async (): Promise<any> => {
         console.log(chalk.green("All done."), emoji.get(":white_check_mark:"))
         console.log(
           emoji.get(":rocket:"),
-          `html and pdfs written successfully.`
+          `html and pdfs written successfully to html/${
+            result.eventName
+          } and pdf/${result.eventName} respectively.`
         )
       } catch (err) {
         console.log(
