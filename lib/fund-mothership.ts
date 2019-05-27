@@ -7,7 +7,7 @@ const chalk = require("chalk")
 const emoji = require("node-emoji")
 
 try {
-  const wallet: Wallet = require(`./goldenTicketWallet.json`)
+  const wallet: Wallet = require(`../goldenTicketWallet.json`)
 
   // show funder address qr code
   console.log(`Send funds to: ${wallet.mothership.address}`)

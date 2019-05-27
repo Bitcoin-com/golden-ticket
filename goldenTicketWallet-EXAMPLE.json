@@ -1,7 +1,8 @@
 {
-  "mnemonic": "six clap first crucial theory exhaust appear write rubber bunker life wing certain boat strong arrive harbor plunge transfer steak jeans eye fold puzzle",
+  "mnemonic": "cedibile vivido lungo fango piramide meno cremoso arnese zolla irlanda rosolare ferro ottobre frigo nevrotico falco uovo potassio miagolare meno ghepardo inoltrare prurito feudo",
+  "hdpath": "m/44'/145'",
   "mothership": {
-    "hdPath": "m/44'/145'/1'/0/0",
-    "address": "bitcoincash:qzcvflg98a45d3ks23fu55k0agxfseqztsscnlv5zs"
+    "hdPath": "m/44'/145'/0'/1/0",
+    "address": "bitcoincash:qqj4nuycqhs6p86kkm29flr5nx9tr4zw6gzlr49e6p"
   }
 }
