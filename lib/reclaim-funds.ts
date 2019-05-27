@@ -37,7 +37,7 @@ const main: any = async (): Promise<any> => {
           wallet.hdpath
         )
 
-        for (let i: number = 0; i <= ticketCount; i++) {
+        for (let i: number = 0; i < ticketCount; i++) {
           await sleep(1100)
 
           const node: HDNode = bitbox.HDNode.derivePath(
@@ -54,7 +54,6 @@ const main: any = async (): Promise<any> => {
             const utxo: AddressUtxoResult["utxos"] = utxos.utxos
 
             if (utxo && utxo.length >= 1) {
-              console.log(`${cashAddress} utxo: `, utxo)
               utxo.forEach(
                 async (u: any): Promise<any> => {
                   const transactionBuilder: any = new bitbox.TransactionBuilder()
@@ -81,11 +80,10 @@ const main: any = async (): Promise<any> => {
                   )
                   const tx: any = transactionBuilder.build()
                   const hex: string = tx.toHex()
-                  // console.log("HEX: ", hex)
                   const success: string = await bitbox.RawTransactions.sendRawTransaction(
                     hex
                   )
-                  console.log("SUCCESS: ", success)
+                  console.log("SUCCESS txid: ", success)
                 }
               )
             }

@@ -33,7 +33,7 @@
     "fund-mothership": "node lib/fund-mothership.js",
     "fund-tickets": "node lib/fund-tickets.js",
     "check-tickets": "node lib/check-tickets.js",
-    "generate-stats": "node generate-stats.js",
+    "generate-stats": "node lib/generate-stats.js",
     "reclaim-funds": "node lib/reclaim-funds.js"
   }
 }
