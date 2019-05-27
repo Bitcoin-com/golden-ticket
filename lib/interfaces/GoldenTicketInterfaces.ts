@@ -7,7 +7,9 @@ export interface AddressesCommon {
   ticketCount: string
 }
 
-export interface FundTicketsResult extends AddressesCommon {}
+export interface FundTicketsResult extends AddressesCommon {
+  iterator: string
+}
 
 export interface CreateTicketsResult extends AddressesCommon {
   eventName: string

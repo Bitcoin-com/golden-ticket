@@ -15,7 +15,7 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["hdAccount", "ticketCount"],
+    ["hdAccount", "ticketCount", "iterator"],
     async (err: any, result: FundTicketsResult): Promise<any> => {
       try {
         // Open the wallet generated with generate-wallet.
@@ -69,7 +69,8 @@ const main: any = async (): Promise<any> => {
 
           const sendAmount: number = originalAmount - byteCount
 
-          const iterator: number = 0
+          let tmpIterator = parseInt(result.iterator)
+          const iterator: number = tmpIterator ? tmpIterator : 0
           for (let i: number = iterator; i < ticketCount + iterator; i++) {
             // derive the ith external change address HDNode
             const node: HDNode = bitbox.HDNode.derivePath(account, `0/${i}`)
