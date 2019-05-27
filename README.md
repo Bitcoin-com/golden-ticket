@@ -8,17 +8,17 @@ Not only does Golden Ticket let you chose a custom mnemonic language or hdpath b
 
 ## Getting started
 
-[getting-started](getting-started.md)
+[getting-started](documentation/getting-started.md)
 
 ## Workflow
 
 A typical workflow is
 
-1. [generate-wallet](generate-wallet.md)
-2. [create-tickets](create-tickets.md)
-3. [create-csv](create-csv.md)
-4. [fund-mothership](fund-mothership.md)
-5. [fund-tickets](fund-tickets.md)
-6. [check-tickets](check-tickets.md)
-7. [generate-stats](generate-stats.md)
-8. [reclaim-funds](reclaim-funds.md)
+1. [generate-wallet](documentation/generate-wallet.md)
+2. [create-tickets](documentation/create-tickets.md)
+3. [create-csv](documentation/create-csv.md)
+4. [fund-mothership](documentation/fund-mothership.md)
+5. [fund-tickets](documentation/fund-tickets.md)
+6. [check-tickets](documentation/check-tickets.md)
+7. [generate-stats](documentation/generate-stats.md)
+8. [reclaim-funds](documentation/reclaim-funds.md)
