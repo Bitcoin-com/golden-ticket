@@ -33,10 +33,10 @@ npm run build
 You can now start running the Golden Ticket commands. A typical workflow is:
 
 - [generate-wallet](generate-wallet.md)
-- create-addresses
-- create-csv
-- fund-mothership
-- fund-addresses
-- check-addresses
-- generate-stats
-- reclaim-funds
+- [create-addresses](create-addresses.md)
+- [create-csv](create-csv.md)
+- [fund-mothership](fund-mothership.md)
+- [fund-addresses](fund-addresses.md)
+- [check-addresses](check-addresses.md)
+- [generate-stats](generate-stats.md)
+- [reclaim-funds](reclaim-funds.md)
