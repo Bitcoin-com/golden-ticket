@@ -3,11 +3,7 @@ import { BITBOX } from "bitbox-sdk"
 import { AddressDetailsResult } from "bitcoin-com-rest"
 import { HDNode } from "bitcoincashjs-lib"
 import * as fs from "fs"
-import {
-  CheckAddresses,
-  CSV,
-  Wallet
-} from "./interfaces/GoldenTicketInterfaces"
+import { CheckTickets, CSV, Wallet } from "./interfaces/GoldenTicketInterfaces"
 
 // consts
 const bitbox: BITBOX = new BITBOX()
@@ -24,7 +20,7 @@ const main: any = async (): Promise<any> => {
   // ask for language, hdpath and walletFileName
   prompt.get(
     ["eventName", "hdAccount", "ticketCount"],
-    async (err: any, result: CheckAddresses): Promise<any> => {
+    async (err: any, result: CheckTickets): Promise<any> => {
       // eventName
       const eventName: string = result.eventName
 

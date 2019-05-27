@@ -2,10 +2,7 @@
 import { BITBOX } from "bitbox-sdk"
 import { AddressUtxoResult } from "bitcoin-com-rest"
 import { ECPair, HDNode } from "bitcoincashjs-lib"
-import {
-  FundAddressesResult,
-  Wallet
-} from "./interfaces/GoldenTicketInterfaces"
+import { FundTicketsResult, Wallet } from "./interfaces/GoldenTicketInterfaces"
 
 // consts
 const bitbox: BITBOX = new BITBOX()
@@ -19,7 +16,7 @@ const main: any = async (): Promise<any> => {
   // ask for language, hdpath and walletFileName
   prompt.get(
     ["hdAccount", "ticketCount"],
-    async (err: any, result: FundAddressesResult): Promise<any> => {
+    async (err: any, result: FundTicketsResult): Promise<any> => {
       try {
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
         const ticketCount: number = parseInt(result.ticketCount)
@@ -37,7 +34,6 @@ const main: any = async (): Promise<any> => {
           mothership
         )
         console.log("mothership addy", mothershipAddress)
-        // return
 
         // HDNode of BIP44 account
         const account: HDNode = bitbox.HDNode.derivePath(
@@ -52,7 +48,7 @@ const main: any = async (): Promise<any> => {
           console.log(utxos.utxos[0])
           if (!utxos.utxos[0]) return
 
-          const transactionBuilder = new bitbox.TransactionBuilder()
+          const transactionBuilder: any = new bitbox.TransactionBuilder()
           const originalAmount: number = utxos.utxos[0].satoshis
 
           const vout: number = utxos.utxos[0].vout
@@ -101,7 +97,6 @@ const main: any = async (): Promise<any> => {
           const tx: any = transactionBuilder.build()
           // output rawhex
           const hex: string = tx.toHex()
-          console.log("HEX: ", hex)
 
           // sendRawTransaction to running BCH node
           const success: string = await bitbox.RawTransactions.sendRawTransaction(

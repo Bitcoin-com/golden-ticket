@@ -7,7 +7,7 @@ export interface AddressesCommon {
   ticketCount: string
 }
 
-export interface FundAddressesResult extends AddressesCommon {}
+export interface FundTicketsResult extends AddressesCommon {}
 
 export interface CreateTicketsResult extends AddressesCommon {
   eventName: string
@@ -32,7 +32,7 @@ export interface PDF {
 }
 
 export interface CreateCSV extends CreateTicketsResult {}
-export interface CheckAddresses extends CreateTicketsResult {}
+export interface CheckTickets extends CreateTicketsResult {}
 
 export interface CSV {
   cashAddress: string
