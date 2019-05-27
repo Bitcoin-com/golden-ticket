@@ -1,4 +1,4 @@
-# Getting started
+# Generate Wallet
 
 ## Prerequisites
 
@@ -32,7 +32,7 @@ npm run build
 
 You can now start running the Golden Ticket commands. A typical workflow is:
 
-- [generate-wallet]('./generate-wallet.md')
+- generate-wallet
 - create-addresses
 - create-csv
 - fund-mothership
