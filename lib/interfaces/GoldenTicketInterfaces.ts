@@ -29,6 +29,7 @@ export interface PDFOptions {
 }
 
 export interface CreateCSV extends CreateAddressesResult {}
+export interface CheckAddresses extends CreateAddressesResult {}
 
 export interface CSV {
   cashAddress: string
