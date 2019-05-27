@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-Install the NodeJS LTS version from [https://nodejs.org/en/](https://nodejs.org/en/). At the time of writing that is 10.15.3. This also comes bundled w/ `npm` for installing dependencies and running scripts.
+Install the NodeJS LTS version from [nodejs.org](https://nodejs.org/en/). At the time of writing that is 10.15.3. This also comes bundled w/ `npm` for installing dependencies and running scripts.
 
 ## Installation
 
@@ -30,7 +30,7 @@ Transpile the typescript to javascript
 npm run build
 ```
 
-You can now start running the Golden Ticket commands. A typical workflow is:
+You can now run the Golden Ticket commands. A typical workflow is:
 
 - [generate-wallet](generate-wallet.md)
 - [create-addresses](create-addresses.md)

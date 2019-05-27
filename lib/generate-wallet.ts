@@ -16,7 +16,7 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["language", "walletFileName"],
+    ["language"],
     (err: any, result: GenerateWalletResult): void => {
       // generate mnemonic based on language input. Default to english
       const mnemonic: string = bitbox.Mnemonic.generate(
@@ -69,10 +69,7 @@ const main: any = async (): Promise<any> => {
         }
       }
 
-      // get walletFileName from user. Default to wallet.json
       let walletFileName: string = "goldenTicketWallet.json"
-      if (result.walletFileName)
-        walletFileName = `${result.walletFileName}.json`
 
       // Write out the basic wallet into a json file for other scripts  to use.
       fs.writeFile(

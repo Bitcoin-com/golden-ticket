@@ -1,6 +1,5 @@
 export interface GenerateWalletResult {
   language: string
-  walletFileName: string
 }
 
 export interface AddressesCommon {

@@ -1,42 +1,13 @@
 # Generate Wallet
 
-## Prerequisites
-
-Install the NodeJS LTS version from [https://nodejs.org/en/](https://nodejs.org/en/). At the time of writing that is 10.15.3. This also comes bundled w/ `npm` for installing dependencies and running scripts.
-
-## Installation
-
-Clone the repo
+The first step in creating Golden Tickets for your event is to generate a light-weight wallet which will be used in subsequent steps.
 
 ```
-git clone https://github.com/Bitcoin-com/golden-ticket.git
+npm run generate-wallet
+
+prompt: language:
+prompt: walletFileName:
+Your mnemonic is: inject divert similar boy coin boy parrot diamond divide rate box urban scorpion price sport forward nature wolf civil vague enjoy maple foot view
+Your base HDPath is m/44'/145'
+Your mothership's HDPath is m/44'/145'/0'/1/0
 ```
-
-Change directories to the newly cloned codebase
-
-```
-cd golden-ticket
-```
-
-Install the dependencies
-
-```
-npm install
-```
-
-Transpile the typescript to javascript
-
-```
-npm run build
-```
-
-You can now start running the Golden Ticket commands. A typical workflow is:
-
-- generate-wallet
-- create-addresses
-- create-csv
-- fund-mothership
-- fund-addresses
-- check-addresses
-- generate-stats
-- reclaim-funds
