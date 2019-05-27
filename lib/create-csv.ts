@@ -35,7 +35,7 @@ const main: any = async (): Promise<any> => {
             )
             console.log(
               emoji.get(":rocket:"),
-              `${result.eventName} written successfully.`
+              `${result.eventName}.csv written successfully.`
             )
           }
         )
@@ -77,12 +77,11 @@ const main: any = async (): Promise<any> => {
             claimed: "false"
           }
 
-          if (i <= 199) obj.value = 0.005
-          else if (i >= 200 && i <= 349) obj.value = 0.006
-          else if (i >= 350 && i <= 399) obj.value = 0.02
+          if (i <= 2) obj.value = 1
+          else if (i === 3) obj.value = 5
+          else if (i === 4) obj.value = 10
 
           addresses.push(obj)
-          console.log(i, cashAddress, wif, obj.value, obj.claimed)
         }
         converter.json2csv(addresses, json2csvCallback)
       } catch (err) {
