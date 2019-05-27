@@ -32,7 +32,7 @@
     "create-csv": "node lib/create-csv.js",
     "fund-mothership": "node lib/fund-mothership.js",
     "fund-tickets": "node lib/fund-tickets.js",
-    "check-addresses": "node lib/check-addresses.js",
+    "check-tickets": "node lib/check-tickets.js",
     "generate-stats": "node generate-stats.js",
     "reclaim-funds": "node lib/reclaim-funds.js"
   }
