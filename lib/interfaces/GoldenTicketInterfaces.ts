@@ -22,3 +22,12 @@ export interface PDFOptions {
   width: string
   height: string
 }
+
+export interface CreateCSV extends CreateAddressesResult {}
+
+export interface CSV {
+  cashAddress: string
+  wif: string
+  claimed: boolean
+  value?: number
+}
