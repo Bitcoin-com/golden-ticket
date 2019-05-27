@@ -10,13 +10,13 @@ import {
 
 // consts
 const bitbox: BITBOX = new BITBOX()
-const QRCode = require("qrcode")
-const prompt = require("prompt")
-const touch = require("touch")
-const mkdirp = require("mkdirp")
-const pdf = require("html-pdf")
-const emoji = require("node-emoji")
-const chalk = require("chalk")
+const QRCode: any = require("qrcode")
+const prompt: any = require("prompt")
+const touch: any = require("touch")
+const mkdirp: any = require("mkdirp")
+const pdf: any = require("html-pdf")
+const emoji: any = require("node-emoji")
+const chalk: any = require("chalk")
 // const addresses: string[] = []
 const sleep: any = (ms: number) =>
   new Promise(resolve => setTimeout(resolve, ms))

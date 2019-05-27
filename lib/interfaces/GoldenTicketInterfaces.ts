@@ -3,10 +3,15 @@ export interface GenerateWalletResult {
   walletFileName: string
 }
 
-export interface CreateAddressesResult {
-  eventName: string
+export interface AddressesCommon {
   hdAccount: string
   addressCount: string
+}
+
+export interface FundAddressesResult extends AddressesCommon {}
+
+export interface CreateAddressesResult extends AddressesCommon {
+  eventName: string
 }
 
 export interface Wallet {

@@ -2,9 +2,9 @@
 import { Wallet } from "./interfaces/GoldenTicketInterfaces"
 
 // consts
-const qrcode = require("qrcode-terminal")
-const chalk = require("chalk")
-const emoji = require("node-emoji")
+const qrcode: any = require("qrcode-terminal")
+const chalk: any = require("chalk")
+const emoji: any = require("node-emoji")
 
 try {
   const wallet: Wallet = require(`../goldenTicketWallet.json`)

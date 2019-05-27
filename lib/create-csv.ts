@@ -4,6 +4,7 @@ import { HDNode } from "bitcoincashjs-lib"
 import * as fs from "fs"
 import { CreateCSV, CSV, Wallet } from "./interfaces/GoldenTicketInterfaces"
 
+// consts
 const bitbox: BITBOX = new BITBOX()
 const converter = require("json-2-csv")
 const emoji = require("node-emoji")
