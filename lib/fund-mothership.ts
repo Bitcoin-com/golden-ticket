@@ -13,6 +13,11 @@ try {
   // show funder address qr code
   console.log(`Send funds to: ${wallet.mothership.address}`)
   qrcode.generate(wallet.mothership.address)
+  console.log(
+    `Check your mothership address on the explorer: https://explorer.bitcoin.com/bch/address/${
+      wallet.mothership.address
+    }`
+  )
 } catch (err) {
   console.log(
     `Could not open goldenTicketWallet.json. Generate a mnemonic with generate-wallet first.
