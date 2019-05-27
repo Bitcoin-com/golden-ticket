@@ -13,7 +13,7 @@ Not only does Golden Ticket let you chose a custom mnemonic language or hdpath b
 - Create Golden Tickets in html and pdf format for printing.
 - Create .csv file w/ cash address, wif and ticket tier breakdown
 - Fund all tickets programmatically
-- Check with tickets have been claimed and generate stats report
+- Check which tickets have been claimed and generate stats report
 - Sweep unclaimed funds back to your wallet
 
 ## Getting started
