@@ -41,3 +41,9 @@ export interface CSV {
   claimed: string
   value?: number
 }
+
+export interface ReclaimFunds {
+  hdAccount: string
+  addressCount: string
+  receiveAddress: string
+}
