@@ -32,6 +32,7 @@ const main: any = async (): Promise<any> => {
       try {
         // Open the wallet generated with generate-wallet.
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
+        const addressCount: number = parseInt(result.addressCount)
 
         // create needed directory structure
         mkdirp(`./html`, (err: any): void => {})
@@ -54,7 +55,7 @@ const main: any = async (): Promise<any> => {
           "m/44'/145'"
         )
 
-        for (let i: number = 0; i < parseInt(result.addressCount); i++) {
+        for (let i: number = 0; i < addressCount; i++) {
           console.log(`html: ${i}`)
           await sleep(100)
           // derive the ith external change address from the BIP44 account HDNode
@@ -97,7 +98,7 @@ const main: any = async (): Promise<any> => {
           )
         }
 
-        for (let i: number = 0; i < parseInt(result.addressCount); i++) {
+        for (let i: number = 0; i < addressCount; i++) {
           console.log(`pdf: ${i}`)
           await sleep(2000)
 

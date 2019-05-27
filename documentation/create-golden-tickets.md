@@ -1,11 +1,11 @@
 # Create Golden Tickets
 
-Once you've generated a wallet w/ `generate-wallet` you're now ready to generate your Golden Tickets via the `create-golden-tickets` command
+Once you've generated a wallet w/ `generate-wallet` you're now ready to generate your Golden Tickets via the `create-golden-tickets` command. You'll be promted for `eventName`, `hdAccount` and `addressCount`
 
 [base64-image.de](https://www.base64-image.de/)
 
 ```
-npm run create-addresses
+npm run create-golden-tickets
 
 prompt: eventName:  exampleEvent
 prompt: hdAccount:  0
