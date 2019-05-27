@@ -2,8 +2,12 @@
   "name": "golden-ticket",
   "license": "MIT",
   "description": "Event paper wallet generator",
-  "author": "Gabriel Cardona @ Bitcoin.com",
-  "version": "0.0.1",
+  "author": "Gabriel Cardona <gabriel@bitcoin.com>",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bitcoin-com/golden-ticket.git"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "csvtojson": "^2.0.8",
@@ -22,7 +26,8 @@
     "touch": "^3.1.0"
   },
   "scripts": {
-    "generate-wallet": "node generate-wallet.js",
+    "build": "tsc",
+    "generate-wallet": "node lib/generate-wallet.js",
     "create-addresses": "node create-addresses.js",
     "create-csv": "node create-csv.js",
     "fund-mothership": "node fund-mothership.js",
@@ -32,7 +37,7 @@
     "generate-stats": "node generate-stats.js"
   },
   "devDependencies": {
-    "bitbox-sdk": "5.1.0",
+    "bitbox-sdk": "8.2.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.5.0",
     "eslint-config-prettier": "^3.0.1",
@@ -43,6 +48,7 @@
     "node-mocks-http": "^1.7.0",
     "nodemon": "^1.8.1",
     "supertest": "^2.0.0",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "typescript": "3.4.5"
   }
 }

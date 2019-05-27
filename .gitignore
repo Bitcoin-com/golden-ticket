@@ -4,6 +4,7 @@
 .DS_Store
 npm-debug.log*
 .console_history
+yarn.lock
 
 *.csv
 *.swp
@@ -15,3 +16,10 @@ goldenTicketWallet.json
 
 html/*
 pdf/*
+
+index.js
+index.js.map
+lib/**/*.js
+lib/**/*.js.map
+test/**/*.js
+test/**/*.js.map
