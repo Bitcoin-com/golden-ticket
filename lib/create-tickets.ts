@@ -3,8 +3,8 @@ import { BITBOX } from "bitbox-sdk"
 import { HDNode } from "bitcoincashjs-lib"
 import * as fs from "fs"
 import {
-  CreateAddressesResult,
-  PDFOptions,
+  CreateTicketsResult,
+  PDF,
   Wallet
 } from "./interfaces/GoldenTicketInterfaces"
 
@@ -27,12 +27,12 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["eventName", "hdAccount", "addressCount"],
-    async (err: any, result: CreateAddressesResult) => {
+    ["eventName", "hdAccount", "ticketCount"],
+    async (err: any, result: CreateTicketsResult) => {
       try {
         // Open the wallet generated with generate-wallet.
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
-        const addressCount: number = parseInt(result.addressCount)
+        const ticketCount: number = parseInt(result.ticketCount)
 
         // create needed directory structure
         mkdirp(`./html`, (err: any): void => {})
@@ -55,7 +55,7 @@ const main: any = async (): Promise<any> => {
           "m/44'/145'"
         )
 
-        for (let i: number = 0; i < addressCount; i++) {
+        for (let i: number = 0; i < ticketCount; i++) {
           console.log(`html: ${i}`)
           await sleep(100)
           // derive the ith external change address from the BIP44 account HDNode
@@ -98,12 +98,12 @@ const main: any = async (): Promise<any> => {
           )
         }
 
-        for (let i: number = 0; i < addressCount; i++) {
+        for (let i: number = 0; i < ticketCount; i++) {
           console.log(`pdf: ${i}`)
           await sleep(2000)
 
           // save to pdf
-          let options: PDFOptions = {
+          let pdfConfig: PDF = {
             width: "170mm",
             height: "260mm"
           }
@@ -116,7 +116,7 @@ const main: any = async (): Promise<any> => {
 
           // save to pdf
           pdf
-            .create(privKeyWIFsHtml, options)
+            .create(privKeyWIFsHtml, pdfConfig)
             .toFile(
               `./pdf/${result.eventName}/privKeyWIFs/paper-wallet-wif-${i}.pdf`,
               (err: any) => {

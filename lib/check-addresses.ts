@@ -23,7 +23,7 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["eventName", "hdAccount", "addressCount"],
+    ["eventName", "hdAccount", "ticketCount"],
     async (err: any, result: CheckAddresses): Promise<any> => {
       // eventName
       const eventName: string = result.eventName
@@ -31,8 +31,8 @@ const main: any = async (): Promise<any> => {
       // hdAccount
       const hdAccount: string = result.hdAccount
 
-      // address count
-      const addressCount: number = parseInt(result.addressCount)
+      // ticket count
+      const ticketCount: number = parseInt(result.ticketCount)
 
       const json2csvCallback: any = (err: any, csv: any): any => {
         if (err) throw err
@@ -60,7 +60,7 @@ const main: any = async (): Promise<any> => {
           `m/44'/145'`
         )
 
-        for (let i: number = 0; i <= addressCount; i++) {
+        for (let i: number = 0; i <= ticketCount; i++) {
           await sleep(1100)
           // derive the ith external change address HDNode
           const node: HDNode = bitbox.HDNode.derivePath(

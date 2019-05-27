@@ -18,11 +18,11 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["hdAccount", "addressCount"],
+    ["hdAccount", "ticketCount"],
     async (err: any, result: FundAddressesResult): Promise<any> => {
       try {
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
-        const addressCount: number = parseInt(result.addressCount)
+        const ticketCount: number = parseInt(result.ticketCount)
 
         const rootSeed: Buffer = bitbox.Mnemonic.toSeed(wallet.mnemonic)
 
@@ -63,13 +63,13 @@ const main: any = async (): Promise<any> => {
 
           const byteCount: number = bitbox.BitcoinCash.getByteCount(
             { P2PKH: 1 },
-            { P2PKH: addressCount }
+            { P2PKH: ticketCount }
           )
 
           const sendAmount: number = originalAmount - byteCount
 
           const iterator: number = 0
-          for (let i: number = iterator; i < addressCount + iterator; i++) {
+          for (let i: number = iterator; i < ticketCount + iterator; i++) {
             // derive the ith external change address HDNode
             const node: HDNode = bitbox.HDNode.derivePath(account, `0/${i}`)
 
@@ -81,7 +81,7 @@ const main: any = async (): Promise<any> => {
             // add output w/ address and amount to send
             transactionBuilder.addOutput(
               cashAddress,
-              Math.floor(sendAmount / addressCount)
+              Math.floor(sendAmount / ticketCount)
             )
           }
 

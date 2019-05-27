@@ -8,6 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/Bitcoin-com/golden-ticket.git"
   },
+  "engines": {
+    "node": ">=10.15.3"
+  },
   "dependencies": {
     "bitbox-sdk": "8.2.0",
     "chalk": "^2.4.1",
@@ -25,7 +28,7 @@
   "scripts": {
     "build": "tsc",
     "generate-wallet": "node lib/generate-wallet.js",
-    "create-golden-tickets": "node lib/create-golden-tickets.js",
+    "create-tickets": "node lib/create-tickets.js",
     "create-csv": "node lib/create-csv.js",
     "fund-mothership": "node lib/fund-mothership.js",
     "fund-addresses": "node lib/fund-addresses.js",

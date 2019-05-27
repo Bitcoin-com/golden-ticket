@@ -19,7 +19,7 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["eventName", "hdAccount", "addressCount"],
+    ["eventName", "hdAccount", "ticketCount"],
     async (err: any, result: CreateCSV): Promise<any> => {
       const json2csvCallback = (err: any, csv: any): void => {
         if (err) throw err
@@ -41,6 +41,9 @@ const main: any = async (): Promise<any> => {
         )
       }
       try {
+        // ticket count
+        const ticketCount: number = parseInt(result.ticketCount)
+
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
         // root seed buffer
         const rootSeed: Buffer = bitbox.Mnemonic.toSeed(wallet.mnemonic)
@@ -54,7 +57,7 @@ const main: any = async (): Promise<any> => {
           "m/44'/145'"
         )
 
-        for (let i: number = 0; i < parseInt(result.addressCount); i++) {
+        for (let i: number = 0; i < ticketCount; i++) {
           const node: HDNode = bitbox.HDNode.derivePath(
             bip44,
             `${result.hdAccount}'/0/${i}`

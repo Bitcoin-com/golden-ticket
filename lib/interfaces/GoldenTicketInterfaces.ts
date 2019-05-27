@@ -4,12 +4,12 @@ export interface GenerateWalletResult {
 
 export interface AddressesCommon {
   hdAccount: string
-  addressCount: string
+  ticketCount: string
 }
 
 export interface FundAddressesResult extends AddressesCommon {}
 
-export interface CreateAddressesResult extends AddressesCommon {
+export interface CreateTicketsResult extends AddressesCommon {
   eventName: string
 }
 
@@ -26,13 +26,13 @@ export interface Wallet {
   }
 }
 
-export interface PDFOptions {
+export interface PDF {
   width: string
   height: string
 }
 
-export interface CreateCSV extends CreateAddressesResult {}
-export interface CheckAddresses extends CreateAddressesResult {}
+export interface CreateCSV extends CreateTicketsResult {}
+export interface CheckAddresses extends CreateTicketsResult {}
 
 export interface CSV {
   cashAddress: string
