@@ -38,7 +38,6 @@ const main: any = async (): Promise<any> => {
         const mothershipAddress: string = bitbox.HDNode.toCashAddress(
           mothership
         )
-        console.log("mothership addy", mothershipAddress)
 
         // HDNode of BIP44 account
         const account: HDNode = bitbox.HDNode.derivePath(
@@ -50,7 +49,6 @@ const main: any = async (): Promise<any> => {
           | AddressUtxoResult
           | AddressUtxoResult[] = await bitbox.Address.utxo(mothershipAddress)
         if (!Array.isArray(utxos)) {
-          console.log(utxos.utxos[0])
           if (!utxos.utxos[0]) return
 
           const transactionBuilder: any = new bitbox.TransactionBuilder()
@@ -69,7 +67,7 @@ const main: any = async (): Promise<any> => {
 
           const sendAmount: number = originalAmount - byteCount
 
-          let tmpIterator = parseInt(result.iterator)
+          let tmpIterator: number = parseInt(result.iterator)
           const iterator: number = tmpIterator ? tmpIterator : 0
           for (let i: number = iterator; i < ticketCount + iterator; i++) {
             // derive the ith external change address HDNode
@@ -109,6 +107,9 @@ const main: any = async (): Promise<any> => {
             hex
           )
           console.log("Success! TXID: ", success)
+          console.log(
+            `Check your transaction on the explorer: https://explorer.bitcoin.com/bch/tx/${success}`
+          )
         }
       } catch (err) {
         console.log(

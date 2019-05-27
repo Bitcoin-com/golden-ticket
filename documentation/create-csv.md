@@ -4,12 +4,22 @@ Often there is more than one stakeholder in a project. For example at bitcoin.co
 
 When you run `create-csv` you'll be prompted for `eventName`, `hdAccount` and `ticketCount`. These values should be the values which you used in `create-tickets`.
 
+You'll want to edit `create-csv.ts` to add in the different tiers that you'll be funding. For example in our previous step `create-tickets` we created 5 golden tickets. Now imagine that we want to fund 3 w/ $1, 1 w/ $5 and 1 w/ \$10. We would add the following to `create-csv.ts`. Make sure to run `npm run build` after you make changes to `create-csv.ts`.
+
+```js
+if (i <= 2) obj.value = 1
+else if (i === 3) obj.value = 5
+else if (i === 4) obj.value = 10
+```
+
+Now when you run `create-csv` you will get a .csv with the breakdown of tiers which you can share w/ your team.
+
 ```
 npm run create-csv
 
-prompt: eventName:  exampleEvent
-prompt: hdAccount:  0
-prompt: ticketCount:  5
+prompt: eventName: exampleEvent
+prompt: hdAccount: 0
+prompt: ticketCount: 5
 All done. ✅
 🚀 exampleEvent.csv written successfully.
 ```
