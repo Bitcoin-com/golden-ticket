@@ -8,7 +8,7 @@ The Golden Ticket repo comes with a nice Bitcoin.com branded background you can 
 
 After converting you'll want to copy the base64 and paste it in to the `background-image` property in `create-tickets.ts`. Remember to run `npm run build` before running `create-tickets` if you change the background image.
 
-`create-tickets` will first create html files in the `html/${eventName}` directory for your `ticketCount`. It will then save those html files to PDFs in the `pdf/${eventName}` directory
+`create-tickets` will first create html files in the `html/${eventName}` directory for your `ticketCount`. It will then save those html files to PDFs in the `pdf/${eventName}` directory. You'll want to confirm the PDFs look good to you and that they properly scan. Once you confirm this you can send the PDFs off to be printed for your event.
 
 ```
 npm run create-golden-tickets

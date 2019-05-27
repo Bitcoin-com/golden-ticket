@@ -17,13 +17,14 @@ const main: any = async (): Promise<any> => {
 
   // ask for language, hdpath and walletFileName
   prompt.get(
-    ["hdAccount", "addressCount", "receiveAddress"],
+    ["hdAccount", "ticketCount", "receiveAddress"],
     async (err: any, result: ReclaimFunds): Promise<any> => {
       try {
+        // Open the wallet generated with generate-wallet.
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
 
-        // address count
-        const addressCount: number = parseInt(result.addressCount)
+        // ticket count
+        const ticketCount: number = parseInt(result.ticketCount)
 
         // root seed buffer
         const rootSeed: Buffer = bitbox.Mnemonic.toSeed(wallet.mnemonic)
@@ -36,7 +37,7 @@ const main: any = async (): Promise<any> => {
           wallet.hdpath
         )
 
-        for (let i: number = 0; i <= addressCount; i++) {
+        for (let i: number = 0; i <= ticketCount; i++) {
           await sleep(1100)
 
           const node: HDNode = bitbox.HDNode.derivePath(

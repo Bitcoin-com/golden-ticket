@@ -18,11 +18,16 @@ const main: any = async (): Promise<any> => {
     ["hdAccount", "ticketCount"],
     async (err: any, result: FundTicketsResult): Promise<any> => {
       try {
+        // Open the wallet generated with generate-wallet.
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
+
+        // ticket count
         const ticketCount: number = parseInt(result.ticketCount)
 
+        // root seed buffer
         const rootSeed: Buffer = bitbox.Mnemonic.toSeed(wallet.mnemonic)
 
+        // master HDNode
         const masterHDNode: HDNode = bitbox.HDNode.fromSeed(rootSeed)
 
         const mothership: HDNode = bitbox.HDNode.derivePath(

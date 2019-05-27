@@ -42,6 +42,7 @@ const main: any = async (): Promise<any> => {
         )
       }
       try {
+        // Open the wallet generated with generate-wallet.
         const wallet: Wallet = require(`../goldenTicketWallet.json`)
 
         // root seed buffer

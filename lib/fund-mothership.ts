@@ -7,6 +7,7 @@ const chalk: any = require("chalk")
 const emoji: any = require("node-emoji")
 
 try {
+  // Open the wallet generated with generate-wallet.
   const wallet: Wallet = require(`../goldenTicketWallet.json`)
 
   // show funder address qr code

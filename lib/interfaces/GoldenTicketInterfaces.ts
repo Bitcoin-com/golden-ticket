@@ -43,6 +43,6 @@ export interface CSV {
 
 export interface ReclaimFunds {
   hdAccount: string
-  addressCount: string
+  ticketCount: string
   receiveAddress: string
 }

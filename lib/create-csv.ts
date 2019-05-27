@@ -41,10 +41,12 @@ const main: any = async (): Promise<any> => {
         )
       }
       try {
+        // Open the wallet generated with generate-wallet.
+        const wallet: Wallet = require(`../goldenTicketWallet.json`)
+
         // ticket count
         const ticketCount: number = parseInt(result.ticketCount)
 
-        const wallet: Wallet = require(`../goldenTicketWallet.json`)
         // root seed buffer
         const rootSeed: Buffer = bitbox.Mnemonic.toSeed(wallet.mnemonic)
 
