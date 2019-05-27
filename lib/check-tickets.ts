@@ -57,7 +57,7 @@ const main: any = async (): Promise<any> => {
           `m/44'/145'`
         )
 
-        for (let i: number = 0; i <= ticketCount; i++) {
+        for (let i: number = 0; i < ticketCount; i++) {
           await sleep(1100)
           // derive the ith external change address HDNode
           const node: HDNode = bitbox.HDNode.derivePath(
@@ -74,11 +74,9 @@ const main: any = async (): Promise<any> => {
             const wif: string = bitbox.HDNode.toWIF(node)
 
             let value: number = 1
-            if (i <= 918) value = 1
-            else if (i >= 919 && i <= 968) value = 2
-            else if (i >= 969 && i <= 988) value = 5
-            else if (i >= 989 && i <= 998) value = 10
-            else if (i === 999) value = 500
+            if (i <= 2) value = 1
+            else if (i === 3) value = 5
+            else if (i === 4) value = 10
 
             let claimed = details.balance === 0
             const csv: CSV = {
@@ -91,8 +89,8 @@ const main: any = async (): Promise<any> => {
             addresses.push(csv)
             console.log(i, cashAddress, wif, value, csv.claimed)
           }
-          converter.json2csv(addresses, json2csvCallback)
         }
+        converter.json2csv(addresses, json2csvCallback)
       } catch (err) {
         console.log(
           `Could not open goldenTicketWallet.json. Generate a mnemonic with generate-wallet first.
