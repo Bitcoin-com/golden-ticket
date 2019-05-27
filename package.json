@@ -25,9 +25,9 @@
   "scripts": {
     "build": "tsc",
     "generate-wallet": "node lib/generate-wallet.js",
-    "fund-mothership": "node lib/fund-mothership.js",
-    "create-addresses": "node lib/create-addresses.js",
+    "create-golden-tickets": "node lib/create-golden-tickets.js",
     "create-csv": "node lib/create-csv.js",
+    "fund-mothership": "node lib/fund-mothership.js",
     "fund-addresses": "node lib/fund-addresses.js",
     "check-addresses": "node lib/check-addresses.js",
     "generate-stats": "node generate-stats.js",

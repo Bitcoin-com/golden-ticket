@@ -58,7 +58,9 @@ const main: any = async (): Promise<any> => {
 
       // mothership HDNode to cashAddr
       const mothershipAddress: string = bitbox.HDNode.toCashAddress(mothership)
-      console.log(`Your mothership's cash address is ${mothershipAddress}`)
+      console.log(
+        `Your mothership's cash address is ${mothershipHDPathFormatted}`
+      )
 
       // mnemonic, hdpath and mothership address to save in basic wallet
       const mnemonicObj = {
