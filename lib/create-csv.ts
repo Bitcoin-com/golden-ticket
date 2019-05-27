@@ -62,7 +62,7 @@ const main: any = async (): Promise<any> => {
         for (let i: number = 0; i < ticketCount; i++) {
           const node: HDNode = bitbox.HDNode.derivePath(
             bip44,
-            `${result.hdAccount}'/0/${i}`
+            `${result.hdAccount ? result.hdAccount : 0}'/0/${i}`
           )
 
           // get the cash address
