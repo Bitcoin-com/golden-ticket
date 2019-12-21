@@ -1,8 +1,9 @@
 import { Mnemonic, HDNode as BitboxHDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
 import { Mothership } from "../interfaces";
-import logger from "../helpers/logger";
+import { getLogger } from "log4js";
 
+const logger = getLogger("generateMothership");
 /**
  * Generate mothership wallet
  *

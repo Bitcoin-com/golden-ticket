@@ -1,16 +1,16 @@
 import path from "path";
-import childProcess from "child_process";
-import readlineSync from "readline-sync";
+import fs from "fs-extra";
+import getLogger from "./helpers/logger";
+
+import { ArgumentsMap } from "./interfaces";
+import readlineSync from "./helpers/readlineSync";
+import { locales } from "./i18n";
+
+import runScript from "./helpers/runScript";
+import { colorOutput } from "./helpers/colorFormatters";
 import chalk from "chalk";
 
-import { locales } from "./i18n";
-import logger, { colorDisplay } from "./helpers/logger";
-
-import { Locale } from "./interfaces";
-
-readlineSync.setDefaultOptions({
-  print: display => logger.info(colorDisplay(display))
-});
+const logger = getLogger("start");
 
 const scripts = {
   "Generate Wallet": "generateWallet",
@@ -23,32 +23,12 @@ const scripts = {
   "Reclaim Funds": "reclaim-funds.js"
 };
 
-const runScript = (
-  modulePath: string,
-  args: string[],
-  callback: (props?: object | Error | null) => void
-): void => {
-  const process = childProcess.fork(modulePath, args);
-  let invoked = false;
-
-  process.on("error", err => {
-    if (invoked) return;
-    invoked = true;
-    callback(err);
-  });
-
-  process.on("exit", code => {
-    if (invoked) return;
-    invoked = true;
-    const err = code === 0 ? null : new Error("Exit code " + code);
-    callback(err);
-  });
-};
-
-interface ArgumentsMap {
-  locale: Locale;
-  debug?: string;
-}
+// need a script to export static assets to dist directory
+const startBanner = chalk.yellowBright(
+  fs
+    .readFileSync(path.resolve(__dirname, "../src/assets/banner.txt"))
+    .toString()
+);
 
 /**
  * Initializes scripts selection and launches selected script
@@ -58,30 +38,41 @@ interface ArgumentsMap {
 const init = (): void => {
   try {
     const { argv } = process;
-
-    if (argv.includes("--debug")) logger.level = "debug";
-
     const argsMap: ArgumentsMap = argv.reduce(
       (p, c, i) =>
         c.startsWith("--") ? { ...p, [c.substr(2)]: argv[i + 1] } : p,
       { locale: "en" }
     );
     const { locale = "en" } = argsMap;
-
     const { SCRIPTS } = locales[locale];
-
     const scriptKeys = Object.keys(scripts);
 
-    const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT);
+    logger.info(startBanner);
+
+    const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
+      hideEchoBack: true,
+      defaultInput: "0",
+      cancel: "EXIT"
+    });
 
     if (index !== -1) {
       const script = path.resolve(__dirname, scripts[scriptKeys[index]]);
 
-      logger.info(SCRIPTS.LOG_RUNNING, chalk.green(scriptKeys[index]));
+      logger.info(colorOutput(SCRIPTS.LOG_RUNNING, scriptKeys[index]));
 
-      runScript(script, [locale], err => {
-        if (err) return logger.error(err);
-        return logger.info("Finished running", scriptKeys[index]);
+      runScript(script, [locale], () => {
+        if (
+          readlineSync.keyInYN("Return to menu?", {
+            caseSensitive: false,
+            trueValue: ["y", "yes", "yeah", "yep"],
+            falseValue: ["n", "no", "nah", "nope"],
+            defaultInput: "y"
+          })
+        ) {
+          init();
+        } else {
+          logger.info(colorOutput(SCRIPTS.FINISHED_RUNNING, scriptKeys[index]));
+        }
       });
     }
   } catch (error) {
@@ -89,4 +80,4 @@ const init = (): void => {
   }
 };
 
-init();
+export default init();

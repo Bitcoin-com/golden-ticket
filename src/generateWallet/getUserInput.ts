@@ -1,8 +1,10 @@
-import readlineSync from "readline-sync";
+import readlineSync from "../helpers/readlineSync";
 import chalk from "chalk";
-import logger, { colorQuestion } from "../helpers/logger";
+import { getLogger } from "log4js";
+import { colorQuestion } from "../helpers/colorFormatters";
 import { GenerateWalletUserInput, SectionStrings } from "../interfaces";
 
+const logger = getLogger("getUserInput");
 /**
  * Gets input from user
  *

@@ -28,8 +28,6 @@ const main: any = async (): Promise<any> => {
     const config = await getUserInput(strings);
     const { title, hdAccount, ticketCount } = config;
 
-    console.log(config);
-
     if (title) return;
     // create needed directory structure
     mkdirp(`./html`, (err: any): void => {});

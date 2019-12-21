@@ -1,7 +1,10 @@
 import emoji from "node-emoji";
-import logger, { colorOutput } from "../helpers/logger";
+import { getLogger } from "log4js";
+import { colorOutput } from "../helpers/colorFormatters";
 import { WalletInfo } from "../interfaces";
+import chalk from "chalk";
 
+const logger = getLogger("printGeneratedWallet");
 /**
  * Prints out wallet information
  *
@@ -10,6 +13,8 @@ import { WalletInfo } from "../interfaces";
  */
 const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
   try {
+    logger.debug("generateWallet::printGeneratedWallet");
+
     if (error) {
       logger.error(colorOutput(strings.ERROR, error.message));
       return;
@@ -19,8 +24,6 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
       logger.error(colorOutput(strings.ERROR, "no data. wtf?"));
       return;
     }
-
-    logger.debug("printGeneratedWallet");
 
     const {
       filename,
@@ -37,12 +40,9 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
     logger.info(colorOutput(strings.INFO_ADDRESS, address));
 
     logger.info(
-      colorOutput(strings.INFO_WRITE_SUCCESS, filename, {
-        emoji: emoji.get(":rocket:")
-      })
+      colorOutput(strings.INFO_WRITE_SUCCESS, filename),
+      emoji.get(":white_check_mark:")
     );
-
-    logger.info(strings.INFO_DONE, emoji.get(":white_check_mark:"));
   } catch (error) {
     logger.error(colorOutput(strings.ERROR, error.message));
   }

@@ -1,9 +1,11 @@
 import readlineSync from "readline-sync";
 import chalk from "chalk";
-import logger, { colorQuestion } from "../helpers/logger";
+import { colorQuestion } from "../helpers/colorFormatters";
 import { CreateTicketsUserInput, SectionStrings } from "../interfaces";
 import fs from "fs-extra";
 import path from "path";
+import { getLogger } from "log4js";
+const logger = getLogger("getUserInput");
 
 /**
  * Gets input from user

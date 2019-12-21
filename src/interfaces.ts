@@ -4,7 +4,10 @@ export interface Mothership {
   fullNodePath: string;
   address: string;
 }
-
+export interface ArgumentsMap {
+  locale: Locale;
+  debug?: string;
+}
 export interface MnemonicObject {
   mnemonic: string;
   hdpath: string;

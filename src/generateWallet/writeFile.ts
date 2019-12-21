@@ -1,8 +1,9 @@
 import fs from "fs-extra";
 import printGeneratedWallet from "./printGeneratedWallet";
 import { SectionStrings, MnemonicObject } from "../interfaces";
-import logger from "../helpers/logger";
+import { getLogger } from "log4js";
 
+const logger = getLogger("writeFile");
 /**
  * Sets up directory and creates wallet.json file
  *
@@ -21,10 +22,9 @@ const writeFile = async (
     const rawFile = fs.readFileSync(filename, "utf8");
     const jsonData = JSON.parse(rawFile);
 
-    /* await fs.writeJSON(filename, data); */
-    printGeneratedWallet({ data: { ...jsonData, filename }, strings });
+    printGeneratedWallet({ strings, data: { ...jsonData, filename } });
   } catch (error) {
-    printGeneratedWallet({ error, strings });
+    printGeneratedWallet({ strings, error });
   }
 };
 export default writeFile;

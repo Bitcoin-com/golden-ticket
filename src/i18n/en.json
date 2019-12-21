@@ -1,7 +1,8 @@
 {
   "SCRIPTS": {
     "PROMPT_SCRIPT": "Select script to run",
-    "LOG_RUNNING": "Ok, starting"
+    "LOG_RUNNING": "Ok, starting",
+    "FINISHED_RUNNING": "Finished running"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
@@ -11,7 +12,7 @@
     "INFO_HDNODE": "Your mothership's HDPath is:",
     "INFO_ADDRESS": "Your mothership's cash address is:",
     "INFO_DONE": "All done.",
-    "INFO_WRITE_SUCCESS": "written successfully.",
+    "INFO_WRITE_SUCCESS": "Wallet Created.",
     "ERROR": "Something went wrong"
   },
   "CREATE_TICKETS": {

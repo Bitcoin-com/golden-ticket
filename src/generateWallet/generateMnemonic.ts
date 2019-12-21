@@ -1,7 +1,8 @@
 import { Mnemonic } from "bitbox-sdk/lib/Mnemonic";
 import settings from "../settings.json";
-import logger from "../helpers/logger.js";
+import { getLogger } from "log4js";
 
+const logger = getLogger("generateMnemonic");
 /**
  * Generates a mnemonic
  * @return {string} The wallet mnemonic string

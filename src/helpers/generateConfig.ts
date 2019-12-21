@@ -1,8 +1,9 @@
+import { getLogger } from "log4js";
 import { locales } from "../i18n";
 import settings from "../settings.json";
 import { Config, ScriptName } from "../interfaces";
-import logger from "./logger";
 
+const logger = getLogger("generateConfig");
 /**
  * Generates localized config settings
  *
