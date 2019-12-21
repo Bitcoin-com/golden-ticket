@@ -1,9 +1,12 @@
 {
   "name": "golden-ticket",
+  "version": "3.0.0",
   "license": "MIT",
   "description": "Event paper wallet generator",
   "author": "Gabriel Cardona <gabriel@bitcoin.com>",
-  "version": "1.0.0",
+  "contributors": [
+    "Paul Bergamo <paul@bitcoin.com>"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bitcoin-com/golden-ticket.git"
@@ -12,28 +15,40 @@
     "node": ">=10.15.3"
   },
   "dependencies": {
-    "bitbox-sdk": "8.4.0",
-    "chalk": "^2.4.1",
+    "@types/fs-extra": "^8.0.1",
+    "@types/node-emoji": "^1.8.1",
+    "@types/readline-sync": "^1.4.3",
+    "chalk": "^3.0.0",
     "csvtojson": "^2.0.8",
+    "fs-extra": "^8.1.0",
     "html-pdf": "^2.2.0",
-    "json-2-csv": "^2.3.1",
+    "json-2-csv": "^3.5.7",
+    "log4js": "^6.1.0",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
-    "prompt": "^1.0.0",
     "qrcode": "^1.2.0",
     "qrcode-terminal": "^0.12.0",
-    "touch": "^3.1.0",
-    "typescript": "3.4.5"
+    "readline-sync": "^1.4.10",
+    "touch": "^3.1.0"
+  },
+  "devDependencies": {
+    "bitbox-sdk": "8.11.2",
+    "prettier": "1.19.1",
+    "rimraf": "^3.0.0",
+    "typescript": "3.7.4"
   },
   "scripts": {
-    "build": "tsc",
-    "generate-wallet": "node lib/generate-wallet.js",
-    "create-tickets": "node lib/create-tickets.js",
-    "create-csv": "node lib/create-csv.js",
-    "fund-mothership": "node lib/fund-mothership.js",
-    "fund-tickets": "node lib/fund-tickets.js",
-    "check-tickets": "node lib/check-tickets.js",
-    "generate-stats": "node lib/generate-stats.js",
-    "reclaim-funds": "node lib/reclaim-funds.js"
+    "build": "yarn clean && tsc",
+    "watch": "yarn clean && tsc --watch",
+    "clean": "rimraf dist log",
+    "start": "node dist/start.js",
+    "generate-wallet": "node dist/generate-wallet.js",
+    "create-tickets": "node dist/create-tickets.js",
+    "create-csv": "node dist/create-csv.js",
+    "fund-mothership": "node dist/fund-mothership.js",
+    "fund-tickets": "node dist/fund-tickets.js",
+    "check-tickets": "node dist/check-tickets.js",
+    "generate-stats": "node dist/generate-stats.js",
+    "reclaim-funds": "node dist/reclaim-funds.js"
   }
 }

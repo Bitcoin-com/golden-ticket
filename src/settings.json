@@ -1,0 +1,15 @@
+{
+  "defaultLocale": "en",
+  "outDir": "output",
+  "hdpath": "m/44'/145'",
+  "languages": {
+    "en": "english",
+    "ja": "japanese",
+    "zh-Hans": "chinese_simplified",
+    "zh": "chinese_traditional",
+    "fr": "french",
+    "it": "italian",
+    "ko": "korean",
+    "es": "spanish"
+  }
+}
