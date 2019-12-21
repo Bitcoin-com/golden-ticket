@@ -6,8 +6,6 @@
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
     "PROMPT_TITLE_DEFAULT": "GoldenTicket",
-    "PROMPT_LANGUAGE_DESCRIPTION": "Mnemonic language",
-    "PROMPT_LANGUAGE_MESSAGE": "Must be en, ja, zh, zhHans, fr, it, ko or es",
     "INFO_MNEMONIC": "Your mnemonic is:",
     "INFO_HDPATH": "Your base HDPath is:",
     "INFO_HDNODE": "Your mothership's HDPath is:",
@@ -15,5 +13,9 @@
     "INFO_DONE": "All done.",
     "INFO_WRITE_SUCCESS": "written successfully.",
     "ERROR": "Something went wrong"
+  },
+  "CREATE_TICKETS": {
+    "PROMPT_TITLE_DESCRIPTION": "Campaign title",
+    "PROMPT_TITLE_DEFAULT": "GoldenTicket"
   }
 }

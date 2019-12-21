@@ -1,15 +1,7 @@
 import fs from "fs-extra";
-import { Mothership } from "./generateMothership";
-import { SectionStrings } from "../i18n";
 import printGeneratedWallet from "./printGeneratedWallet";
-
-interface MnemonicObject {
-  mnemonic: string;
-  hdpath: string;
-  mothership: Mothership;
-}
-
-type Callback = (res: { err?: object; filename?: string }) => void;
+import { SectionStrings, MnemonicObject } from "../interfaces";
+import logger from "../helpers/logger";
 
 /**
  * Sets up directory and creates wallet.json file
@@ -24,9 +16,10 @@ const writeFile = async (
   strings: SectionStrings
 ): Promise<void> => {
   try {
-    await fs.outputFile(filename, JSON.stringify(data));
-    const rawFile = await fs.readFile(filename, "utf8");
-    const jsonData = await JSON.parse(rawFile);
+    logger.debug("generateWallet::writeFile");
+    fs.outputFileSync(filename, JSON.stringify(data));
+    const rawFile = fs.readFileSync(filename, "utf8");
+    const jsonData = JSON.parse(rawFile);
 
     /* await fs.writeJSON(filename, data); */
     printGeneratedWallet({ data: { ...jsonData, filename }, strings });

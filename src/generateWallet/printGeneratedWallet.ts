@@ -1,21 +1,13 @@
 import emoji from "node-emoji";
-import { SectionStrings } from "../i18n";
 import logger, { colorOutput } from "../helpers/logger";
+import { WalletInfo } from "../interfaces";
 
-interface WalletInfo {
-  strings: SectionStrings;
-  error?: Error;
-  data?: {
-    filename: string;
-    mnemonic: string;
-    hdpath: string;
-    mothership: {
-      fullNodePath: string;
-      address: string;
-    };
-  };
-}
-
+/**
+ * Prints out wallet information
+ *
+ * @param {WalletInfo} { strings, data, error }
+ * @returns {void}
+ */
 const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
   try {
     if (error) {
@@ -23,7 +15,12 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
       return;
     }
 
-    if (!data) return;
+    if (!data) {
+      logger.error(colorOutput(strings.ERROR, "no data. wtf?"));
+      return;
+    }
+
+    logger.debug("printGeneratedWallet");
 
     const {
       filename,
@@ -46,7 +43,9 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
     );
 
     logger.info(strings.INFO_DONE, emoji.get(":white_check_mark:"));
-  } catch (error) {}
+  } catch (error) {
+    logger.error(colorOutput(strings.ERROR, error.message));
+  }
 };
 
 export default printGeneratedWallet;

@@ -1,35 +1,27 @@
-import getUserInput, { UserInput } from "./getUserInput";
+import getUserInput from "./getUserInput";
 import generateMnemonic from "./generateMnemonic";
-import generateMothership, { Mothership } from "./generateMothership";
+import generateMothership from "./generateMothership";
 import writeFile from "./writeFile";
 
-import { Locale, locales } from "../i18n";
-import generateConfig, { Config } from "../helpers/generateConfig";
-import settings from "../settings.json";
+import generateConfig from "../helpers/generateConfig";
+import { GenerateWalletUserInput, Config, Mothership } from "../interfaces";
+import logger from "../helpers/logger";
 
 /**
  * Generate Wallets
  */
-const main = async (): Promise<void> => {
-  const { argv } = process;
-
-  let locale: Locale = Object.keys(locales).includes(argv[3])
-    ? (argv[3] as Locale)
-    : (settings.defaultLocale as Locale);
-
+const main = (): void => {
+  logger.debug("generateWallet::main()");
   // get settings from generated config
-  const { hdpath, strings, outDir }: Config = generateConfig({
-    locale,
-    scriptName: "GENERATE_WALLETS"
-  });
+  const { hdpath, strings, outDir }: Config = generateConfig(
+    "GENERATE_WALLETS"
+  );
 
   // get input from user
-  const { title, locale: settingsLocale }: UserInput = getUserInput(strings);
+  const { title }: GenerateWalletUserInput = getUserInput(strings);
 
   // genereate a mnemonic
-  const mnemonic: string = generateMnemonic(
-    settings.languages[locale ? locale : settingsLocale]
-  );
+  const mnemonic: string = generateMnemonic();
 
   // HDNode of first internal change address
   const mothership: Mothership = generateMothership(mnemonic, hdpath);
@@ -43,7 +35,7 @@ const main = async (): Promise<void> => {
   };
 
   // write file and print results
-  await writeFile(filename, fileData, strings);
+  writeFile(filename, fileData, strings);
 };
 
 export default main();

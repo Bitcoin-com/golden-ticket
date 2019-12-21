@@ -1,15 +1,20 @@
 import path from "path";
 import childProcess from "child_process";
 import readlineSync from "readline-sync";
-
-import { locales, Locale } from "./i18n";
-
 import chalk from "chalk";
-import logger, { colorOutput } from "./helpers/logger";
+
+import { locales } from "./i18n";
+import logger, { colorDisplay } from "./helpers/logger";
+
+import { Locale } from "./interfaces";
+
+readlineSync.setDefaultOptions({
+  print: display => logger.info(colorDisplay(display))
+});
 
 const scripts = {
   "Generate Wallet": "generateWallet",
-  "Create Tickets": "create-tickets.js",
+  "Create Tickets": "createTickets",
   "Create CSV": "create-csv.js",
   "Fund Mothership": "fund-mothership.js",
   "Fund Tickets": "fund-tickets.js",
@@ -35,13 +40,14 @@ const runScript = (
   process.on("exit", code => {
     if (invoked) return;
     invoked = true;
-    const err = code === 0 ? null : new Error("exit code " + code);
+    const err = code === 0 ? null : new Error("Exit code " + code);
     callback(err);
   });
 };
 
 interface ArgumentsMap {
   locale: Locale;
+  debug?: string;
 }
 
 /**
@@ -51,11 +57,9 @@ interface ArgumentsMap {
  */
 const init = (): void => {
   try {
-    readlineSync.setPrint(display => {
-      console.log("print", display);
-      logger.info(display);
-    });
     const { argv } = process;
+
+    if (argv.includes("--debug")) logger.level = "debug";
 
     const argsMap: ArgumentsMap = argv.reduce(
       (p, c, i) =>
@@ -63,14 +67,12 @@ const init = (): void => {
       { locale: "en" }
     );
     const { locale = "en" } = argsMap;
+
     const { SCRIPTS } = locales[locale];
 
     const scriptKeys = Object.keys(scripts);
 
-    const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
-      guide: false,
-      print: display => logger.info("keyselect", display)
-    });
+    const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT);
 
     if (index !== -1) {
       const script = path.resolve(__dirname, scripts[scriptKeys[index]]);

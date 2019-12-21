@@ -73,4 +73,13 @@ export const colorOutput = (
   return strings.join(" ");
 };
 
+/**
+ * Colurs number display
+ *
+ * @param {string} display
+ * @returns {string}
+ */
+export const colorDisplay = (display: string): string =>
+  display.replace(/\W\d\W/g, (x: string) => chalk.green(x));
+
 export default logger;

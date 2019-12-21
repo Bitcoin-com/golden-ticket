@@ -1,13 +1,7 @@
-import { locales, Locale, ScriptName, SectionStrings } from "../i18n";
+import { locales } from "../i18n";
 import settings from "../settings.json";
+import { Config, ScriptName } from "../interfaces";
 import logger from "./logger";
-
-export interface Config {
-  locale: Locale;
-  outDir: string;
-  hdpath: string;
-  strings: SectionStrings;
-}
 
 /**
  * Generates localized config settings
@@ -18,17 +12,12 @@ export interface Config {
  * }} props
  * @returns {Config}
  */
-const generateConfig = (props: {
-  locale: Locale;
-  scriptName: ScriptName;
-}): Config => {
-  const { locale, scriptName } = props;
-  const scripts = locales[locale];
-
+const generateConfig = (scriptName: ScriptName): Config => {
+  logger.debug("generateWallet::generateConfig");
+  const scripts = locales[settings.defaultLocale];
   const strings = scripts[scriptName];
 
   return {
-    locale: settings.defaultLocale as Locale,
     outDir: settings.outDir,
     hdpath: settings.hdpath,
     strings
