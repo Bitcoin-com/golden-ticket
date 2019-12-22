@@ -1,16 +1,10 @@
 import fs from "fs-extra";
 import { Mnemonic, HDNode as BB_HDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
-import { emoji } from "node-emoji";
 import { Campaign } from "../interfaces";
-import {
-  getLogger,
-  sleep,
-  generateConfig,
-  colorOutput,
-  OutputStyles
-} from "../helpers";
+import { getLogger, sleep, colorOutput, OutputStyles } from "../helpers";
 import settings from "../settings.json";
+import { locales } from "../i18n";
 
 const logger = getLogger("generateWallets");
 
@@ -33,8 +27,13 @@ const generateWIFs = async ({
 }: Campaign): Promise<string[]> => {
   try {
     const {
-      strings: { INFO_GENERATED_WIF, INFO_GENERATING_WIFS, INFO_GENERATED_WIFS }
-    } = generateConfig("CREATE_TICKETS");
+      CREATE_TICKETS: {
+        INFO_GENERATED_WIF,
+        INFO_GENERATING_WIFS,
+        INFO_GENERATED_WIFS
+      }
+    } = locales[settings.defaultLocale];
+
     const bbMnemonic = new Mnemonic();
     const hdnode = new BB_HDNode();
     const rootSeed: Buffer = bbMnemonic.toSeed(mnemonic);

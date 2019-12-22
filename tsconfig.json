@@ -1,12 +1,11 @@
 {
+  "compileOnSave": true,
   "compilerOptions": {
-    "outDir": "dist",
     "module": "commonjs",
+    "outDir": "./dist/",
     "target": "es6",
     "lib": ["es2017"],
     "moduleResolution": "node",
-    "rootDir": "src",
-    "baseUrl": "src",
     "removeComments": true,
     "sourceMap": true,
     "jsx": "react",
@@ -24,9 +23,15 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strict": true,
-    "resolveJsonModule": true
+    "strict": true
   },
-  "include": ["**/*", "settings.json"],
-  "exclude": ["node_modules", "dist", "output", "log"]
+  "files": [
+    "src/globals.d.ts",
+    "src/start.ts",
+    "src/createCSV/index.ts",
+    "src/createTickets/index.ts",
+    "src/fundMothership/index.ts",
+    "src/fundTickets/index.ts",
+    "src/generateWallet/index.ts"
+  ]
 }

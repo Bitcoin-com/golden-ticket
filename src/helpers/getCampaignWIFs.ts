@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import { outDir } from "../settings.json";
+import settings from "../settings.json";
 
 /**
  * Get list of WIFs used in campaign
@@ -9,7 +9,10 @@ import { outDir } from "../settings.json";
  */
 const getCampaignWIFs = async (title: string): Promise<string[]> => {
   try {
-    const wifs = fs.readFileSync(`${outDir}/${title}/privKeyWIFs`, "utf8");
+    const wifs = fs.readFileSync(
+      `${settings.outDir}/${title}/privKeyWIFs`,
+      "utf8"
+    );
     const wifsArray = wifs.toString().split("\n");
     return wifsArray;
   } catch (error) {

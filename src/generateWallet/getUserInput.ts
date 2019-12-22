@@ -1,57 +1,54 @@
-import readlineSync from "../helpers/readlineSync";
-import fs from "fs-extra";
-import { GenerateWalletUserInput, SectionStrings } from "../interfaces";
-import { colorQuestion, getLogger } from "../helpers";
+import readlineSync from "readline-sync";
+import { colorQuestion, getLogger, promptCampaign } from "../helpers";
 import settings from "../settings.json";
+import { locales } from "../i18n";
 
-const logger = getLogger("getUserInput");
 /**
  * Gets input from user
  *
  * @param {SectionStrings} strings strings for localization
  * @returns {title: string; language: string;} returns project title and language
  */
-const getUserInput = (strings: SectionStrings): GenerateWalletUserInput => {
-  logger.debug("generateWallet::getUserInput");
+const getUserInput = async (): Promise<{
+  title: string;
+  ticketCount: number;
+}> => {
+  try {
+    const logger = getLogger("generateWallet");
+    const strings = locales[settings.defaultLocale];
+    const campaigns = await promptCampaign();
+    if (campaigns) {
+      console.log(campaigns);
+    }
+    const title = readlineSync.question(
+      colorQuestion(
+        strings.GENERATE_WALLETS.PROMPT_TITLE_DESCRIPTION,
+        strings.GENERATE_WALLETS.PROMPT_TITLE_DEFAULT
+      ),
+      {
+        defaultInput: strings.GENERATE_WALLETS.PROMPT_TITLE_DEFAULT,
+        limit: t => {
+          console.log(t);
+          return true;
+        },
+        limitMessage: strings.GENERATE_WALLETS.PROMPT_TITLE_LIMIT_MESSAGE
+      }
+    );
 
-  fs.ensureDirSync(settings.outDir);
-  const campaigns = fs.readdirSync(settings.outDir);
+    const ticketCount = readlineSync.questionInt(
+      colorQuestion(
+        strings.CREATE_TICKETS.PROMPT_COUNT_DESCRIPTION,
+        settings.defaultTickets.toString()
+      ),
+      {
+        defaultInput: settings.defaultTickets.toString()
+      }
+    );
 
-  const {
-    PROMPT_TITLE_DEFAULT,
-    PROMPT_TITLE_DESCRIPTION,
-    PROMPT_TITLE_LIMIT_MESSAGE,
-    PROMPT_TITLE_OVERWRITE
-  } = strings;
-
-  const titleQuestion = colorQuestion(
-    PROMPT_TITLE_DESCRIPTION,
-    PROMPT_TITLE_DEFAULT
-  );
-
-  const title = readlineSync.question(titleQuestion, {
-    defaultInput: PROMPT_TITLE_DEFAULT,
-    hideEchoBack: true
-  }); // ask user for campaign title
-
-  if (campaigns.includes(title)) {
-    logger.info(PROMPT_TITLE_LIMIT_MESSAGE);
-    const overwrite = readlineSync.keyInYNStrict(PROMPT_TITLE_OVERWRITE, {
-      hideEchoBack: true
-    });
-    if (overwrite) return { title };
-
-    const newTitle = readlineSync.question(titleQuestion, {
-      defaultInput: PROMPT_TITLE_DEFAULT,
-      hideEchoBack: true,
-      limit: t => !campaigns.includes(t),
-      limitMessage: PROMPT_TITLE_LIMIT_MESSAGE
-    }); // ask user for campaign title
-
-    return { title: newTitle };
+    return { title, ticketCount };
+  } catch (error) {
+    throw error;
   }
-
-  return { title };
 };
 
 export default getUserInput;

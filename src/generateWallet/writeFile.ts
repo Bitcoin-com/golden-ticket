@@ -1,9 +1,10 @@
 import fs from "fs-extra";
 import printGeneratedWallet from "./printGeneratedWallet";
-import { SectionStrings, MnemonicObject } from "../interfaces";
+import { MnemonicObject } from "../interfaces";
 import { getLogger } from "../helpers";
 
 const logger = getLogger("writeFile");
+
 /**
  * Sets up directory and creates wallet.json file
  *
@@ -13,8 +14,7 @@ const logger = getLogger("writeFile");
  */
 const writeFile = async (
   filename: string,
-  data: MnemonicObject,
-  strings: SectionStrings
+  data: MnemonicObject
 ): Promise<void> => {
   try {
     logger.debug("generateWallet::writeFile");
@@ -22,9 +22,9 @@ const writeFile = async (
     const rawFile = fs.readFileSync(filename, "utf8");
     const jsonData = JSON.parse(rawFile);
 
-    printGeneratedWallet({ strings, data: { ...jsonData, filename } });
+    printGeneratedWallet({ data: { ...jsonData, filename } });
   } catch (error) {
-    printGeneratedWallet({ strings, error });
+    printGeneratedWallet({ error });
   }
 };
 export default writeFile;

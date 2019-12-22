@@ -2,18 +2,23 @@ import qrcode from "qrcode-terminal";
 import {
   getLogger,
   colorOutput,
-  generateConfig,
   promptCampaign,
   OutputStyles
 } from "../helpers";
+import { locales } from "../i18n";
+import settings from "../settings.json";
 
 const main: any = async (): Promise<any> => {
   try {
     const logger = getLogger("fundMothership");
-    const { strings } = generateConfig("FUND_MOTHERSHIP");
+    const strings = locales[settings.defaultLocale];
+
+    const campaignData = await promptCampaign();
+    if (campaignData === "CANCELED") return;
+
     const {
       mothership: { address }
-    } = await promptCampaign(strings.SELECT_CAMPAIGN);
+    } = campaignData;
 
     logger.info(
       colorOutput({

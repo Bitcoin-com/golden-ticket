@@ -1,10 +1,9 @@
 import fs from "fs-extra";
-import getUserInput from "./getUserInput";
 import generateWIFs from "./generateWIFs";
 import generateHTML from "./generateHTML";
 import generatePDF from "./generatePDF";
 import settings from "../settings.json";
-import { getLogger } from "../helpers";
+import { getLogger, promptCampaign } from "../helpers";
 
 const logger = getLogger("createTickets");
 
@@ -15,10 +14,10 @@ const logger = getLogger("createTickets");
  */
 const main: any = async (): Promise<any> => {
   try {
-    const campaignData = await getUserInput();
-    const { title } = campaignData;
+    const campaignData = await promptCampaign();
+    if (campaignData === "CANCELED") return;
 
-    if (!title) return new Error();
+    const { title } = campaignData;
 
     // create needed directory structure
     fs.ensureDirSync(`${settings.outDir}/${title}/html/`);

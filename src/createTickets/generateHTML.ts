@@ -1,15 +1,10 @@
 import fs from "fs-extra";
 import QRCode from "qrcode";
-import {
-  getLogger,
-  generateConfig,
-  sleep,
-  colorOutput,
-  OutputStyles
-} from "../helpers";
+import { getLogger, sleep, colorOutput, OutputStyles } from "../helpers";
 import { Campaign } from "../interfaces";
 import { defaultTemplate } from "../templates";
 import settings from "../settings.json";
+import { locales } from "../i18n";
 
 const logger = getLogger("generateHTML");
 
@@ -45,7 +40,8 @@ const generateHTML = async (
   campaignData: Campaign
 ): Promise<void> => {
   try {
-    const { strings } = generateConfig("CREATE_TICKETS");
+    const strings = locales[settings.defaultLocale];
+
     const { title } = campaignData;
 
     logger.info(

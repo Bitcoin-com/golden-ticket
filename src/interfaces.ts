@@ -30,12 +30,11 @@ export type Callback = (res: { err?: object; filename?: string }) => void;
 export interface GenerateWalletUserInput {
   title: string;
 }
-export interface CreateTicketsUserInput extends WalletInfo {
+export interface CreateTicketsUserInput extends CampaignInfo {
   ticketCount: number;
 }
 
-export interface WalletInfo {
-  strings: SectionStrings;
+export interface CampaignInfo {
   error?: Error;
   data?: {
     title: string;
@@ -47,12 +46,6 @@ export interface WalletInfo {
       address: string;
     };
   };
-}
-
-export interface Config {
-  outDir: string;
-  hdpath: string;
-  strings: SectionStrings;
 }
 
 export type ScriptName =
@@ -70,12 +63,6 @@ export type Locale = keyof typeof locales;
 export type Strings = {
   [K in keyof typeof enStrings]: typeof enStrings[K];
 };
-
-export type SectionStrings = Strings["GENERATE_WALLETS"] &
-  Strings["CREATE_TICKETS"] &
-  Strings["CREATE_CSV"] &
-  Strings["FUND_MOTHERSHIP"] &
-  Strings["SCRIPTS"];
 
 export interface AddressesCommon {
   hdAccount: string;

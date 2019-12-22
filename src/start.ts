@@ -1,62 +1,73 @@
 import path from "path";
 import fs from "fs-extra";
-import { ArgumentsMap } from "./interfaces";
-import {
-  runScript,
-  readlineSync,
-  getLogger,
-  colorOutput,
-  OutputStyles
-} from "./helpers";
+import chalk from "chalk";
+import readlineSync, { BasicOptions } from "readline-sync";
+import { runScript, getLogger, colorOutput, OutputStyles } from "./helpers";
 import { locales } from "./i18n";
 
-import chalk from "chalk";
+import settings from "./settings.json";
 
-const logger = getLogger("start");
+import { Logger } from "log4js";
 
-const scripts = {
-  "Generate Wallet": "generateWallet",
-  "Create Tickets": "createTickets",
-  "Create CSV": "createCSV",
-  "Fund Mothership": "fundMothership",
-  "Fund Tickets": "fund-tickets.js",
-  "Check Tickets": "check-tickets.js",
-  "Generate Stats": "generate-stats.js",
-  "Reclaim Funds": "reclaim-funds.js"
+const { SCRIPTS } = locales[settings.defaultLocale];
+
+type ScriptsMap = {
+  +readonly [K in keyof typeof SCRIPTS.NAMES]+?: typeof SCRIPTS.NAMES[K];
 };
-
-// need a script to export static assets to dist directory
-const startBanner = chalk.yellowBright(
-  fs
-    .readFileSync(path.resolve(__dirname, "../src/assets/banner.txt"))
-    .toString()
-);
 
 /**
  * Initializes scripts selection and launches selected script
  *
- * @returns {void}
+ * @returns {Promise<void>}
  */
-const init = (): void => {
+const init = async (): Promise<void> => {
   try {
-    const { argv } = process;
-    const argsMap: ArgumentsMap = argv.reduce(
-      (p, c, i) =>
-        c.startsWith("--") ? { ...p, [c.substr(2)]: argv[i + 1] } : p,
-      { locale: "en" }
-    );
-    const { locale = "en" } = argsMap;
-    const { SCRIPTS } = locales[locale];
-    const scriptKeys = Object.keys(scripts);
+    const scripts: ScriptsMap = {
+      [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: "generateWallet",
+      [SCRIPTS.NAMES.CREATE_TICKETS]: "createTickets",
+      [SCRIPTS.NAMES.CREATE_CSV]: "createCSV",
+      [SCRIPTS.NAMES.FUND_MOTHERSHIP]: "fundMothership",
+      [SCRIPTS.NAMES.FUND_TICKETS]: "fundTickets",
+      [SCRIPTS.NAMES.CHECK_TICKETS]: "checkTickets",
+      [SCRIPTS.NAMES.GENERATE_STATS]: "generateStats",
+      [SCRIPTS.NAMES.RECLAIM_FUNDS]: "reclaimFunds"
+    };
+    const logger: Logger = getLogger("start");
 
-    logger.info(startBanner);
-    readlineSync.setDefaultOptions({
-      hideEchoBack: true
-    });
+    // display the golden ticket ascii text
+    const bannerPath: string = path.resolve(__dirname, "../assets/banner.txt");
+    const banner: string = fs.readFileSync(bannerPath).toString();
+    logger.info(chalk.yellowBright(banner));
+
+    const scriptKeys: string[] = Object.keys(scripts);
+
+    const readlineOptions: BasicOptions = {
+      prompt: {
+        toString: (display: any) => {
+          console.log("display");
+          return display;
+        }
+      },
+      hideEchoBack: false,
+      mask: "*",
+      limit: [],
+      limitMessage: "Input another, please.$<( [)limit(])>",
+      defaultInput: "",
+      trueValue: [],
+      falseValue: [],
+      caseSensitive: false,
+      keepWhitespace: false,
+      encoding: "utf8",
+      bufferSize: 1024,
+      print: undefined,
+      history: true,
+      cd: false
+    };
+
+    readlineSync.setDefaultOptions(readlineOptions);
+
     const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
-      hideEchoBack: true,
-      defaultInput: "0",
-      cancel: "EXIT"
+      cancel: SCRIPTS.EXIT
     });
 
     if (index !== -1) {
@@ -70,7 +81,7 @@ const init = (): void => {
         })
       );
 
-      runScript(script, [locale], () => {
+      runScript(script, [], () => {
         logger.info(
           colorOutput({
             item: SCRIPTS.FINISHED_RUNNING,
@@ -83,7 +94,7 @@ const init = (): void => {
       });
     }
   } catch (error) {
-    return logger.error(error);
+    throw error;
   }
 };
 

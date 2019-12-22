@@ -1,5 +1,6 @@
 {
   "defaultLocale": "en",
+  "debug": true,
   "outDir": "output",
   "hdpath": "m/44'/145'",
   "timer": 50,

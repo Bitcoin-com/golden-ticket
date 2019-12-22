@@ -1,7 +1,6 @@
 import {
   getLogger,
   colorOutput,
-  generateConfig,
   OutputStyles,
   createObject,
   promptCampaign,
@@ -9,7 +8,7 @@ import {
 } from "../helpers";
 import writeCSV from "./writeCSV";
 import settings from "../settings.json";
-
+import { locales } from "../i18n";
 /**
  * Open the wallet generated with generate-wallet.
  *
@@ -17,17 +16,20 @@ import settings from "../settings.json";
  */
 const main: any = async (): Promise<any> => {
   try {
-    const { strings } = generateConfig("CREATE_CSV");
+    const strings = locales[settings.defaultLocale];
+
     const logger = getLogger("createCSV");
-    const { title } = await promptCampaign(strings.PROMPT_TITLE_DESCRIPTION);
-    const wifs = await getCampaignWIFs(title);
+    const campaignData = await promptCampaign();
+    if (campaignData === "CANCELED") return;
+
+    const wifs = await getCampaignWIFs(campaignData.title);
     const addresses = await createObject(wifs);
-    const filename = `${settings.outDir}/${title}/addresses.csv`;
+    const filename = `${settings.outDir}/${campaignData.title}/addresses.csv`;
 
     logger.info(
       colorOutput({
         item: strings.INFO_GENERATING_CSV,
-        value: title,
+        value: campaignData.title,
         style: OutputStyles.Start
       })
     );

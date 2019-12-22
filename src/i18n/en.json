@@ -1,10 +1,24 @@
 {
   "SCRIPTS": {
-    "PROMPT_SCRIPT": "Select script to run",
+    "PROMPT_SCRIPT": "Select a script to run",
     "LOG_RUNNING": "Ok, starting",
     "FINISHED_RUNNING": "Finished running",
     "CONTINUE": "Continue",
-    "SELECT_CAMPAIGN": "Select campaign to manage:"
+    "SELECT_CAMPAIGN": "Select campaign to manage:",
+    "NO_CAMPAIGNS": "No campaigns found, creating one",
+    "EXIT": "EXIT",
+    "CANCELED": "CANCELED",
+    "ERROR": "Something went wrong!",
+    "NAMES": {
+      "CONFIGURE_CAMPAIGN": "Configure Campaign",
+      "CREATE_TICKETS": "Create Tickets",
+      "CREATE_CSV": "Create CSV",
+      "FUND_MOTHERSHIP": "Fund Mothership",
+      "FUND_TICKETS": "Fund Tickets",
+      "CHECK_TICKETS": "Check Tickets",
+      "GENERATE_STATS": "Generate Stats",
+      "RECLAIM_FUNDS": "Reclaim Funds"
+    }
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
@@ -17,8 +31,7 @@
     "INFO_HDNODE": "Mothership's HDPath:",
     "INFO_ADDRESS": "Mothership's cash address:",
     "INFO_WRITE_SUCCESS": "Wallet Created:",
-    "INFO_DONE": "All done!",
-    "ERROR": "Something went wrong!"
+    "INFO_DONE": "All done!"
   },
   "CREATE_TICKETS": {
     "PROMPT_TITLE_DESCRIPTION": "Select campaign to manage:",

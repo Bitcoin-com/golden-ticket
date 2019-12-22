@@ -1,7 +1,3 @@
-import { TransactionBuilder, BitcoinCash } from "bitbox-sdk";
-import { AddressUtxoResult } from "bitcoin-com-rest";
-import { ticketSpread } from "../settings.json";
-
 const buildTransaction = async ({
   ticketCount
 }: {

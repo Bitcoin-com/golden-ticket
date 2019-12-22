@@ -1,21 +1,22 @@
 import { getLogger, colorOutput, OutputStyles, sleep } from "../helpers";
-import { WalletInfo } from "../interfaces";
+import { CampaignInfo } from "../interfaces";
 import settings from "../settings.json";
+import { locales } from "../i18n";
 
 const logger = getLogger("printGeneratedWallet");
+const strings = locales[settings.defaultLocale];
 /**
  * Prints out wallet information
  *
- * @param {WalletInfo} { strings, data, error }
+ * @param {CampaignInfo} { strings, data, error }
  * @returns {void}
  */
 const printGeneratedWallet = async ({
-  strings,
   data,
   error
-}: WalletInfo): Promise<void> => {
+}: CampaignInfo): Promise<void> => {
   try {
-    logger.debug("generateWallet::printGeneratedWallet");
+    logger.debug("generateWallet:printGeneratedWallet()");
 
     if (error) {
       logger.error(colorOutput({ item: strings.ERROR, value: error.message }));
@@ -60,7 +61,9 @@ const printGeneratedWallet = async ({
       "\n"
     );
   } catch (error) {
-    logger.error(colorOutput({ item: strings.ERROR, value: error.message }));
+    logger.error(
+      colorOutput({ item: strings.SCRIPTS.ERROR, value: error.message })
+    );
   }
 };
 

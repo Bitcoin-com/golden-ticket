@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
-import bgBase64 from "../assets/bgBase64";
+import bgBase64 from "../../assets/bgBase64";
 import settings from "../settings.json";
-import { Campaign } from "interfaces";
+import { Campaign } from "../interfaces";
 
 /**
  * Template for HTML page generation

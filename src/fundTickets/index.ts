@@ -9,26 +9,30 @@ import { HDNode, ECPair } from "bitcoincashjs-lib";
 import {
   getCampaignWIFs,
   getLogger,
-  generateConfig,
   promptCampaign,
   getUTXOs
 } from "../helpers";
 
 import buildTransaction from "./buildTransaction";
 
-import { ticketSpread } from "../settings.json";
+import { locales } from "../i18n";
+import settings from "../settings.json";
 
 // Open the wallet generated with generate-wallet.
 const main: any = async (): Promise<any> => {
   try {
     const logger = getLogger("fundTickets");
-    const { strings } = generateConfig("FUND_TICKETS");
+    const strings = locales[settings.defaultLocale];
+
+    const campaignData = await promptCampaign();
+    if (campaignData === "CANCELED") return;
+
     const {
       title,
       ticketCount,
       mnemonic: mothershipMnemonic,
       mothership: { hdPath, address: mothershipAddress }
-    } = await promptCampaign(strings.SELECT_CAMPAIGN);
+    } = campaignData;
 
     const wifs = await getCampaignWIFs(title);
 

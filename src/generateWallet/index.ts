@@ -1,41 +1,48 @@
-import { GenerateWalletUserInput, Config, Mothership } from "../interfaces";
-import { generateConfig, getLogger } from "../helpers";
 import getUserInput from "./getUserInput";
 import generateMnemonic from "./generateMnemonic";
 import generateMothership from "./generateMothership";
 import writeFile from "./writeFile";
+import { GenerateWalletUserInput, Mothership } from "../interfaces";
+import { locales } from "../i18n";
+import { getLogger } from "../helpers";
+import settings from "../settings.json";
 
 const logger = getLogger("generateWallet");
 /**
  * Generate Wallets
  */
-const main = (): void => {
-  logger.debug("generateWallet::main()");
-  // get settings from generated config
-  const { hdpath, strings, outDir }: Config = generateConfig(
-    "GENERATE_WALLETS"
-  );
+const main = async (): Promise<void> => {
+  try {
+    logger.debug("generateWallet::main()");
+    const strings = locales[settings.defaultLocale];
 
-  // get input from user
-  const { title }: GenerateWalletUserInput = getUserInput(strings);
+    // get input from user
+    const { title }: GenerateWalletUserInput = await getUserInput();
 
-  // genereate a mnemonic
-  const mnemonic: string = generateMnemonic();
+    if (!title) return;
+    // genereate a mnemonic
+    const mnemonic: string = generateMnemonic();
 
-  // HDNode of first internal change address
-  const mothership: Mothership = generateMothership(mnemonic, hdpath);
+    // HDNode of first internal change address
+    const mothership: Mothership = generateMothership(
+      mnemonic,
+      settings.hdpath
+    );
 
-  // prepare for writting wallet to file
-  const filename: string = `${outDir}/${title}/wallet.json`;
-  const fileData = {
-    title,
-    mnemonic,
-    hdpath,
-    mothership
-  };
+    // prepare for writting wallet to file
+    const filename: string = `${settings.outDir}/${title}/wallet.json`;
+    const fileData = {
+      title,
+      mnemonic,
+      hdpath: settings.hdpath,
+      mothership
+    };
 
-  // write file and print results
-  writeFile(filename, fileData, strings);
+    // write file and print results
+    await writeFile(filename, fileData);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default main();
