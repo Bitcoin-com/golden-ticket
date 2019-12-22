@@ -29,12 +29,12 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
       filename,
       mnemonic,
       hdpath,
+      title,
       mothership: { fullNodePath, address }
     } = data;
 
-    logger.info(
-      colorOutput(strings.INFO_MNEMONIC, mnemonic, { highlight: true })
-    );
+    logger.info(colorOutput(strings.INFO_CAMPAIGN, title, { highlight: true }));
+    logger.info(colorOutput(strings.INFO_MNEMONIC, mnemonic));
     logger.info(colorOutput(strings.INFO_HDPATH, hdpath));
     logger.info(colorOutput(strings.INFO_HDNODE, fullNodePath));
     logger.info(colorOutput(strings.INFO_ADDRESS, address));

@@ -30,6 +30,7 @@ const main = (): void => {
   // prepare for writting wallet to file
   const filename: string = `${outDir}/${title}/wallet.json`;
   const fileData = {
+    title,
     mnemonic,
     hdpath,
     mothership

@@ -29,6 +29,7 @@ export interface WalletInfo {
   strings: SectionStrings;
   error?: Error;
   data?: {
+    title: string;
     filename: string;
     mnemonic: string;
     hdpath: string;

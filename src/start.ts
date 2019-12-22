@@ -51,6 +51,7 @@ const init = (): void => {
 
     const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
       hideEchoBack: true,
+
       defaultInput: "0",
       cancel: "EXIT"
     });

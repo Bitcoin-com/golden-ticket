@@ -33,7 +33,7 @@ export const colorOutput = (
   const strings = [
     chalk.green(item),
     highlight
-      ? chalk.bgBlackBright(` ${chalk.cyan(value)} `)
+      ? chalk.bold(chalk.bgYellow(chalk.black(` === ${value} === `)))
       : chalk.cyan(value)
   ];
 
