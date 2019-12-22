@@ -2,7 +2,8 @@
   "SCRIPTS": {
     "PROMPT_SCRIPT": "Select script to run",
     "LOG_RUNNING": "Ok, starting",
-    "FINISHED_RUNNING": "Finished running"
+    "FINISHED_RUNNING": "Finished running",
+    "CONTINUE": "Continue"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
@@ -19,7 +20,18 @@
     "ERROR": "Something went wrong!"
   },
   "CREATE_TICKETS": {
-    "PROMPT_TITLE_DESCRIPTION": "Campaign title",
-    "PROMPT_TITLE_DEFAULT": "GoldenTicket"
+    "PROMPT_TITLE_DESCRIPTION": "Select campaign to manage:",
+    "PROMPT_TITLE_DEFAULT": "GoldenTicket",
+    "PROMPT_COUNT_DESCRIPTION": "Number of tickets to create:",
+    "INFO_GENERATING_WIFS": "Generating wifs for",
+    "INFO_GENERATED_WIFS": "WIFs generated and saved to",
+    "INFO_GENERATED_WIF": "Generated wif",
+    "INFO_GENERATING_HTML": "Generating HTML for",
+    "INFO_GENERATING_HTML_COMPLETE": "HTML generation complete",
+    "INFO_GENERATED_HTML": "Generated HTML",
+    "INFO_GENERATING_PDF": "Generating PDF for",
+    "INFO_GENERATING_PDF_COMPLETE": "PDF generation complete",
+    "INFO_GENERATED_PDF": "Generated PDF",
+    "ERROR_NO_CAMPAIGNS": "No campaigns found, return to main menu?"
   }
 }

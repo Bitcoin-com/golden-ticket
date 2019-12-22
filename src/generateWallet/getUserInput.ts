@@ -1,9 +1,11 @@
 import readlineSync from "../helpers/readlineSync";
 import chalk from "chalk";
 import { getLogger } from "log4js";
-import { colorQuestion } from "../helpers/colorFormatters";
-import { GenerateWalletUserInput, SectionStrings } from "../interfaces";
 import fs from "fs-extra";
+import { GenerateWalletUserInput, SectionStrings } from "../interfaces";
+import { colorQuestion } from "../helpers";
+import settings from "../settings.json";
+
 const logger = getLogger("getUserInput");
 /**
  * Gets input from user
@@ -13,13 +15,9 @@ const logger = getLogger("getUserInput");
  */
 const getUserInput = (strings: SectionStrings): GenerateWalletUserInput => {
   logger.debug("generateWallet::getUserInput");
-  readlineSync.setDefaultOptions({
-    print: display => logger.info(display),
-    prompt: chalk.red.bold(": ")
-  });
 
-  fs.ensureDirSync("output");
-  const campaigns = fs.readdirSync("output");
+  fs.ensureDirSync(settings.outDir);
+  const campaigns = fs.readdirSync(settings.outDir);
 
   const {
     PROMPT_TITLE_DEFAULT,
@@ -34,7 +32,8 @@ const getUserInput = (strings: SectionStrings): GenerateWalletUserInput => {
   );
 
   const title = readlineSync.question(titleQuestion, {
-    defaultInput: PROMPT_TITLE_DEFAULT
+    defaultInput: PROMPT_TITLE_DEFAULT,
+    hideEchoBack: true
   }); // ask user for campaign title
 
   if (campaigns.includes(title)) {
@@ -46,6 +45,7 @@ const getUserInput = (strings: SectionStrings): GenerateWalletUserInput => {
 
     const newTitle = readlineSync.question(titleQuestion, {
       defaultInput: PROMPT_TITLE_DEFAULT,
+      hideEchoBack: true,
       limit: t => !campaigns.includes(t),
       limitMessage: PROMPT_TITLE_LIMIT_MESSAGE
     }); // ask user for campaign title

@@ -1,13 +1,15 @@
 import path from "path";
 import fs from "fs-extra";
-import getLogger from "./helpers/logger";
-
 import { ArgumentsMap } from "./interfaces";
-import readlineSync from "./helpers/readlineSync";
+import {
+  runScript,
+  readlineSync,
+  getLogger,
+  colorOutput,
+  OutputStyles
+} from "./helpers";
 import { locales } from "./i18n";
 
-import runScript from "./helpers/runScript";
-import { colorOutput } from "./helpers/colorFormatters";
 import chalk from "chalk";
 
 const logger = getLogger("start");
@@ -48,10 +50,11 @@ const init = (): void => {
     const scriptKeys = Object.keys(scripts);
 
     logger.info(startBanner);
-
+    readlineSync.setDefaultOptions({
+      hideEchoBack: true
+    });
     const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
       hideEchoBack: true,
-
       defaultInput: "0",
       cancel: "EXIT"
     });
@@ -59,21 +62,20 @@ const init = (): void => {
     if (index !== -1) {
       const script = path.resolve(__dirname, scripts[scriptKeys[index]]);
 
-      logger.info(colorOutput(SCRIPTS.LOG_RUNNING, scriptKeys[index]));
+      logger.info(
+        colorOutput(SCRIPTS.LOG_RUNNING, scriptKeys[index], OutputStyles.Start)
+      );
 
       runScript(script, [locale], () => {
-        if (
-          readlineSync.keyInYN("Return to menu?", {
-            caseSensitive: false,
-            trueValue: ["y", "yes", "yeah", "yep"],
-            falseValue: ["n", "no", "nah", "nope"],
-            defaultInput: "y"
-          })
-        ) {
-          init();
-        } else {
-          logger.info(colorOutput(SCRIPTS.FINISHED_RUNNING, scriptKeys[index]));
-        }
+        logger.info(
+          colorOutput(
+            SCRIPTS.FINISHED_RUNNING,
+            scriptKeys[index],
+            OutputStyles.Complete
+          )
+        );
+        readlineSync.keyInPause(SCRIPTS.CONTINUE);
+        init();
       });
     }
   } catch (error) {

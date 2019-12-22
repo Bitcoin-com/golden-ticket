@@ -5,6 +5,7 @@ import { colorDisplay } from "./colorFormatters";
 const logger = getLogger("userInput");
 
 const readlineSyncOptions: BasicOptions = {
+  hideEchoBack: true,
   print: (display: string) => {
     const displayInfo = colorDisplay(display);
     return logger.info(displayInfo);

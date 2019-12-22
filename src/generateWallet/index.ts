@@ -1,11 +1,9 @@
+import { GenerateWalletUserInput, Config, Mothership } from "../interfaces";
+import { generateConfig, getLogger } from "../helpers";
 import getUserInput from "./getUserInput";
 import generateMnemonic from "./generateMnemonic";
 import generateMothership from "./generateMothership";
 import writeFile from "./writeFile";
-
-import generateConfig from "../helpers/generateConfig";
-import { GenerateWalletUserInput, Config, Mothership } from "../interfaces";
-import { getLogger } from "log4js";
 
 const logger = getLogger("generateWallet");
 /**

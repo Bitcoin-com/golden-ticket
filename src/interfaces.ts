@@ -1,5 +1,16 @@
 import { locales, enStrings } from "./i18n";
 
+export interface Campaign {
+  title: string;
+  mnemonic: string;
+  hdpath: string;
+  mothership: {
+    hdPath: string;
+    address: string;
+  };
+  ticketCount: number;
+}
+
 export interface Mothership {
   fullNodePath: string;
   address: string;
@@ -19,9 +30,7 @@ export type Callback = (res: { err?: object; filename?: string }) => void;
 export interface GenerateWalletUserInput {
   title: string;
 }
-export interface CreateTicketsUserInput {
-  title: string;
-  hdAccount: string;
+export interface CreateTicketsUserInput extends WalletInfo {
   ticketCount: number;
 }
 
@@ -72,12 +81,14 @@ export interface AddressesCommon {
 }
 
 export interface Wallet {
+  title: string;
   mnemonic: string;
   hdpath: string;
   mothership: {
     hdPath: string;
     address: string;
   };
+  ticketCount?: number;
 }
 
 export interface CreateTicketsResult extends AddressesCommon {

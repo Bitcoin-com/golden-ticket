@@ -1,7 +1,7 @@
-import { getLogger } from "log4js";
-import { locales } from "../i18n";
-import settings from "../settings.json";
+import getLogger from "./logger";
 import { Config, ScriptName } from "../interfaces";
+import settings from "../settings.json";
+import { locales } from "../i18n";
 
 const logger = getLogger("generateConfig");
 /**

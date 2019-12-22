@@ -1,56 +1,57 @@
-import readlineSync from "readline-sync";
 import chalk from "chalk";
-import { colorQuestion } from "../helpers/colorFormatters";
-import { CreateTicketsUserInput, SectionStrings } from "../interfaces";
 import fs from "fs-extra";
-import path from "path";
-import { getLogger } from "log4js";
+import { Campaign, Config } from "../interfaces";
+import {
+  colorQuestion,
+  generateConfig,
+  getLogger,
+  readlineSync
+} from "../helpers";
+import settings from "../settings.json";
+
 const logger = getLogger("getUserInput");
 
 /**
- * Gets input from user
+ * Get input from the user
  *
- * @param {SectionStrings} strings strings for localization
- * @returns {title: string; language: string;} returns project title and language
+ * @returns {Promise<Campaign>}
  */
-const getUserInput = async (
-  strings: SectionStrings
-): Promise<CreateTicketsUserInput> => {
+const getUserInput = async (): Promise<Campaign> => {
   try {
     logger.debug("createTickets::getUserInput");
     readlineSync.setDefaultOptions({
       print: display => logger.info(display),
       prompt: chalk.red.bold(": ")
     });
+    const { strings }: Config = generateConfig("CREATE_TICKETS");
 
-    const { PROMPT_TITLE_DEFAULT, PROMPT_TITLE_DESCRIPTION } = strings;
+    const { PROMPT_TITLE_DESCRIPTION, PROMPT_COUNT_DESCRIPTION } = strings;
 
     // ask user for campaign title
-    const titleQuestion = colorQuestion(
-      PROMPT_TITLE_DESCRIPTION,
-      PROMPT_TITLE_DEFAULT
+    const dirs = fs.readdirSync(`${settings.outDir}`);
+
+    const index = readlineSync.keyInSelect(dirs, PROMPT_TITLE_DESCRIPTION);
+    if (index < 0) throw new Error();
+
+    const rawFile = fs
+      .readFileSync(`${settings.outDir}/${dirs[index]}/wallet.json`)
+      .toString();
+
+    const campaignData = JSON.parse(rawFile);
+
+    const ticketCount = readlineSync.questionInt(
+      colorQuestion(
+        PROMPT_COUNT_DESCRIPTION,
+        settings.defaultTickets.toString()
+      ),
+      {
+        defaultInput: settings.defaultTickets.toString()
+      }
     );
 
-    const dirs = fs.readdirSync(path.resolve(__dirname, "output"));
-
-    const title = readlineSync.question(titleQuestion, {
-      defaultInput: PROMPT_TITLE_DEFAULT,
-      limit: directory => {
-        const file = path.resolve(__dirname, directory, "wallet.json");
-        fs.ensureFileSync(file);
-
-        return false;
-      }
-    });
-
-    // Open the wallet generated with generate-wallet.
-    /* const wallet: Wallet = import(walletPath); */
-
-    const hdAccount = "";
-    const ticketCount = 10;
-
-    return { title, hdAccount, ticketCount };
+    return { ...campaignData, ticketCount };
   } catch (error) {
+    logger.error(error.message);
     return error;
   }
 };

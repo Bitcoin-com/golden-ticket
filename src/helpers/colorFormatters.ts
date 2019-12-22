@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import emoji from "node-emoji";
+import { emoji } from "node-emoji";
 
 /**
  * Colors and formats a question and default answer
@@ -15,6 +15,14 @@ export const colorQuestion = (
   return [question, chalk.blackBright(` [${defaultAnswer}]`), ": "].join("");
 };
 
+export enum OutputStyles {
+  Highlight = "highlight",
+  Complete = "complete",
+  Start = "start",
+  Error = "error",
+  Default = "default"
+}
+
 /**
  * Colors and formats information
  *
@@ -26,18 +34,44 @@ export const colorQuestion = (
 export const colorOutput = (
   item: string,
   value: string,
-  extra?: { highlight?: boolean }
+  style:
+    | "highlight"
+    | "complete"
+    | "error"
+    | "default"
+    | "start" = OutputStyles.Default
 ): string => {
-  const { highlight } = extra || {};
-
-  const strings = [
-    chalk.green(item),
-    highlight
-      ? chalk.bold(chalk.bgYellow(chalk.black(` === ${value} === `)))
-      : chalk.cyan(value)
-  ];
-
-  return strings.join(" ");
+  switch (style) {
+    case OutputStyles.Start: {
+      const strings = [
+        emoji.heavy_check_mark,
+        "",
+        chalk.white(item),
+        chalk.green(value)
+      ];
+      return strings.join(" ");
+    }
+    case OutputStyles.Complete: {
+      const strings = [
+        emoji.heavy_check_mark,
+        "",
+        chalk.cyan(item),
+        chalk.white(value)
+      ];
+      return strings.join(" ");
+    }
+    case OutputStyles.Highlight: {
+      const strings = [
+        chalk.green(item),
+        chalk.bgYellowBright(chalk.black(` === ${value} === `))
+      ];
+      return strings.join(" ");
+    }
+    default: {
+      const strings = [chalk.green(item), chalk.cyan(value)];
+      return strings.join(" ");
+    }
+  }
 };
 
 /**

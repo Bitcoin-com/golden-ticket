@@ -1,8 +1,6 @@
-import emoji from "node-emoji";
-import { getLogger } from "log4js";
-import { colorOutput } from "../helpers/colorFormatters";
+import { getLogger, colorOutput, OutputStyles, sleep } from "../helpers";
 import { WalletInfo } from "../interfaces";
-import chalk from "chalk";
+import settings from "../settings.json";
 
 const logger = getLogger("printGeneratedWallet");
 /**
@@ -11,7 +9,11 @@ const logger = getLogger("printGeneratedWallet");
  * @param {WalletInfo} { strings, data, error }
  * @returns {void}
  */
-const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
+const printGeneratedWallet = async ({
+  strings,
+  data,
+  error
+}: WalletInfo): Promise<void> => {
   try {
     logger.debug("generateWallet::printGeneratedWallet");
 
@@ -33,16 +35,19 @@ const printGeneratedWallet = ({ strings, data, error }: WalletInfo): void => {
       mothership: { fullNodePath, address }
     } = data;
 
-    logger.info(colorOutput(strings.INFO_CAMPAIGN, title, { highlight: true }));
-    logger.info(colorOutput(strings.INFO_MNEMONIC, mnemonic));
-    logger.info(colorOutput(strings.INFO_HDPATH, hdpath));
-    logger.info(colorOutput(strings.INFO_HDNODE, fullNodePath));
-    logger.info(colorOutput(strings.INFO_ADDRESS, address));
-
     logger.info(
-      colorOutput(strings.INFO_WRITE_SUCCESS, filename),
-      emoji.get(":white_check_mark:")
+      colorOutput(strings.INFO_CAMPAIGN, title, OutputStyles.Highlight)
     );
+    await sleep(settings.timer);
+    logger.info(colorOutput(strings.INFO_MNEMONIC, mnemonic));
+    await sleep(settings.timer);
+    logger.info(colorOutput(strings.INFO_HDPATH, hdpath));
+    await sleep(settings.timer);
+    logger.info(colorOutput(strings.INFO_HDNODE, fullNodePath));
+    await sleep(settings.timer);
+    logger.info(colorOutput(strings.INFO_ADDRESS, address));
+    await sleep(settings.timer);
+    logger.info(colorOutput(strings.INFO_WRITE_SUCCESS, filename), "\n");
   } catch (error) {
     logger.error(colorOutput(strings.ERROR, error.message));
   }

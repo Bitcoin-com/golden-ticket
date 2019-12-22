@@ -2,6 +2,10 @@
   "defaultLocale": "en",
   "outDir": "output",
   "hdpath": "m/44'/145'",
+  "timer": 100,
+  "defaultTickets": 10,
+  "pdfHeight": "260mm",
+  "pdfWidth": "170mm",
   "languages": {
     "en": "english",
     "ja": "japanese",
