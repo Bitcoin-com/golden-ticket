@@ -2,10 +2,17 @@
   "defaultLocale": "en",
   "outDir": "output",
   "hdpath": "m/44'/145'",
-  "timer": 100,
+  "timer": 50,
   "defaultTickets": 10,
-  "pdfHeight": "260mm",
-  "pdfWidth": "170mm",
+  "pdfConfig": {
+    "height": "260mm",
+    "width": "170mm"
+  },
+  "qrcode": {
+    "height": "34.5mm",
+    "left": "68mm",
+    "top": "102mm"
+  },
   "languages": {
     "en": "english",
     "ja": "japanese",

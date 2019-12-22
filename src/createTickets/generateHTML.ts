@@ -1,31 +1,45 @@
 import fs from "fs-extra";
-import { emoji } from "node-emoji";
 import QRCode from "qrcode";
-import getLogger from "../helpers/logger";
-import { generateConfig, sleep, colorOutput } from "../helpers";
+import {
+  getLogger,
+  generateConfig,
+  sleep,
+  colorOutput,
+  OutputStyles
+} from "../helpers";
 import { Campaign } from "../interfaces";
-
+import { defaultTemplate } from "../templates";
 import settings from "../settings.json";
-import bgBase64 from "../assets/bgBase64";
 
 const logger = getLogger("generateHTML");
 
-const saveHTMLFile = async (filename: string, wifQR: string): Promise<void> => {
+/**
+ * Saves HTML files
+ *
+ * @param {string} filename
+ * @param {string} wifQR
+ * @param {Campaign} campaignData
+ * @returns {Promise<void>}
+ */
+const saveHTMLFile = async (
+  filename: string,
+  wifQR: string,
+  campaignData: Campaign
+): Promise<void> => {
   try {
-    fs.writeFileSync(
-      filename,
-      [
-        `<body style="padding: 0; margin: 0;">`,
-        `<div style="height: 100%; background-size: cover; background-position: no-repeat left center; background-image: url('${bgBase64}')">`,
-        `<img style='position: absolute; top: 280px; left: 180px; height: 120px;' src='${wifQR}' />`,
-        `</div></body>`
-      ].join("")
-    );
+    fs.writeFileSync(filename, defaultTemplate(campaignData, wifQR));
   } catch (error) {
     return error;
   }
 };
 
+/**
+ * Generates HTML files
+ *
+ * @param {string[]} wifs
+ * @param {Campaign} campaignData
+ * @returns {Promise<void>}
+ */
 const generateHTML = async (
   wifs: string[],
   campaignData: Campaign
@@ -35,25 +49,28 @@ const generateHTML = async (
     const { title } = campaignData;
 
     logger.info(
-      `${emoji.hourglass_flowing_sand} ${strings.INFO_GENERATING_HTML}`,
-      title
+      colorOutput(strings.INFO_GENERATING_HTML, title, OutputStyles.Start)
     );
 
     for (const wif in wifs) {
       await sleep(settings.timer);
       const filename = `${settings.outDir}/${title}/html/${wifs[wif]}.html`;
       QRCode.toDataURL(
-        wif,
+        wifs[wif],
+        { margin: 0 },
         async (_err: Error, wifQR: string): Promise<void> => {
-          await saveHTMLFile(filename, wifQR);
+          await saveHTMLFile(filename, wifQR, campaignData);
         }
       );
       logger.info(colorOutput(strings.INFO_GENERATED_HTML, filename));
     }
 
     logger.info(
-      `${emoji.white_check_mark}  ${strings.INFO_GENERATING_HTML_COMPLETE}`,
-      title
+      colorOutput(
+        strings.INFO_GENERATING_HTML_COMPLETE,
+        title,
+        OutputStyles.Complete
+      )
     );
   } catch (error) {
     return error;

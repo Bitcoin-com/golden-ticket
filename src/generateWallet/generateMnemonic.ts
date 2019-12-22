@@ -1,5 +1,5 @@
 import { Mnemonic } from "bitbox-sdk/lib/Mnemonic";
-import { getLogger } from "log4js";
+import { getLogger } from "../helpers";
 import settings from "../settings.json";
 
 const logger = getLogger("generateMnemonic");

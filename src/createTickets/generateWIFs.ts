@@ -9,11 +9,15 @@ import settings from "../settings.json";
 const logger = getLogger("generateWallets");
 
 /**
- *  Generates a wallet based with provided seed and path
+ * Generates, saves and returns wifs
  *
- * @param {string} seed wallet seed
- * @param {string} path wallet path
- * @returns {HDNode}
+ * @param {Campaign} {
+ *   mnemonic,
+ *   hdpath,
+ *   ticketCount,
+ *   title
+ * }
+ * @returns {Promise<string[]>}
  */
 const generateWIFs = async ({
   mnemonic,

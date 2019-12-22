@@ -7,6 +7,13 @@ import settings from "../settings.json";
 
 const logger = getLogger("generatePDF");
 
+/**
+ * Generates and saves PDF Files
+ *
+ * @param {string[]} wifs
+ * @param {Campaign} campaignData
+ * @returns {Promise<void>}
+ */
 const generatePDF = async (
   wifs: string[],
   campaignData: Campaign
@@ -26,10 +33,7 @@ const generatePDF = async (
       const pdfFilename = `${settings.outDir}/${title}/pdf/${wifs[wif]}.pdf`;
 
       // save to pdf
-      const pdfConfig: PDF = {
-        width: settings.pdfWidth,
-        height: settings.pdfHeight
-      };
+      const { pdfConfig }: { pdfConfig: PDF } = settings;
 
       // get html file
       const privKeyWIFsHtml: string = fs.readFileSync(htmlFilename, "utf8");

@@ -9,6 +9,7 @@
     "baseUrl": "src",
     "removeComments": true,
     "sourceMap": true,
+    "jsx": "react",
     "allowJs": false,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,

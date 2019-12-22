@@ -5,11 +5,15 @@ import generateWIFs from "./generateWIFs";
 import generateHTML from "./generateHTML";
 import generatePDF from "./generatePDF";
 import settings from "../settings.json";
-import { getLogger, colorOutput } from "../helpers";
-import { emoji } from "node-emoji";
+import { getLogger } from "../helpers";
 
 const logger = getLogger("createTickets");
 
+/**
+ * Starts create tickets
+ *
+ * @returns {Promise<any>}
+ */
 const main: any = async (): Promise<any> => {
   try {
     const campaignData = await getUserInput();
@@ -29,8 +33,6 @@ const main: any = async (): Promise<any> => {
     logger.info("============================================================");
     await generatePDF(wifs, campaignData);
     logger.info("============================================================");
-
-    logger.info(colorOutput("Tickee", title), emoji.white_check_mark);
   } catch (err) {
     return err;
   }

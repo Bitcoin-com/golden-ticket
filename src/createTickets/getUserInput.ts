@@ -12,7 +12,7 @@ import settings from "../settings.json";
 const logger = getLogger("getUserInput");
 
 /**
- * Get input from the user
+ * Gets user input for create tickets
  *
  * @returns {Promise<Campaign>}
  */
