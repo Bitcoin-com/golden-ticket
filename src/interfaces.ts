@@ -74,6 +74,7 @@ export type Strings = {
 export type SectionStrings = Strings["GENERATE_WALLETS"] &
   Strings["CREATE_TICKETS"] &
   Strings["CREATE_CSV"] &
+  Strings["FUND_MOTHERSHIP"] &
   Strings["SCRIPTS"];
 
 export interface AddressesCommon {

@@ -1,11 +1,11 @@
 import chalk from "chalk";
-import fs from "fs-extra";
 import { Campaign, Config } from "../interfaces";
 import {
   colorQuestion,
   generateConfig,
   getLogger,
-  readlineSync
+  readlineSync,
+  promptCampaign
 } from "../helpers";
 import settings from "../settings.json";
 
@@ -27,17 +27,7 @@ const getUserInput = async (): Promise<Campaign> => {
 
     const { PROMPT_TITLE_DESCRIPTION, PROMPT_COUNT_DESCRIPTION } = strings;
 
-    // ask user for campaign title
-    const dirs = fs.readdirSync(`${settings.outDir}`);
-
-    const index = readlineSync.keyInSelect(dirs, PROMPT_TITLE_DESCRIPTION);
-    if (index < 0) throw new Error();
-
-    const rawFile = fs
-      .readFileSync(`${settings.outDir}/${dirs[index]}/wallet.json`)
-      .toString();
-
-    const campaignData = JSON.parse(rawFile);
+    const campaignData = await promptCampaign(PROMPT_TITLE_DESCRIPTION);
 
     const ticketCount = readlineSync.questionInt(
       colorQuestion(

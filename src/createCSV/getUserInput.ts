@@ -1,8 +1,11 @@
 import chalk from "chalk";
-import fs from "fs-extra";
 import { Campaign, Config } from "../interfaces";
-import { generateConfig, getLogger, readlineSync } from "../helpers";
-import settings from "../settings.json";
+import {
+  promptCampaign,
+  generateConfig,
+  getLogger,
+  readlineSync
+} from "../helpers";
 
 const logger = getLogger("getUserInput");
 
@@ -20,21 +23,7 @@ const getUserInput = async (): Promise<Campaign> => {
     });
     const { strings }: Config = generateConfig("CREATE_TICKETS");
 
-    // ask user for campaign title
-    const dirs = fs.readdirSync(`${settings.outDir}`);
-
-    const index = readlineSync.keyInSelect(
-      dirs,
-      strings.PROMPT_TITLE_DESCRIPTION
-    );
-    if (index < 0) throw new Error();
-
-    const campaignWallet = `${settings.outDir}/${dirs[index]}/wallet.json`;
-    const rawFile = fs.readFileSync(campaignWallet).toString();
-
-    const campaignData = JSON.parse(rawFile);
-
-    return campaignData;
+    return await promptCampaign(strings.PROMPT_TITLE_DESCRIPTION);
   } catch (error) {
     logger.error(error.message);
     return error;

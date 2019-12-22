@@ -3,7 +3,8 @@
     "PROMPT_SCRIPT": "Select script to run",
     "LOG_RUNNING": "Ok, starting",
     "FINISHED_RUNNING": "Finished running",
-    "CONTINUE": "Continue"
+    "CONTINUE": "Continue",
+    "SELECT_CAMPAIGN": "Select campaign to manage:"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
@@ -37,7 +38,10 @@
   "CREATE_CSV": {
     "INFO_GENERATING_CSV": "Generating CSV for",
     "INFO_GENERATING_CSV_COMPLETE": "CSV generation complete",
-
     "INFO_WRITE_SUCCESS": "CSV Created:"
+  },
+  "FUND_MOTHERSHIP": {
+    "INFO_SEND_TO_MOTHERSHIP": "Send funds to:",
+    "INFO_CHECK_MOTHERSHIP": "Check address on the explorer:"
   }
 }

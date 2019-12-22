@@ -16,7 +16,7 @@ const logger = getLogger("generateConfig");
 const generateConfig = (scriptName: ScriptName): Config => {
   logger.debug("generateWallet::generateConfig");
   const scripts = locales[settings.defaultLocale];
-  const strings = scripts[scriptName];
+  const strings = { ...scripts[scriptName], ...scripts["SCRIPTS"] };
 
   return {
     outDir: settings.outDir,

@@ -21,7 +21,8 @@ export enum OutputStyles {
   Complete = "complete",
   Start = "start",
   Error = "error",
-  Default = "default"
+  Default = "default",
+  Information = "information"
 }
 
 /**
@@ -39,9 +40,25 @@ export const colorOutput = ({
 }: {
   item: string;
   value: string;
-  style?: "highlight" | "complete" | "error" | "waiting" | "default" | "start";
+  style?:
+    | "highlight"
+    | "complete"
+    | "error"
+    | "waiting"
+    | "default"
+    | "start"
+    | "information";
 }): string => {
   switch (style) {
+    case OutputStyles.Information: {
+      const strings = [
+        emoji.grey_question,
+        "",
+        chalk.cyan(item),
+        chalk.bgWhite(chalk.black(` ${value} `))
+      ];
+      return strings.join(" ");
+    }
     case OutputStyles.Waiting: {
       const strings = [
         emoji.hourglass_flowing_sand,

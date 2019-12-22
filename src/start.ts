@@ -18,7 +18,7 @@ const scripts = {
   "Generate Wallet": "generateWallet",
   "Create Tickets": "createTickets",
   "Create CSV": "createCSV",
-  "Fund Mothership": "fund-mothership.js",
+  "Fund Mothership": "fundMothership",
   "Fund Tickets": "fund-tickets.js",
   "Check Tickets": "check-tickets.js",
   "Generate Stats": "generate-stats.js",
