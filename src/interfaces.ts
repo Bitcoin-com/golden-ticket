@@ -56,14 +56,14 @@ export interface Config {
 }
 
 export type ScriptName =
-  | "check-tickets"
-  | "create-csv"
+  | "CHECK_TICKETS"
+  | "CREATE_CSV"
   | "CREATE_TICKETS"
-  | "fund-mothership"
-  | "fund-tickets"
-  | "generate-state"
+  | "FUND_MOTHERSHIP"
+  | "FUND_TICKETS"
+  | "GENERATE_STATE"
   | "GENERATE_WALLETS"
-  | "reclaim-funds";
+  | "RECLAIM_FUNDS";
 
 export type Locale = keyof typeof locales;
 
@@ -73,6 +73,7 @@ export type Strings = {
 
 export type SectionStrings = Strings["GENERATE_WALLETS"] &
   Strings["CREATE_TICKETS"] &
+  Strings["CREATE_CSV"] &
   Strings["SCRIPTS"];
 
 export interface AddressesCommon {
@@ -97,4 +98,13 @@ export interface CreateTicketsResult extends AddressesCommon {
 export interface PDF {
   width: string;
   height: string;
+}
+
+export interface CreateCSV extends CreateTicketsResult {}
+
+export interface CSV {
+  cashAddress: string;
+  wif: string;
+  claimed: boolean;
+  value?: number;
 }

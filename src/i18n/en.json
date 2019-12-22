@@ -33,5 +33,11 @@
     "INFO_GENERATING_PDF_COMPLETE": "PDF generation complete",
     "INFO_GENERATED_PDF": "Generated PDF",
     "ERROR_NO_CAMPAIGNS": "No campaigns found, return to main menu?"
+  },
+  "CREATE_CSV": {
+    "INFO_GENERATING_CSV": "Generating CSV for",
+    "INFO_GENERATING_CSV_COMPLETE": "CSV generation complete",
+
+    "INFO_WRITE_SUCCESS": "CSV Created:"
   }
 }

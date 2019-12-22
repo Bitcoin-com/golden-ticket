@@ -49,7 +49,11 @@ const generateHTML = async (
     const { title } = campaignData;
 
     logger.info(
-      colorOutput(strings.INFO_GENERATING_HTML, title, OutputStyles.Start)
+      colorOutput({
+        item: strings.INFO_GENERATING_HTML,
+        value: title,
+        style: OutputStyles.Start
+      })
     );
 
     for (const wif in wifs) {
@@ -62,15 +66,17 @@ const generateHTML = async (
           await saveHTMLFile(filename, wifQR, campaignData);
         }
       );
-      logger.info(colorOutput(strings.INFO_GENERATED_HTML, filename));
+      logger.info(
+        colorOutput({ item: strings.INFO_GENERATED_HTML, value: filename })
+      );
     }
 
     logger.info(
-      colorOutput(
-        strings.INFO_GENERATING_HTML_COMPLETE,
-        title,
-        OutputStyles.Complete
-      )
+      colorOutput({
+        item: strings.INFO_GENERATING_HTML_COMPLETE,
+        value: title,
+        style: OutputStyles.Complete
+      })
     );
   } catch (error) {
     return error;

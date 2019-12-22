@@ -17,6 +17,7 @@ export const colorQuestion = (
 
 export enum OutputStyles {
   Highlight = "highlight",
+  Waiting = "waiting",
   Complete = "complete",
   Start = "start",
   Error = "error",
@@ -31,23 +32,31 @@ export enum OutputStyles {
  * @param {{ highlight?: boolean; emoji?: Emoji }} [extra]
  * @returns {string}
  */
-export const colorOutput = (
-  item: string,
-  value: string,
-  style:
-    | "highlight"
-    | "complete"
-    | "error"
-    | "default"
-    | "start" = OutputStyles.Default
-): string => {
+export const colorOutput = ({
+  item,
+  value,
+  style = OutputStyles.Default
+}: {
+  item: string;
+  value: string;
+  style?: "highlight" | "complete" | "error" | "waiting" | "default" | "start";
+}): string => {
   switch (style) {
+    case OutputStyles.Waiting: {
+      const strings = [
+        emoji.hourglass_flowing_sand,
+        "",
+        chalk.cyanBright(item),
+        chalk.green(value)
+      ];
+      return strings.join(" ");
+    }
     case OutputStyles.Start: {
       const strings = [
-        emoji.heavy_check_mark,
+        emoji.hourglass_flowing_sand,
         "",
-        chalk.white(item),
-        chalk.green(value)
+        chalk.cyanBright(item),
+        chalk.white(value)
       ];
       return strings.join(" ");
     }
@@ -55,7 +64,7 @@ export const colorOutput = (
       const strings = [
         emoji.heavy_check_mark,
         "",
-        chalk.cyan(item),
+        chalk.cyanBright(item),
         chalk.white(value)
       ];
       return strings.join(" ");

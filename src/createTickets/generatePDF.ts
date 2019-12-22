@@ -2,7 +2,13 @@ import fs from "fs-extra";
 import pdf from "html-pdf";
 import { emoji } from "node-emoji";
 import { Campaign, PDF } from "../interfaces";
-import { generateConfig, sleep, getLogger, colorOutput } from "../helpers";
+import {
+  generateConfig,
+  sleep,
+  getLogger,
+  colorOutput,
+  OutputStyles
+} from "../helpers";
 import settings from "../settings.json";
 
 const logger = getLogger("generatePDF");
@@ -23,8 +29,11 @@ const generatePDF = async (
     const { title } = campaignData;
 
     logger.info(
-      `${emoji.hourglass_flowing_sand} ${strings.INFO_GENERATING_PDF}`,
-      title
+      colorOutput({
+        item: strings.INFO_GENERATING_PDF,
+        value: title,
+        style: OutputStyles.Start
+      })
     );
 
     for (const wif in wifs) {
@@ -41,12 +50,17 @@ const generatePDF = async (
       pdf.create(privKeyWIFsHtml, pdfConfig).toFile(pdfFilename, (err: any) => {
         if (err) return logger.error(err.message);
       });
-      logger.info(colorOutput(strings.INFO_GENERATED_PDF, pdfFilename));
+      logger.info(
+        colorOutput({ item: strings.INFO_GENERATED_PDF, value: pdfFilename })
+      );
     }
 
     logger.info(
-      `${emoji.white_check_mark}  ${strings.INFO_GENERATING_PDF_COMPLETE}`,
-      title
+      colorOutput({
+        item: strings.INFO_GENERATING_PDF_COMPLETE,
+        value: title,
+        style: OutputStyles.Complete
+      })
     );
   } catch (error) {
     return error;

@@ -1,4 +1,3 @@
-// imports
 import fs from "fs-extra";
 import getUserInput from "./getUserInput";
 import generateWIFs from "./generateWIFs";

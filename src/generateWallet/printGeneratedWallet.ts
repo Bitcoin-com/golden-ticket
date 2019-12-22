@@ -18,12 +18,14 @@ const printGeneratedWallet = async ({
     logger.debug("generateWallet::printGeneratedWallet");
 
     if (error) {
-      logger.error(colorOutput(strings.ERROR, error.message));
+      logger.error(colorOutput({ item: strings.ERROR, value: error.message }));
       return;
     }
 
     if (!data) {
-      logger.error(colorOutput(strings.ERROR, "no data. wtf?"));
+      logger.error(
+        colorOutput({ item: strings.ERROR, value: "no data. wtf?" })
+      );
       return;
     }
 
@@ -36,20 +38,29 @@ const printGeneratedWallet = async ({
     } = data;
 
     logger.info(
-      colorOutput(strings.INFO_CAMPAIGN, title, OutputStyles.Highlight)
+      colorOutput({
+        item: strings.INFO_CAMPAIGN,
+        value: title,
+        style: OutputStyles.Highlight
+      })
     );
     await sleep(settings.timer);
-    logger.info(colorOutput(strings.INFO_MNEMONIC, mnemonic));
+    logger.info(colorOutput({ item: strings.INFO_MNEMONIC, value: mnemonic }));
     await sleep(settings.timer);
-    logger.info(colorOutput(strings.INFO_HDPATH, hdpath));
+    logger.info(colorOutput({ item: strings.INFO_HDPATH, value: hdpath }));
     await sleep(settings.timer);
-    logger.info(colorOutput(strings.INFO_HDNODE, fullNodePath));
+    logger.info(
+      colorOutput({ item: strings.INFO_HDNODE, value: fullNodePath })
+    );
     await sleep(settings.timer);
-    logger.info(colorOutput(strings.INFO_ADDRESS, address));
+    logger.info(colorOutput({ item: strings.INFO_ADDRESS, value: address }));
     await sleep(settings.timer);
-    logger.info(colorOutput(strings.INFO_WRITE_SUCCESS, filename), "\n");
+    logger.info(
+      colorOutput({ item: strings.INFO_WRITE_SUCCESS, value: filename }),
+      "\n"
+    );
   } catch (error) {
-    logger.error(colorOutput(strings.ERROR, error.message));
+    logger.error(colorOutput({ item: strings.ERROR, value: error.message }));
   }
 };
 

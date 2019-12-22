@@ -3,7 +3,13 @@ import { Mnemonic, HDNode as BB_HDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
 import { emoji } from "node-emoji";
 import { Campaign } from "../interfaces";
-import { getLogger, sleep, generateConfig, colorOutput } from "../helpers";
+import {
+  getLogger,
+  sleep,
+  generateConfig,
+  colorOutput,
+  OutputStyles
+} from "../helpers";
 import settings from "../settings.json";
 
 const logger = getLogger("generateWallets");
@@ -37,8 +43,11 @@ const generateWIFs = async ({
     const wifs = [];
 
     logger.info(
-      `${emoji.hourglass_flowing_sand} ${INFO_GENERATING_WIFS}`,
-      title
+      colorOutput({
+        item: INFO_GENERATING_WIFS,
+        value: title,
+        style: OutputStyles.Start
+      })
     );
 
     for (let i: number = 0; i < ticketCount; i++) {
@@ -47,7 +56,7 @@ const generateWIFs = async ({
 
       const wif = hdnode.toWIF(node);
       wifs.push(wif);
-      logger.info(colorOutput(INFO_GENERATED_WIF, wif));
+      logger.info(colorOutput({ item: INFO_GENERATED_WIF, value: wif }));
     }
 
     const privKeyWifs = `${settings.outDir}/${title}/privKeyWIFs`;
@@ -56,8 +65,11 @@ const generateWIFs = async ({
     fs.ensureFileSync(privKeyWifs);
 
     logger.info(
-      `${emoji.white_check_mark}  ${INFO_GENERATED_WIFS}`,
-      privKeyWifs
+      colorOutput({
+        item: INFO_GENERATED_WIFS,
+        value: privKeyWifs,
+        style: OutputStyles.Complete
+      })
     );
 
     return wifs;

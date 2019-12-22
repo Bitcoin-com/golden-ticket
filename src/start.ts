@@ -17,7 +17,7 @@ const logger = getLogger("start");
 const scripts = {
   "Generate Wallet": "generateWallet",
   "Create Tickets": "createTickets",
-  "Create CSV": "create-csv.js",
+  "Create CSV": "createCSV",
   "Fund Mothership": "fund-mothership.js",
   "Fund Tickets": "fund-tickets.js",
   "Check Tickets": "check-tickets.js",
@@ -63,16 +63,20 @@ const init = (): void => {
       const script = path.resolve(__dirname, scripts[scriptKeys[index]]);
 
       logger.info(
-        colorOutput(SCRIPTS.LOG_RUNNING, scriptKeys[index], OutputStyles.Start)
+        colorOutput({
+          item: SCRIPTS.LOG_RUNNING,
+          value: scriptKeys[index],
+          style: OutputStyles.Start
+        })
       );
 
       runScript(script, [locale], () => {
         logger.info(
-          colorOutput(
-            SCRIPTS.FINISHED_RUNNING,
-            scriptKeys[index],
-            OutputStyles.Complete
-          )
+          colorOutput({
+            item: SCRIPTS.FINISHED_RUNNING,
+            value: scriptKeys[index],
+            style: OutputStyles.Complete
+          })
         );
         readlineSync.keyInPause(SCRIPTS.CONTINUE);
         init();
