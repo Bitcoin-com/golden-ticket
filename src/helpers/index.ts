@@ -6,3 +6,7 @@ export { default as readlineSync } from "./readlineSync";
 export { default as runScript } from "./runScript";
 export { default as getCashAddress } from "./getCashAddress";
 export { default as promptCampaign } from "./promptCampaign";
+export { default as getTieredValue } from "./getTieredValue";
+export { default as getCampaignWIFs } from "./getCampaignWIFs";
+export { default as getUTXOs } from "./getUTXOs";
+export { default as createObject } from "./createObject";

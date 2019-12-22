@@ -1,4 +1,4 @@
-import { Wallet, Campaign } from "../interfaces";
+import qrcode from "qrcode-terminal";
 import {
   getLogger,
   colorOutput,
@@ -6,11 +6,6 @@ import {
   promptCampaign,
   OutputStyles
 } from "../helpers";
-
-// consts
-import qrcode from "qrcode-terminal";
-import chalk from "chalk";
-import emoji from "node-emoji";
 
 const main: any = async (): Promise<any> => {
   try {
@@ -35,27 +30,10 @@ const main: any = async (): Promise<any> => {
         style: OutputStyles.Information
       })
     );
+    logger.info("============================================================");
   } catch (error) {
     return error;
   }
 };
-/* try {
-  const logger = getLogger("fundMothership");
-
-  // show funder address qr code
-  console.log(`Send funds to: ${wallet.mothership.address}`);
-  qrcode.generate(wallet.mothership.address);
-  console.log(
-    `Check your mothership address on the explorer: https://explorer.bitcoin.com/bch/address/${wallet.mothership.address}`
-  );
-} catch (err) {
-  console.log(
-    `Could not open goldenTicketWallet.json. Generate a mnemonic with generate-wallet first.
-      Exiting.`
-  );
-  process.exit(0);
-}
-console.log(chalk.green("All done."), emoji.get(":white_check_mark:"));
- */
 
 export default main();
