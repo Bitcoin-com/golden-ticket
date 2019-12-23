@@ -1,18 +1,29 @@
-import { getLogger } from "log4js";
+import { getLogger, configure } from "log4js";
 import path from "path";
 import fs from "fs-extra";
 import chalk from "chalk";
-import readlineSync, { BasicOptions } from "readline-sync";
-import { runScript, colorOutput, OutputStyles } from "./helpers";
-import { locales } from "./i18n";
-
-import settings from "./settings.json";
+import readlineSync from "readline-sync";
+import { runScript, colorOutput, OutputStyles, getLocales } from "./helpers";
+import settings from "../settings.json";
 import banner from "../assets/banner.txt";
+import { Locale } from "./interfaces";
+import loggerConfig from "./helpers/loggerConfig";
 
-const { SCRIPTS } = locales[settings.defaultLocale];
+const logger = getLogger("start");
+configure(loggerConfig);
+
+const { SCRIPTS } = getLocales(settings.defaultLocale as Locale);
 
 type ScriptsMap = {
   +readonly [K in keyof typeof SCRIPTS.NAMES]+?: typeof SCRIPTS.NAMES[K];
+};
+
+const showBanner = () => {
+  // display the golden ticket ascii text
+  const bannerString: string = fs
+    .readFileSync(path.resolve("dist", banner))
+    .toString();
+  logger.info(chalk.yellowBright(bannerString));
 };
 
 /**
@@ -22,6 +33,9 @@ type ScriptsMap = {
  */
 const init = async (): Promise<void> => {
   try {
+    logger.debug("start:init");
+    showBanner();
+
     const scripts: ScriptsMap = {
       [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: "generateWallet",
       [SCRIPTS.NAMES.CREATE_TICKETS]: "createTickets",
@@ -32,47 +46,17 @@ const init = async (): Promise<void> => {
       [SCRIPTS.NAMES.GENERATE_STATS]: "generateStats",
       [SCRIPTS.NAMES.RECLAIM_FUNDS]: "reclaimFunds"
     };
-    const logger = getLogger("start");
-
-    // display the golden ticket ascii text
-    const bannerString: string = fs
-      .readFileSync(path.resolve("dist", banner))
-      .toString();
-    logger.info(chalk.yellowBright(bannerString));
 
     const scriptKeys: string[] = Object.keys(scripts);
 
-    const readlineOptions: BasicOptions = {
-      prompt: {
-        toString: (display: any) => {
-          console.log("display");
-          return display;
-        }
-      },
-      hideEchoBack: false,
-      mask: "*",
-      limit: [],
-      limitMessage: "Input another, please.$<( [)limit(])>",
-      defaultInput: "",
-      trueValue: [],
-      falseValue: [],
-      caseSensitive: false,
-      keepWhitespace: false,
-      encoding: "utf8",
-      bufferSize: 1024,
-      print: undefined,
-      history: true,
-      cd: false
-    };
-
-    readlineSync.setDefaultOptions(readlineOptions);
-
-    const index = readlineSync.keyInSelect(scriptKeys, SCRIPTS.PROMPT_SCRIPT, {
-      cancel: SCRIPTS.EXIT
-    });
+    const index = readlineSync.keyInSelect(
+      scriptKeys.map(key => chalk.cyan(key)),
+      SCRIPTS.PROMPT_SCRIPT,
+      { cancel: chalk.red(SCRIPTS.EXIT) }
+    );
 
     if (index !== -1) {
-      const script = path.resolve(__dirname, scripts[scriptKeys[index]]);
+      const script = path.resolve("dist", scripts[scriptKeys[index]]);
 
       logger.info(
         colorOutput({
@@ -95,8 +79,9 @@ const init = async (): Promise<void> => {
       });
     }
   } catch (error) {
+    logger.error(error.message);
     throw error;
   }
 };
 
-export default init();
+export default init;

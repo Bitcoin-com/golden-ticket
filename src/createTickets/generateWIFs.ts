@@ -4,7 +4,7 @@ import { Mnemonic, HDNode as BB_HDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
 import { Campaign } from "../interfaces";
 import { sleep, colorOutput, OutputStyles } from "../helpers";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { locales } from "../i18n";
 
 const logger = getLogger("generateWallets");

@@ -5,7 +5,6 @@
     "FINISHED_RUNNING": "Finished running",
     "CONTINUE": "Continue",
     "SELECT_CAMPAIGN": "Select campaign to manage:",
-    "NO_CAMPAIGNS": "No campaigns found, creating one",
     "EXIT": "EXIT",
     "CANCELED": "CANCELED",
     "ERROR": "Something went wrong!",
@@ -20,9 +19,13 @@
       "RECLAIM_FUNDS": "Reclaim Funds"
     }
   },
+  "ERRORS": {
+    "NO_CAMPAIGNS": "No campaigns found, creating one"
+  },
   "CAMPAIGN": {
-    "TITLE": "Campaign title",
-    "TITLE_DEFAULT": "GoldenTicket"
+    "TITLE": "Campaign title:",
+    "TITLE_DEFAULT": "GoldenTicket",
+    "TICKETS_NUMBER": "Number of tickets:"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",

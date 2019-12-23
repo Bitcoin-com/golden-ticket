@@ -3,7 +3,7 @@ import { getLogger } from "log4js";
 import generateWIFs from "./generateWIFs";
 import generateHTML from "./generateHTML";
 import generatePDF from "./generatePDF";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { selectCampaign } from "../helpers";
 
 const logger = getLogger("createTickets");
@@ -37,4 +37,4 @@ const main: any = async (): Promise<any> => {
   }
 };
 
-export default main();
+export default main;

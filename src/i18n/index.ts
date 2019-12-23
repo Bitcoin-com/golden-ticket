@@ -1,7 +1,5 @@
 import enStrings from "./en.json";
 
-export { enStrings };
-
 export const locales = {
   en: enStrings,
   ja: enStrings,

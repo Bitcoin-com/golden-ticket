@@ -2,7 +2,7 @@ import qrcode from "qrcode-terminal";
 import { getLogger } from "log4js";
 import { colorOutput, OutputStyles, selectCampaign } from "../helpers";
 import { locales } from "../i18n";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 
 const main: any = async (): Promise<any> => {
   try {
@@ -37,4 +37,4 @@ const main: any = async (): Promise<any> => {
   }
 };
 
-export default main();
+export default main;

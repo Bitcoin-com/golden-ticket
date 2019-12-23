@@ -1,13 +1,16 @@
-import { getLogger } from "log4js";
+import { getLogger, configure } from "log4js";
 import generateMnemonic from "../helpers/getMnemonic";
 import createMothership from "../helpers/createMothership";
 import writeFile from "./writeFile";
 import { Mothership, Campaign } from "../interfaces";
-
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import selectCampaign from "../helpers/prompts/selectCampaign";
+import "../helpers/loggerConfig";
+import loggerConfig from "../helpers/loggerConfig";
 
+configure(loggerConfig);
 const logger = getLogger("generateWallet");
+
 /**
  * Generate Wallets
  */
@@ -39,8 +42,9 @@ const main = async (): Promise<void> => {
     // write file and print results
     await writeFile(filename, fileData);
   } catch (error) {
+    logger.error(error.message);
     throw error;
   }
 };
 
-export default main();
+export default main;

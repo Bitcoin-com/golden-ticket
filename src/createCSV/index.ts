@@ -7,7 +7,7 @@ import {
 } from "../helpers";
 import selectCampaign from "../helpers/prompts/selectCampaign";
 import writeCSV from "./writeCSV";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { locales } from "../i18n";
 /**
  * Open the wallet generated with generate-wallet.
@@ -45,8 +45,8 @@ const main: any = async (): Promise<any> => {
       "\n============================================================"
     );
   } catch (error) {
-    return error;
+    throw error;
   }
 };
 
-export default main();
+export default main;

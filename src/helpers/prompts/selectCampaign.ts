@@ -1,11 +1,12 @@
 import fs from "fs-extra";
 import { getLogger } from "log4js";
-import { Campaign } from "../../interfaces";
+import { Campaign, Locale } from "../../interfaces";
 import readlineSync from "readline-sync";
-import settings from "../../settings.json";
-import { locales } from "../../i18n";
+import settings from "../../../settings.json";
 import path from "path";
 import createCampaign from "./createCampaign";
+import { colorOutput } from "../colorFormatters";
+import getLocales from "../getLocales";
 
 const logger = getLogger("promptCampaign");
 
@@ -19,13 +20,10 @@ const selectCampaign = async (): Promise<Campaign | "CANCELED"> => {
   try {
     fs.ensureDirSync(settings.outDir);
     const dirs = fs.readdirSync(path.resolve(settings.outDir));
-    logger.debug("promptCampaign:path", path.resolve(settings.outDir));
-    logger.debug("promptCampaign:dirs", dirs);
-    const { SCRIPTS } = locales[settings.defaultLocale];
+    const { ERRORS, SCRIPTS } = getLocales(settings.defaultLocale as Locale);
 
-    if (dirs.length !== -1) {
+    if (dirs) {
       const index = readlineSync.keyInSelect(dirs, SCRIPTS.SELECT_CAMPAIGN);
-
       if (index < 0) return "CANCELED";
 
       const campaignWallet = `${settings.outDir}/${dirs[index]}/wallet.json`;
@@ -36,8 +34,10 @@ const selectCampaign = async (): Promise<Campaign | "CANCELED"> => {
       return campaignData;
     }
 
+    logger.error(ERRORS.NO_CAMPAIGNS);
     return await createCampaign();
   } catch (error) {
+    logger.error(error.message);
     throw error;
   }
 };

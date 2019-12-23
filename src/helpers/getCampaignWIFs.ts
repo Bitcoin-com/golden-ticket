@@ -1,5 +1,5 @@
 import fs from "fs-extra";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 
 /**
  * Get list of WIFs used in campaign

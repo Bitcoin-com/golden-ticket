@@ -53,10 +53,10 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build": "yarn clean && tsc",
-    "watch": "yarn clean && tsc --watch",
+    "build": "yarn clean && webpack",
+    "watch": "yarn clean && webpack --watch",
     "clean": "rimraf dist log",
-    "start": "node dist/start.js",
+    "start": "node dist/main.js",
     "generate-wallet": "node dist/generate-wallet.js",
     "create-tickets": "node dist/create-tickets.js",
     "create-csv": "node dist/create-csv.js",

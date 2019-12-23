@@ -1,7 +1,7 @@
 import { getLogger } from "log4js";
 import { CSV } from "../interfaces";
 import { sleep, getCashAddress, colorOutput, getTieredValue } from "../helpers";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 
 /**
  * Creates CSV object from array of wifs

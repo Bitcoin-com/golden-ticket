@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import bgBase64 from "../../assets/bgBase64";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { Campaign } from "../interfaces";
 
 /**

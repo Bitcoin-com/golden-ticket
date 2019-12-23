@@ -5,4 +5,3 @@ declare module "*.txt" {
   const content: any;
   export = content;
 }
-declare module "log4js/lib/appenders/stdout";

@@ -3,7 +3,7 @@ import pdf from "html-pdf";
 import { Campaign } from "../interfaces";
 import { getLogger } from "log4js";
 import { sleep, colorOutput, OutputStyles } from "../helpers";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { locales } from "../i18n";
 
 const logger = getLogger("generatePDF");

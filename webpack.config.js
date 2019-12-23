@@ -6,11 +6,13 @@ module.exports = {
   target: "node",
   context: process.cwd(),
   entry: {
-    main: ["./src/index.ts"]
+    main: ["./src/index.ts"],
+    start: ["./src/start.ts"],
+    generateWallet: ["./src/generateWallet/index.ts"]
   },
   output: {
     path: path.join(process.cwd(), "dist"),
-    filename: "start.js"
+    filename: "[name].js"
   },
   node: {
     fs: "empty"

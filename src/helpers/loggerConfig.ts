@@ -1,6 +1,6 @@
-import settings from "../settings.json";
+import settings from "../../settings.json";
 
-export default {
+const loggerConfig = {
   appenders: {
     app: {
       type: "file",
@@ -31,3 +31,5 @@ export default {
     }
   }
 };
+
+export default loggerConfig;

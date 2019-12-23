@@ -8,3 +8,4 @@ export { default as getCampaignWIFs } from "./getCampaignWIFs";
 export { default as getUTXOs } from "./getUTXOs";
 export { default as createObject } from "./createObject";
 export { default as getMnemonic } from "./getMnemonic";
+export { default as getLocales } from "./getLocales";

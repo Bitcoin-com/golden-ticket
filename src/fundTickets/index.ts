@@ -11,7 +11,7 @@ import { getCampaignWIFs, selectCampaign, getUTXOs } from "../helpers";
 import buildTransaction from "./buildTransaction";
 
 import { locales } from "../i18n";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 
 // Open the wallet generated with generate-wallet.
 const main: any = async (): Promise<any> => {
@@ -126,4 +126,4 @@ const main: any = async (): Promise<any> => {
   }
 };
 
-export default main();
+export default main;

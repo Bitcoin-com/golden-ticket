@@ -1,7 +1,7 @@
 import { getLogger } from "log4js";
 import { colorOutput, OutputStyles, sleep } from "../helpers";
 import { CampaignInfo } from "../interfaces";
-import settings from "../settings.json";
+import settings from "../../settings.json";
 import { locales } from "../i18n";
 
 const logger = getLogger("printGeneratedWallet");
