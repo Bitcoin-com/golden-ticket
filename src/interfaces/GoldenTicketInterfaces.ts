@@ -29,9 +29,6 @@ export interface PDF {
   height: string;
 }
 
-export interface CreateCSV extends CreateTicketsResult {}
-export interface CheckTickets extends CreateTicketsResult {}
-
 export interface CSV {
   cashAddress: string;
   wif: string;

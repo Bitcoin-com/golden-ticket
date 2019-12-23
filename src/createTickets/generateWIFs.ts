@@ -1,13 +1,13 @@
-import fs from "fs-extra";
-import { getLogger } from "log4js";
-import { Mnemonic, HDNode as BB_HDNode } from "bitbox-sdk";
-import { HDNode } from "bitcoincashjs-lib";
-import { Campaign } from "../interfaces";
-import { sleep, colorOutput, OutputStyles } from "../helpers";
-import settings from "../../settings.json";
-import { locales } from "../i18n";
+import fs from 'fs-extra';
+import { getLogger } from 'log4js';
+import { Mnemonic, HDNode as BBHDNode } from 'bitbox-sdk';
+import { HDNode } from 'bitcoincashjs-lib';
+import { Campaign } from '../interfaces';
+import { sleep, colorOutput, OutputStyles } from '../helpers';
+import settings from '../../settings.json';
+import { locales } from '../i18n';
 
-const logger = getLogger("generateWallets");
+const logger = getLogger('generateWallets');
 
 /**
  * Generates, saves and returns wifs
@@ -24,19 +24,19 @@ const generateWIFs = async ({
   mnemonic,
   hdpath,
   ticketCount,
-  title
+  title,
 }: Campaign): Promise<string[]> => {
   try {
     const {
       CREATE_TICKETS: {
         INFO_GENERATED_WIF,
         INFO_GENERATING_WIFS,
-        INFO_GENERATED_WIFS
-      }
+        INFO_GENERATED_WIFS,
+      },
     } = locales[settings.defaultLocale];
 
     const bbMnemonic = new Mnemonic();
-    const hdnode = new BB_HDNode();
+    const hdnode = new BBHDNode();
     const rootSeed: Buffer = bbMnemonic.toSeed(mnemonic);
     const masterHDNode: HDNode = hdnode.fromSeed(rootSeed);
     const bip44: HDNode = hdnode.derivePath(masterHDNode, hdpath);
@@ -46,11 +46,12 @@ const generateWIFs = async ({
       colorOutput({
         item: INFO_GENERATING_WIFS,
         value: title,
-        style: OutputStyles.Start
-      })
+        style: OutputStyles.Start,
+      }),
     );
 
-    for (let i: number = 0; i < ticketCount; i++) {
+    for (let i = 0; i < ticketCount; i++) {
+      // eslint-disable-next-line no-await-in-loop
       await sleep(settings.timer);
       const node: HDNode = hdnode.derivePath(bip44, `0/0/${i}`);
 
@@ -61,15 +62,15 @@ const generateWIFs = async ({
 
     const privKeyWifs = `${settings.outDir}/${title}/privKeyWIFs`;
 
-    fs.writeFileSync(privKeyWifs, wifs.join("\n"));
+    fs.writeFileSync(privKeyWifs, wifs.join('\n'));
     fs.ensureFileSync(privKeyWifs);
 
     logger.info(
       colorOutput({
         item: INFO_GENERATED_WIFS,
         value: privKeyWifs,
-        style: OutputStyles.Complete
-      })
+        style: OutputStyles.Complete,
+      }),
     );
 
     return wifs;

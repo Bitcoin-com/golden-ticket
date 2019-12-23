@@ -1,5 +1,11 @@
-import { locales, enStrings } from "./i18n";
+import { locales } from './i18n';
 
+/**
+ * Campaign interface (wallet.json structure)
+ *
+ * @export
+ * @interface Campaign
+ */
 export interface Campaign {
   title: string;
   mnemonic: string;
@@ -28,39 +34,18 @@ export type Callback = (res: { err?: object; filename?: string }) => void;
 export interface GenerateWalletUserInput {
   title: string;
 }
-export interface CreateTicketsUserInput extends CampaignInfo {
-  ticketCount: number;
-}
-
-export interface CampaignInfo {
-  error?: Error;
-  data?: {
-    title: string;
-    filename: string;
-    mnemonic: string;
-    hdpath: string;
-    mothership: {
-      fullNodePath: string;
-      address: string;
-    };
-  };
-}
 
 export type ScriptName =
-  | "CHECK_TICKETS"
-  | "CREATE_CSV"
-  | "CREATE_TICKETS"
-  | "FUND_MOTHERSHIP"
-  | "FUND_TICKETS"
-  | "GENERATE_STATE"
-  | "GENERATE_WALLETS"
-  | "RECLAIM_FUNDS";
+  | 'CHECK_TICKETS'
+  | 'CREATE_CSV'
+  | 'CREATE_TICKETS'
+  | 'FUND_MOTHERSHIP'
+  | 'FUND_TICKETS'
+  | 'GENERATE_STATE'
+  | 'GENERATE_WALLETS'
+  | 'RECLAIM_FUNDS';
 
 export type Locale = keyof typeof locales;
-
-export type Strings = {
-  [K in keyof typeof enStrings]: typeof enStrings[K];
-};
 
 export interface AddressesCommon {
   hdAccount: string;
@@ -85,8 +70,6 @@ export interface PDF {
   width: string;
   height: string;
 }
-
-export interface CreateCSV extends CreateTicketsResult {}
 
 export interface CSV {
   cashAddress: string;

@@ -1,5 +1,5 @@
-import { Mnemonic } from "bitbox-sdk";
-import settings from "../../settings.json";
+import { Mnemonic } from 'bitbox-sdk';
+import settings from '../../settings.json';
 
 /**
  * Generates a mnemonic

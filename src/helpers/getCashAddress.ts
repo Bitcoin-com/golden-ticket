@@ -1,4 +1,4 @@
-import { ECPair } from "bitbox-sdk";
+import { ECPair } from 'bitbox-sdk';
 
 /**
  * Returns cash address for supplied wif

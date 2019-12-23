@@ -1,22 +1,21 @@
-import fs from "fs-extra";
-import { getLogger } from "log4js";
-import generateWIFs from "./generateWIFs";
-import generateHTML from "./generateHTML";
-import generatePDF from "./generatePDF";
-import settings from "../../settings.json";
-import { selectCampaign } from "../helpers";
+import fs from 'fs-extra';
+import { getLogger } from 'log4js';
+import generateWIFs from './generateWIFs';
+import generateHTML from './generateHTML';
+import generatePDF from './generatePDF';
+import settings from '../../settings.json';
+import { selectCampaign } from '../helpers';
 
-const logger = getLogger("createTickets");
+const logger = getLogger('createTickets');
 
 /**
  * Starts create tickets
  *
- * @returns {Promise<any>}
+ * @returns {Promise<void>}
  */
-const main: any = async (): Promise<any> => {
+const main = async (): Promise<void> => {
   try {
     const campaignData = await selectCampaign();
-    if (campaignData === "CANCELED") return;
 
     const { title } = campaignData;
 
@@ -27,13 +26,14 @@ const main: any = async (): Promise<any> => {
 
     const wifs = await generateWIFs(campaignData);
 
-    logger.info("============================================================");
+    logger.info('============================================================');
     await generateHTML(wifs, campaignData);
-    logger.info("============================================================");
+    logger.info('============================================================');
     await generatePDF(wifs, campaignData);
-    logger.info("============================================================");
-  } catch (err) {
-    return err;
+    logger.info('============================================================');
+  } catch (error) {
+    logger.error(error.message);
+    throw error;
   }
 };
 

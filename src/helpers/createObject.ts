@@ -1,7 +1,7 @@
-import { getLogger } from "log4js";
-import { CSV } from "../interfaces";
-import { sleep, getCashAddress, colorOutput, getTieredValue } from "../helpers";
-import settings from "../../settings.json";
+import { getLogger } from 'log4js';
+import { CSV } from '../interfaces';
+import { sleep, getCashAddress, colorOutput, getTieredValue } from '.';
+import settings from '../../settings.json';
 
 /**
  * Creates CSV object from array of wifs
@@ -10,7 +10,7 @@ import settings from "../../settings.json";
  * @returns {Promise<CSV[]>}
  */
 const createObject = async (wifs: string[]): Promise<CSV[]> => {
-  const logger = getLogger("createCSV");
+  const logger = getLogger('createCSV');
 
   const addresses = await Promise.all(
     wifs.map(async (wif, i) => {
@@ -25,12 +25,12 @@ const createObject = async (wifs: string[]): Promise<CSV[]> => {
       logger.info(
         colorOutput({
           item: `${cashAddress} value:`,
-          value: value.toString()
-        })
+          value: value.toString(),
+        }),
       );
 
       return obj;
-    })
+    }),
   );
 
   return addresses;

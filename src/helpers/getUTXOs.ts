@@ -1,5 +1,4 @@
-import { Address } from "bitbox-sdk";
-import { AddressUtxoResult } from "bitcoin-com-rest";
+import { Address } from 'bitbox-sdk';
 
 /**
  * Get utxos from single address
@@ -8,7 +7,7 @@ import { AddressUtxoResult } from "bitcoin-com-rest";
  * @returns {(Promise<AddressUtxoResult | AddressUtxoResult[]>)}
  */
 const getUTXOs = async (
-  mothershipAddress: string
+  mothershipAddress: string,
 ): Promise<AddressUtxoResult | AddressUtxoResult[]> => {
   try {
     const address = new Address();

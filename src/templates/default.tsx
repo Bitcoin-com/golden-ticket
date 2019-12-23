@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import bgBase64 from "../../assets/bgBase64";
-import settings from "../../settings.json";
-import { Campaign } from "../interfaces";
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import bgBase64 from '../../assets/bgBase64';
+import settings from '../../settings.json';
+import { Campaign } from '../interfaces';
 
 /**
  * Template for HTML page generation
@@ -16,32 +16,32 @@ const template = ({ title }: Campaign, wifQR: string): string => {
     padding: 0,
     margin: 0,
     height: settings.pdfConfig.height,
-    width: settings.pdfConfig.width
+    width: settings.pdfConfig.width,
   };
 
   const containerStyle = {
-    height: "100%",
-    position: "relative" as "relative",
-    backgroundSize: "cover",
-    backgroundImage: `url(${bgBase64})`
+    height: '100%',
+    position: 'relative' as 'relative',
+    backgroundSize: 'cover',
+    backgroundImage: `url(${bgBase64})`,
   };
 
   const { left, top, height } = settings.qrcode;
   const imageStyle = {
-    position: "absolute" as "absolute",
+    position: 'absolute' as 'absolute',
     top,
     left,
-    height
+    height,
   };
 
   const html = (
-    <html>
+    <html lang={settings.defaultLocale}>
       <head>
         <title>{title}</title>
       </head>
       <body style={bodyStyle}>
         <div style={containerStyle}>
-          <img style={imageStyle} src={`${wifQR}`} />
+          <img style={imageStyle} src={`${wifQR}`} alt="WIF QR Code" />
         </div>
       </body>
     </html>

@@ -1,5 +1,5 @@
-import chalk from "chalk";
-import { emoji } from "node-emoji";
+import chalk from 'chalk';
+import { emoji } from 'node-emoji';
 
 /**
  * Colors and formats a question and default answer
@@ -10,19 +10,19 @@ import { emoji } from "node-emoji";
  */
 export const colorQuestion = (
   question: string,
-  defaultAnswer: string
+  defaultAnswer: string,
 ): string => {
-  return [question, chalk.blackBright(` [${defaultAnswer}]`), ": "].join("");
+  return [question, chalk.blackBright(` [${defaultAnswer}]`), ': '].join('');
 };
 
 export enum OutputStyles {
-  Highlight = "highlight",
-  Waiting = "waiting",
-  Complete = "complete",
-  Start = "start",
-  Error = "error",
-  Default = "default",
-  Information = "information"
+  Highlight = 'highlight',
+  Waiting = 'waiting',
+  Complete = 'complete',
+  Start = 'start',
+  Error = 'error',
+  Default = 'default',
+  Information = 'information',
 }
 
 /**
@@ -36,66 +36,66 @@ export enum OutputStyles {
 export const colorOutput = ({
   item,
   value,
-  style = OutputStyles.Default
+  style = OutputStyles.Default,
 }: {
   item: string;
   value: string;
   style?:
-    | "highlight"
-    | "complete"
-    | "error"
-    | "waiting"
-    | "default"
-    | "start"
-    | "information";
+    | 'highlight'
+    | 'complete'
+    | 'error'
+    | 'waiting'
+    | 'default'
+    | 'start'
+    | 'information';
 }): string => {
   switch (style) {
     case OutputStyles.Information: {
       const strings = [
         emoji.grey_question,
-        "",
+        '',
         chalk.cyan(item),
-        chalk.bgWhite(chalk.black(` ${value} `))
+        chalk.bgWhite(chalk.black(` ${value} `)),
       ];
-      return strings.join(" ");
+      return strings.join(' ');
     }
     case OutputStyles.Waiting: {
       const strings = [
         emoji.hourglass_flowing_sand,
-        "",
+        '',
         chalk.cyanBright(item),
-        chalk.green(value)
+        chalk.green(value),
       ];
-      return strings.join(" ");
+      return strings.join(' ');
     }
     case OutputStyles.Start: {
       const strings = [
         emoji.hourglass_flowing_sand,
-        "",
+        '',
         chalk.cyanBright(item),
-        chalk.white(value)
+        chalk.white(value),
       ];
-      return strings.join(" ");
+      return strings.join(' ');
     }
     case OutputStyles.Complete: {
       const strings = [
         emoji.heavy_check_mark,
-        "",
+        '',
         chalk.cyanBright(item),
-        chalk.white(value)
+        chalk.white(value),
       ];
-      return strings.join(" ");
+      return strings.join(' ');
     }
     case OutputStyles.Highlight: {
       const strings = [
         chalk.green(item),
-        chalk.bgYellowBright(chalk.black(` === ${value} === `))
+        chalk.bgYellowBright(chalk.black(` === ${value} === `)),
       ];
-      return strings.join(" ");
+      return strings.join(' ');
     }
     default: {
       const strings = [chalk.green(item), chalk.cyan(value)];
-      return strings.join(" ");
+      return strings.join(' ');
     }
   }
 };

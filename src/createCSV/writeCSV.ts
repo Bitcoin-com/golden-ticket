@@ -1,6 +1,9 @@
-import fs from "fs-extra";
-import { json2csvAsync } from "json-2-csv";
-import { CSV } from "../interfaces";
+import fs from 'fs-extra';
+import { json2csvAsync } from 'json-2-csv';
+import { getLogger } from 'log4js';
+import { CSV } from '../interfaces';
+
+const logger = getLogger('createCSV');
 
 /**
  * Writes out csv file
@@ -15,7 +18,8 @@ const writeCSV = async (filename: string, addresses: CSV[]): Promise<void> => {
 
     fs.writeFileSync(filename, csv);
   } catch (error) {
-    return error;
+    logger.error(error.message);
+    throw error;
   }
 };
 

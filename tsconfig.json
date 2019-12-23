@@ -25,10 +25,13 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
     "strict": true,
-    "resolveJsonModule": true,
-    "paths": { "*": ["node_modules/*"] }
+    "resolveJsonModule": true
   },
-  "include": ["**/*", "node_modules/log4js/lib/appenders/index.js"],
+  "include": [
+    "**/*",
+    "node_modules/log4js/lib/appenders/index.js",
+    "global.d.ts"
+  ],
   "exclude": ["node_modules", "dist", "output", "log"]
   /*   "files": [
     "node_modules/bitbox-sdk/index.ts",

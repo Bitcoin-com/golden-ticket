@@ -1,4 +1,4 @@
-import toRegexRange from "to-regex-range";
+import toRegexRange from 'to-regex-range';
 
 /**
  * Returns a tiered value
@@ -9,13 +9,13 @@ import toRegexRange from "to-regex-range";
  */
 const getTieredValue = (
   number: number,
-  ticketSpread: { [key: string]: number }
+  ticketSpread: { [key: string]: number },
 ): number => {
   const tiers = Object.keys(ticketSpread);
   let value = 1;
 
   tiers.forEach(tier => {
-    const [from, to] = tier.split("-");
+    const [from, to] = tier.split('-');
     const regex = toRegexRange(from, to);
 
     value = RegExp(`^${regex}$`).test(number.toString())
