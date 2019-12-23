@@ -1,10 +1,6 @@
 import qrcode from "qrcode-terminal";
-import {
-  getLogger,
-  colorOutput,
-  promptCampaign,
-  OutputStyles
-} from "../helpers";
+import { getLogger } from "log4js";
+import { colorOutput, OutputStyles, selectCampaign } from "../helpers";
 import { locales } from "../i18n";
 import settings from "../settings.json";
 
@@ -13,7 +9,7 @@ const main: any = async (): Promise<any> => {
     const logger = getLogger("fundMothership");
     const strings = locales[settings.defaultLocale];
 
-    const campaignData = await promptCampaign();
+    const campaignData = await selectCampaign();
     if (campaignData === "CANCELED") return;
 
     const {

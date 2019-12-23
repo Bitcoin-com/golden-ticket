@@ -1,11 +1,11 @@
+import { getLogger } from "log4js";
 import {
-  getLogger,
   colorOutput,
   OutputStyles,
   createObject,
-  promptCampaign,
   getCampaignWIFs
 } from "../helpers";
+import selectCampaign from "../helpers/prompts/selectCampaign";
 import writeCSV from "./writeCSV";
 import settings from "../settings.json";
 import { locales } from "../i18n";
@@ -19,7 +19,7 @@ const main: any = async (): Promise<any> => {
     const strings = locales[settings.defaultLocale];
 
     const logger = getLogger("createCSV");
-    const campaignData = await promptCampaign();
+    const campaignData = await selectCampaign();
     if (campaignData === "CANCELED") return;
 
     const wifs = await getCampaignWIFs(campaignData.title);

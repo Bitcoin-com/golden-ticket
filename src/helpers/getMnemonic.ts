@@ -1,14 +1,11 @@
-import { Mnemonic } from "bitbox-sdk/lib/Mnemonic";
-import { getLogger } from "../helpers";
+import { Mnemonic } from "bitbox-sdk";
 import settings from "../settings.json";
 
-const logger = getLogger("generateMnemonic");
 /**
  * Generates a mnemonic
  * @return {string} The wallet mnemonic string
  */
 const generateMnemonic = (): string => {
-  logger.debug("generateWallet::generateMnemonic");
   const mnemonic = new Mnemonic();
   const language = settings.languages[settings.defaultLocale];
   const wordList = mnemonic.wordLists()[language.toLowerCase()]; // get word list for the selected language

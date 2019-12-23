@@ -1,11 +1,6 @@
+import { getLogger } from "log4js";
 import { CSV } from "../interfaces";
-import {
-  sleep,
-  getCashAddress,
-  getLogger,
-  colorOutput,
-  getTieredValue
-} from "../helpers";
+import { sleep, getCashAddress, colorOutput, getTieredValue } from "../helpers";
 import settings from "../settings.json";
 
 /**

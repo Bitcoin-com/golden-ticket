@@ -1,9 +1,10 @@
 import { Mnemonic, HDNode as BitboxHDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
-import { getLogger } from "../helpers";
+import { getLogger } from "log4js";
 import { Mothership } from "../interfaces";
 
-const logger = getLogger("generateMothership");
+const logger = getLogger("createMothership");
+
 /**
  * Generate mothership wallet
  *
@@ -11,9 +12,8 @@ const logger = getLogger("generateMothership");
  * @param {string} path hdpath to generate HDNode with
  * @returns {Mothership} Object full mothership derivation path and cashaddr
  */
-const generateMothership = (seed: string, path: string): Mothership => {
-  logger.debug("generateWallet::generateMothership");
-
+const createMothership = (seed: string, path: string): Mothership => {
+  logger.debug("createMothership");
   const mnemonic = new Mnemonic();
   const hdnode = new BitboxHDNode();
 
@@ -32,4 +32,4 @@ const generateMothership = (seed: string, path: string): Mothership => {
   return { fullNodePath, address };
 };
 
-export default generateMothership;
+export default createMothership;

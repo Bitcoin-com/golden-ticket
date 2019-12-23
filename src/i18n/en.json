@@ -20,6 +20,10 @@
       "RECLAIM_FUNDS": "Reclaim Funds"
     }
   },
+  "CAMPAIGN": {
+    "TITLE": "Campaign title",
+    "TITLE_DEFAULT": "GoldenTicket"
+  },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",
     "PROMPT_TITLE_DEFAULT": "GoldenTicket",

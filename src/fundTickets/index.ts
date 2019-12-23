@@ -6,13 +6,8 @@ import {
   RawTransactions
 } from "bitbox-sdk";
 import { HDNode, ECPair } from "bitcoincashjs-lib";
-import {
-  getCampaignWIFs,
-  getLogger,
-  promptCampaign,
-  getUTXOs
-} from "../helpers";
-
+import { getLogger } from "log4js";
+import { getCampaignWIFs, selectCampaign, getUTXOs } from "../helpers";
 import buildTransaction from "./buildTransaction";
 
 import { locales } from "../i18n";
@@ -24,14 +19,14 @@ const main: any = async (): Promise<any> => {
     const logger = getLogger("fundTickets");
     const strings = locales[settings.defaultLocale];
 
-    const campaignData = await promptCampaign();
+    const campaignData = await selectCampaign();
     if (campaignData === "CANCELED") return;
 
     const {
       title,
       ticketCount,
       mnemonic: mothershipMnemonic,
-      mothership: { hdPath, address: mothershipAddress }
+      mothership: { fullNodePath, address: mothershipAddress }
     } = campaignData;
 
     const wifs = await getCampaignWIFs(title);
@@ -57,7 +52,7 @@ const main: any = async (): Promise<any> => {
 
     const rootSeed: Buffer = mnemonic.toSeed(mothershipMnemonic);
     const masterHDNode: HDNode = hdnode.fromSeed(rootSeed);
-    const mothership: HDNode = hdnode.derivePath(masterHDNode, hdPath);
+    const mothership: HDNode = hdnode.derivePath(masterHDNode, fullNodePath);
     const account: HDNode = hdnode.derivePath(masterHDNode, `m/44'/145'/0'`);
 
     if (!Array.isArray(utxos)) {

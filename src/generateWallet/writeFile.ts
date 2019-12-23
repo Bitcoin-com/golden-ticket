@@ -1,7 +1,7 @@
 import fs from "fs-extra";
+import { getLogger } from "log4js";
 import printGeneratedWallet from "./printGeneratedWallet";
 import { MnemonicObject } from "../interfaces";
-import { getLogger } from "../helpers";
 
 const logger = getLogger("writeFile");
 

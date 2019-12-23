@@ -1,6 +1,7 @@
 import fs from "fs-extra";
 import QRCode from "qrcode";
-import { getLogger, sleep, colorOutput, OutputStyles } from "../helpers";
+import { getLogger } from "log4js";
+import { sleep, colorOutput, OutputStyles } from "../helpers";
 import { Campaign } from "../interfaces";
 import { defaultTemplate } from "../templates";
 import settings from "../settings.json";

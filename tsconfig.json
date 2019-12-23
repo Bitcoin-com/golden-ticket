@@ -2,14 +2,15 @@
   "compileOnSave": true,
   "compilerOptions": {
     "module": "commonjs",
-    "outDir": "./dist/",
+    "outDir": ".dist",
+    "baseUrl": ".",
     "target": "es6",
     "lib": ["es2017"],
     "moduleResolution": "node",
     "removeComments": true,
     "sourceMap": true,
     "jsx": "react",
-    "allowJs": false,
+    "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -23,15 +24,17 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "resolveJsonModule": true,
+    "paths": { "*": ["node_modules/*"] }
   },
-  "files": [
+  "include": ["**/*", "node_modules/log4js/lib/appenders/index.js"],
+  "exclude": ["node_modules", "dist", "output", "log"]
+  /*   "files": [
+    "node_modules/bitbox-sdk/index.ts",
     "src/globals.d.ts",
-    "src/start.ts",
-    "src/createCSV/index.ts",
-    "src/createTickets/index.ts",
-    "src/fundMothership/index.ts",
-    "src/fundTickets/index.ts",
-    "src/generateWallet/index.ts"
-  ]
+    "src/index.ts",
+    "src/settings.json",
+    "assets/banner.txt"
+  ] */
 }

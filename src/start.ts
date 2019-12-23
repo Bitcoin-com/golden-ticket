@@ -1,13 +1,13 @@
+import { getLogger } from "log4js";
 import path from "path";
 import fs from "fs-extra";
 import chalk from "chalk";
 import readlineSync, { BasicOptions } from "readline-sync";
-import { runScript, getLogger, colorOutput, OutputStyles } from "./helpers";
+import { runScript, colorOutput, OutputStyles } from "./helpers";
 import { locales } from "./i18n";
 
 import settings from "./settings.json";
-
-import { Logger } from "log4js";
+import banner from "../assets/banner.txt";
 
 const { SCRIPTS } = locales[settings.defaultLocale];
 
@@ -32,12 +32,13 @@ const init = async (): Promise<void> => {
       [SCRIPTS.NAMES.GENERATE_STATS]: "generateStats",
       [SCRIPTS.NAMES.RECLAIM_FUNDS]: "reclaimFunds"
     };
-    const logger: Logger = getLogger("start");
+    const logger = getLogger("start");
 
     // display the golden ticket ascii text
-    const bannerPath: string = path.resolve(__dirname, "../assets/banner.txt");
-    const banner: string = fs.readFileSync(bannerPath).toString();
-    logger.info(chalk.yellowBright(banner));
+    const bannerString: string = fs
+      .readFileSync(path.resolve("dist", banner))
+      .toString();
+    logger.info(chalk.yellowBright(bannerString));
 
     const scriptKeys: string[] = Object.keys(scripts);
 

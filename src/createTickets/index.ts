@@ -1,9 +1,10 @@
 import fs from "fs-extra";
+import { getLogger } from "log4js";
 import generateWIFs from "./generateWIFs";
 import generateHTML from "./generateHTML";
 import generatePDF from "./generatePDF";
 import settings from "../settings.json";
-import { getLogger, promptCampaign } from "../helpers";
+import { selectCampaign } from "../helpers";
 
 const logger = getLogger("createTickets");
 
@@ -14,7 +15,7 @@ const logger = getLogger("createTickets");
  */
 const main: any = async (): Promise<any> => {
   try {
-    const campaignData = await promptCampaign();
+    const campaignData = await selectCampaign();
     if (campaignData === "CANCELED") return;
 
     const { title } = campaignData;

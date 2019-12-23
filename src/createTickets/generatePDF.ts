@@ -1,7 +1,8 @@
 import fs from "fs-extra";
 import pdf from "html-pdf";
 import { Campaign } from "../interfaces";
-import { sleep, getLogger, colorOutput, OutputStyles } from "../helpers";
+import { getLogger } from "log4js";
+import { sleep, colorOutput, OutputStyles } from "../helpers";
 import settings from "../settings.json";
 import { locales } from "../i18n";
 

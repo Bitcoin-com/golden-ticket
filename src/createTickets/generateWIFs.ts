@@ -1,8 +1,9 @@
 import fs from "fs-extra";
+import { getLogger } from "log4js";
 import { Mnemonic, HDNode as BB_HDNode } from "bitbox-sdk";
 import { HDNode } from "bitcoincashjs-lib";
 import { Campaign } from "../interfaces";
-import { getLogger, sleep, colorOutput, OutputStyles } from "../helpers";
+import { sleep, colorOutput, OutputStyles } from "../helpers";
 import settings from "../settings.json";
 import { locales } from "../i18n";
 

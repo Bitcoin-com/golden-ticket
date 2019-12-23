@@ -1,7 +1,6 @@
-import { getLogger, configure, Logger } from "log4js";
 import settings from "../settings.json";
 
-const loggerConfig = {
+export default {
   appenders: {
     app: {
       type: "file",
@@ -32,7 +31,3 @@ const loggerConfig = {
     }
   }
 };
-
-configure(loggerConfig);
-
-export default getLogger;

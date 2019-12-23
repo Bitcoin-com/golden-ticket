@@ -4,10 +4,7 @@ export interface Campaign {
   title: string;
   mnemonic: string;
   hdpath: string;
-  mothership: {
-    hdPath: string;
-    address: string;
-  };
+  mothership: Mothership;
   ticketCount: number;
 }
 
@@ -15,6 +12,7 @@ export interface Mothership {
   fullNodePath: string;
   address: string;
 }
+
 export interface ArgumentsMap {
   locale: Locale;
   debug?: string;
