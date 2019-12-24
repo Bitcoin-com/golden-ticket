@@ -19,16 +19,7 @@ const selectCampaign = async (): Promise<Campaign | null> => {
   const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale as Locale);
 
   try {
-    // ensure output directory
-    fs.ensureDirSync(settings.outDir);
-
-    // get list of directories
-    const dirs = fs.readdirSync(path.resolve(settings.outDir));
-    dirs.push(chalk.yellow('+ ADD NEW'));
-
-    // eslint-disable-next-line no-console
-    console.clear();
-
+    // print title
     logger.info(
       colorOutput({
         item: CAMPAIGN.CAMPAIGNS_TITLE,
@@ -36,10 +27,20 @@ const selectCampaign = async (): Promise<Campaign | null> => {
       }),
     );
 
+    // ensure output directory
+    fs.ensureDirSync(settings.outDir);
+
+    // get list of directories
+    const dirs = fs.readdirSync(path.resolve(settings.outDir));
+    dirs.push(chalk.green(SCRIPTS.ADD_NEW));
+
     // promp user to select directory
     const index = readlineSync.keyInSelect(
       dirs.map(d => chalk.cyan(d)),
-      colorOutput({ item: SCRIPTS.SELECT_CAMPAIGN, value: '' }),
+      colorOutput({
+        item: SCRIPTS.SELECT_CAMPAIGN,
+        style: OutputStyles.Question,
+      }),
       { cancel: chalk.red(SCRIPTS.EXIT) },
     );
 
@@ -49,14 +50,12 @@ const selectCampaign = async (): Promise<Campaign | null> => {
     // create campaign if user clicks Add
     if (index === dirs.length - 1) return await createCampaign();
 
-    // get the filename ready
+    // write the config file and start createCampaign
     const campaignWallet = `${settings.outDir}/${dirs[index]}/config.json`;
-
-    // get the campaign file
     const rawFile = fs.readFileSync(campaignWallet).toString();
     const campaign = JSON.parse(rawFile);
 
-    await createCampaign(campaign);
+    return await createCampaign(campaign);
   } catch (error) {
     throw logger.error(error);
   }

@@ -2,10 +2,8 @@ import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
 import path from 'path';
-import Ajv from 'ajv';
 import chalk from 'chalk';
 import settings from '../../settings.json';
-import schema from '../schema/template.json';
 import { getLocales } from '../i18n';
 import { colorOutput, OutputStyles } from '../helpers';
 
@@ -19,12 +17,7 @@ const selectTemplate = async (): Promise<Template | null> => {
   const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale as Locale);
 
   try {
-    // eslint-disable-next-line no-console
-    console.clear();
-    // get list of directories
-    const dirs = fs.readdirSync(path.resolve(settings.templateDir));
-    if (dirs.length === 0) throw Error('No templates');
-
+    // prints title
     logger.info(
       colorOutput({
         item: CAMPAIGN.TEMPLATES_TITLE,
@@ -32,13 +25,16 @@ const selectTemplate = async (): Promise<Template | null> => {
       }),
     );
 
-    const getTempalteDir = (dir: string): string =>
-      `${settings.templateDir}/${dir}/config.json`;
+    // gets list of directories
+    const dirs = fs.readdirSync(path.resolve(settings.templateDir));
+    if (dirs.length === 0) throw Error('No templates');
 
+    // maps all available templates
     const templates = dirs.map(dir => {
-      // read and parse the template config
       const template = JSON.parse(
-        fs.readFileSync(getTempalteDir(dir)).toString(),
+        fs
+          .readFileSync(`${settings.templateDir}/${dir}/config.json`)
+          .toString(),
       );
       return template;
     });
@@ -46,23 +42,17 @@ const selectTemplate = async (): Promise<Template | null> => {
     // promp user to select directory
     const index = readlineSync.keyInSelect(
       templates.map(t => chalk.cyan(t.title)),
-      colorOutput({ item: SCRIPTS.SELECT_TEMPLATE }),
+      colorOutput({
+        item: SCRIPTS.SELECT_TEMPLATE,
+        style: OutputStyles.Question,
+      }),
       { cancel: chalk.red(SCRIPTS.EXIT), defaultInput: '1' },
     );
 
     // return null if user cancels
     if (index === -1) return null;
 
-    const template = JSON.parse(
-      fs.readFileSync(getTempalteDir(dirs[index])).toString(),
-    );
-
-    // validate template config with schema
-    const ajv = new Ajv();
-    const validate = ajv.compile(schema);
-    if (!validate(template)) throw Error('Invalid Template');
-
-    return template;
+    return templates[index];
   } catch (error) {
     throw logger.error(error);
   }

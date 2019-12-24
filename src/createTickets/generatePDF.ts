@@ -4,6 +4,7 @@ import { getLogger } from 'log4js';
 import { sleep, colorOutput, OutputStyles } from '../helpers';
 import settings from '../../settings.json';
 import { getLocales } from '../i18n';
+import getTemplates from '../helpers/getTemplates';
 
 const logger = getLogger('generatePDF');
 const strings = getLocales(settings.locale);
@@ -38,7 +39,9 @@ const generatePDF = async (
       // get html file
       const privKeyWIFsHtml: string = fs.readFileSync(htmlFilename, 'utf8');
 
-      pdf.create(privKeyWIFsHtml, template.pdf).toFile(pdfFilename);
+      pdf
+        .create(privKeyWIFsHtml, await getTemplates()[template].pdf)
+        .toFile(pdfFilename);
       logger.info(
         colorOutput({
           item: strings.CREATE_TICKETS.INFO_GENERATED_PDF,

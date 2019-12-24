@@ -1,8 +1,7 @@
 import { getLogger, configure } from 'log4js';
-import readlineSync from 'readline-sync';
-import selectCampaign from '../prompts/selectCampaign';
-import loggerConfig from '../helpers/loggerConfig';
-import createCampaign from '../prompts/createCampaign';
+import selectCampaign from './prompts/selectCampaign';
+import loggerConfig from './helpers/loggerConfig';
+
 /**
  * Starts campaign configuration
  *

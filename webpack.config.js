@@ -8,7 +8,7 @@ const plugins = [new ForkTsCheckerWebpackPlugin(), new ProgressPlugin()];
 
 const entry = {
   start: ['./src/start.ts'],
-  configureCampaign: ['./src/configureCampaign/index.ts'],
+  configureCampaign: ['./src/configureCampaign.ts'],
 };
 
 const files = {

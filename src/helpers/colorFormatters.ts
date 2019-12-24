@@ -8,16 +8,15 @@ import { emoji } from 'node-emoji';
  * @param {string} defaultAnswer
  * @returns {string} Formatted question - `question [defaultAnswer]`
  */
-export const colorQuestion = (
+/* export const colorQuestion = (
   question: string,
-  defaultAnswer: string,
+  defaultAnswer?: string,
 ): string => {
-  return [
-    chalk.green(question),
-    chalk.blackBright(` [${defaultAnswer}]`),
-    ': ',
-  ].join('');
-};
+  const q = chalk.green(question);
+  const a = defaultAnswer ? chalk.blackBright(`[${defaultAnswer}]`) : '';
+
+  return `${q} ${a}`;
+}; */
 
 export enum OutputStyles {
   Highlight = 'highlight',
@@ -44,9 +43,11 @@ export const colorOutput = ({
   item,
   value = '',
   style = OutputStyles.Default,
+  lineabreak = false,
 }: {
   item: string;
   value?: string;
+  lineabreak?: boolean;
   style?:
     | 'highlight'
     | 'complete'
@@ -61,15 +62,11 @@ export const colorOutput = ({
 }): string => {
   switch (style) {
     case OutputStyles.Warning:
-      return chalk.bgRed(chalk.white(item));
+      return chalk.bgRed(chalk.white(` ${item} `));
     case OutputStyles.Question: {
-      const strings = [
-        emoji.grey_question,
-        '',
-        chalk.yellow(item),
-        chalk.cyan(value),
-      ];
-      return strings.join(' ');
+      const q = chalk.magentaBright(item);
+      const a = value ? chalk.white(`[${value}]: `) : '';
+      return `${q} ${a}`;
     }
     case OutputStyles.Information: {
       const strings = [
@@ -106,8 +103,10 @@ export const colorOutput = ({
       return strings.join(' ');
     }
     case OutputStyles.Title: {
-      const strings = [chalk.bgGreen(chalk.black(` === ${item} === `))];
-      return strings.join('');
+      // eslint-disable-next-line no-console
+      console.clear();
+      const string = chalk.bgYellowBright(chalk.black(` === ${item} === `));
+      return lineabreak ? `${string}\n` : string;
     }
     case OutputStyles.Highlight: {
       const strings = [
@@ -117,7 +116,9 @@ export const colorOutput = ({
       return strings.join(' ');
     }
     default:
-      return `${chalk.whiteBright(item)} ${chalk.cyan(value)}`;
+      return `${chalk.whiteBright(item)}: ${chalk.cyan(value)}${
+        lineabreak ? '\n' : ''
+      }`;
   }
 };
 

@@ -2,11 +2,11 @@ import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
 import settings from '../../settings.json';
 import { getLocales } from '../i18n';
-import { colorQuestion, colorOutput } from '../helpers';
+import { colorOutput, OutputStyles } from '../helpers';
 
 const createSpread = async (count: number): Promise<Spread | null> => {
   const logger = getLogger();
-  const { CAMPAIGN } = getLocales(settings.locale);
+  const { CAMPAIGN, TITLES } = getLocales(settings.locale);
 
   try {
     // eslint-disable-next-line no-console
@@ -18,42 +18,52 @@ const createSpread = async (count: number): Promise<Spread | null> => {
     let spread: Spread = { '0': 1 };
 
     while (lastRange < count) {
-      // show current spread status
+      // eslint-disable-next-line no-console
+      console.clear();
 
-      logger.debug('createSpread', count, lastRange, lastValue, spread);
+      // show current spread status
       logger.info(
         colorOutput({
-          item: 'Remaining tickets',
+          item: TITLES.CREATE_SPREAD,
+          style: OutputStyles.Title,
+          lineabreak: true,
+        }),
+      );
+
+      logger.info(
+        colorOutput({
+          item: CAMPAIGN.SPREAD_TICKETS_REMAINING,
           value: `${count - lastRange}/${count}`,
         }),
       );
       logger.info(
         colorOutput({
-          item: 'Last spread value',
+          item: CAMPAIGN.SPREAD_VALUE_LAST,
           value: `${lastValue}`,
         }),
       );
-
       logger.info(
         colorOutput({
-          item: CAMPAIGN.SPREAD_COUNT,
+          item: CAMPAIGN.SPREAD_TOTALS,
           value: `${Object.keys(spread).length - 1}`,
         }),
       );
 
       const next = readlineSync.questionInt(
-        colorQuestion(
-          `${CAMPAIGN.SPREAD_RANGE} ${lastRange}`,
-          `${lastRange + 1}-${count}`,
-        ),
+        colorOutput({
+          item: `${CAMPAIGN.SPREAD_RANGE} ${lastRange}`,
+          value: `${lastRange + 1}-${count}`,
+          style: OutputStyles.Question,
+        }),
         { defaultInput: `${lastRange + 1}` },
       );
 
       const value = readlineSync.questionInt(
-        colorQuestion(
-          `${CAMPAIGN.SPREAD_VALUE} ${lastRange}-${next}`,
-          `${lastValue + 1}`,
-        ),
+        colorOutput({
+          item: `${CAMPAIGN.SPREAD_VALUE} ${lastRange}-${next}`,
+          value: `${lastValue + 1}`,
+          style: OutputStyles.Question,
+        }),
         {
           defaultInput: `${lastValue + 1}`,
         },

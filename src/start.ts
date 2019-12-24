@@ -69,6 +69,13 @@ const init = async (): Promise<void> => {
     logger.debug('start:init');
     showBanner();
 
+    // validate
+    // validate template config with schema
+    /*     const ajv = new Ajv();
+    const validate = ajv.compile(schema);
+    if (!validate(template)) throw Error('Invalid Template');
+ */
+
     const scripts = {
       [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
       [SCRIPTS.NAMES.CREATE_TICKETS]: 'createTickets',
@@ -84,7 +91,10 @@ const init = async (): Promise<void> => {
 
     const index = readlineSync.keyInSelect(
       scriptKeys.map(key => chalk.cyan(key)),
-      colorOutput({ item: SCRIPTS.PROMPT_SCRIPT }),
+      colorOutput({
+        item: SCRIPTS.PROMPT_SCRIPT,
+        style: OutputStyles.Question,
+      }),
       { cancel: chalk.red(SCRIPTS.EXIT) },
     );
 

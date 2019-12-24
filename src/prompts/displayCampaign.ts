@@ -16,9 +16,9 @@ import { getLocales } from '../i18n';
  * @returns {Promise<void>}
  */
 const displayCampaign = async (campaign: Campaign): Promise<void> => {
-  const logger = getLogger('printGeneratedWallet');
+  const logger = getLogger();
   const strings = getLocales(settings.locale);
-  logger.debug('generateWallet:printGeneratedWallet()');
+  logger.debug('displayCampaign()');
   try {
     const {
       title,

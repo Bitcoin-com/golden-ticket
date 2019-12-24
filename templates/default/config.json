@@ -1,5 +1,6 @@
 {
   "title": "Default",
+  "name": "default",
   "pdf": {
     "height": "260mm",
     "width": "170mm"

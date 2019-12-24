@@ -1,7 +1,7 @@
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
 import chalk from 'chalk';
-import { colorQuestion } from '../helpers/colorFormatters';
+import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
 import { getLocales } from '../i18n';
 import settings from '../../settings.json';
 import createSpread from './createSpread';
@@ -11,18 +11,29 @@ import createSpread from './createSpread';
  *
  * @returns {(Promise<Tickets | null>)}
  */
-const createTickets = async (): Promise<Tickets | null> => {
+const createTickets = async (master?: Campaign): Promise<Tickets | null> => {
   const logger = getLogger();
   const { locale, tickets } = settings;
-  const { CAMPAIGN } = getLocales(locale as Locale);
+  const { CAMPAIGN, TITLES } = getLocales(locale as Locale);
   logger.debug('createTickets');
-
+  logger.debug(master);
   try {
-    // eslint-disable-next-line no-console
-    console.clear();
+    // prints title
+    logger.info(
+      colorOutput({
+        item: TITLES.CREATE_TICKETS,
+        style: OutputStyles.Title,
+        lineabreak: true,
+      }),
+    );
+
     // get total number of tickets
     const count: number = readlineSync.questionInt(
-      colorQuestion(CAMPAIGN.TICKETS_NUMBER, tickets.toString()),
+      colorOutput({
+        item: CAMPAIGN.TICKETS_NUMBER,
+        value: tickets.toString(),
+        style: OutputStyles.Question,
+      }),
       {
         defaultInput: tickets.toString(),
         limit: '^[0-9]{1,5}$',
@@ -37,7 +48,7 @@ const createTickets = async (): Promise<Tickets | null> => {
 
     logger.info("Here's the spread", spread);
 
-    readlineSync.keyInPause();
+    readlineSync.keyInPause('Hope you like it');
     return {
       count,
       spread,

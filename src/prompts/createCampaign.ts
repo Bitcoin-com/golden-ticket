@@ -5,45 +5,60 @@ import settings from '../../settings.json';
 import createMothership from './createMothership';
 import selectTemplate from './selectTemplate';
 import { getLocales } from '../i18n';
-import {
-  colorQuestion,
-  colorOutput,
-  OutputStyles,
-} from '../helpers/colorFormatters';
+import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
 import createTickets from './createTickets';
 import displayCampaign from './displayCampaign';
 
 /**
  * Takes user through campaign configuration
  *
- * @returns {Promise<Campaign>}
+ * @param {Campaign} [master]
+ * @returns {(Promise<Campaign | null>)}
  */
 const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
   const logger = getLogger();
-  const { CAMPAIGN } = getLocales(settings.locale as Locale);
-  logger.debug('createCampaign');
+  const { CAMPAIGN, TITLES } = getLocales(settings.locale as Locale);
 
   try {
-    // eslint-disable-next-line no-console
-    console.clear();
     // template
     const template = await selectTemplate();
     if (!template) return null;
 
-    // eslint-disable-next-line no-console
-    console.clear();
-    // title
+    logger.info(
+      colorOutput({
+        item: TITLES.CREATE_CAMPAIGN,
+        style: OutputStyles.Title,
+        lineabreak: true,
+      }),
+    );
+
+    // display current title if editing campaign
+    if (master) {
+      logger.info(
+        colorOutput({
+          item: CAMPAIGN.TITLE_CURRENT,
+          value: master.title,
+          lineabreak: true,
+        }),
+      );
+    }
+
+    // the title
     const title: string = readlineSync.question(
-      colorQuestion(CAMPAIGN.TITLE, CAMPAIGN.TITLE_DEFAULT),
+      colorOutput({
+        item: CAMPAIGN.TITLE,
+        value: CAMPAIGN.TITLE_DEFAULT,
+        style: OutputStyles.Question,
+      }),
       { defaultInput: master ? master.title : CAMPAIGN.TITLE_DEFAULT },
     );
 
     // mothership
-    const mothership = await createMothership(settings.hdpath);
+    const mothership = await createMothership(settings.hdpath, master);
     if (!mothership) return null;
 
     // tickets
-    const tickets = await createTickets();
+    const tickets = await createTickets(master);
     if (!tickets) return null;
 
     // put it all together

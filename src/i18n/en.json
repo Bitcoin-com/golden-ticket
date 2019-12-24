@@ -10,6 +10,7 @@
     "ERROR": "Something went wrong!",
     "SELECT_TEMPLATE": "Select a template to use",
     "CAMPAIGN_OVERWRITE": "Previous campaign data will be overwritten, are you sure?",
+    "ADD_NEW": "+ ADD NEW",
     "NAMES": {
       "CONFIGURE_CAMPAIGN": "Configure Campaign",
       "CREATE_TICKETS": "Create Tickets",
@@ -21,13 +22,21 @@
       "RECLAIM_FUNDS": "Reclaim Funds"
     }
   },
+  "TITLES": {
+    "CREATE_MNEMONIC": "Mnemonic",
+    "CREATE_CAMPAIGN": "Campaign Title",
+    "CREATE_TICKETS": "Create Tickets",
+    "CREATE_SPREAD": "Create Spread",
+    "CREATE_MOTHERSHIP": "Mothership"
+  },
   "ERRORS": {
     "NO_CAMPAIGNS": "No campaigns found, create one?"
   },
   "CAMPAIGN": {
     "CAMPAIGNS_TITLE": "Campaigns",
     "TEMPLATES_TITLE": "Templates",
-    "TITLE": "Choose Campaign title",
+    "TITLE": "Choose a title",
+    "TITLE_CURRENT": "Current Title",
     "TITLE_DEFAULT": "GoldenTicket",
     "TICKETS_NUMBER": "Number of tickets",
     "SPREAD_LIMIT": "Must be between 1 and 10",
@@ -35,13 +44,14 @@
     "SPREAD_DEFAULT": "1-10 (0 to exit)",
     "SPREAD_RANGE": "Spread range, tickets from",
     "SPREAD_VALUE": "Value for tickets",
-    "SPREAD_COUNT": "Total spreads",
     "SPREAD_CONFIRM": "Are you happy with the spread?",
+    "SPREAD_TOTALS": "Total spreads",
+    "SPREAD_TICKETS_REMAINING": "Remaining tickets",
+    "SPREAD_VALUE_LAST": "Last spread value",
     "NO_CAMPAIGNS": "No campaigns found, create one?",
-    "MNEMONIC": "Generate a mnemoic?",
+    "MNEMONIC": "Generate a new mnemoic?",
+    "MNEMONIC_CURRENT": "Current mnemonic",
     "MNEMONIC_ENTER": "Enter your mnemoic",
-    "MNEMONIC_ENTER_DEFAULT": "Y/n",
-    "MNEMONIC_DEFAULT": "y/n-use your own",
     "INFO_CAMPAIGN": "Campign",
     "INFO_MNEMONIC": "Mnemonic",
     "INFO_HDPATH": "HDPath",
