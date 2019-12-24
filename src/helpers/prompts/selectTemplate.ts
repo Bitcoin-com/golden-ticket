@@ -19,7 +19,7 @@ const selectCampaign = async (): Promise<Campaign | null> => {
 
   try {
     // ensure output directory
-    fs.ensureDirSync(settings.outDir);
+    fs.ensureDirSync(settings.templateDir);
 
     // get list of directories
     const dirs = fs.readdirSync(path.resolve(settings.outDir));

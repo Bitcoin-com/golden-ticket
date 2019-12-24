@@ -10,52 +10,39 @@ import {
 } from 'bitbox-sdk';
 import { HDNode, ECPair } from 'bitcoincashjs-lib';
 import { getLogger } from 'log4js';
-import { getCampaignWIFs, selectCampaign, getUTXOs } from '../helpers';
+import { selectCampaign, getUTXOs } from '../helpers';
 
-import { locales } from '../i18n';
+import { getLocales } from '../i18n';
 import settings from '../../settings.json';
 
 const logger = getLogger('fundTickets');
+const strings = getLocales(settings.locale);
 // Open the wallet generated with generate-wallet.
 const main = async (): Promise<void> => {
   try {
     logger.debug('fundTickets');
-    const strings = locales[settings.defaultLocale];
 
     const campaignData = await selectCampaign();
-    if (campaignData === 'CANCELED') return;
+    if (!campaignData) return;
 
-    const {
-      title,
-      ticketCount,
-      mnemonic: mothershipMnemonic,
-      mothership: { fullNodePath, address: mothershipAddress },
-    } = campaignData;
-
-    const wifs = await getCampaignWIFs(title);
+    // const wifs = await getCampaignWIFs(campaignData.title);
 
     /*     const transaction = await buildTransaction({ ticketCount });
     console.log(transaction);
  */
     if (strings) return;
 
-    const spacer = `
-
-
-
-
-
-
-
-`;
-    const utxos = await getUTXOs(mothershipAddress);
+    const utxos = await getUTXOs(campaignData.mothership.address);
 
     const mnemonic = new Mnemonic();
     const hdnode = new BBHDNode();
 
-    const rootSeed: Buffer = mnemonic.toSeed(mothershipMnemonic);
+    const rootSeed: Buffer = mnemonic.toSeed(campaignData.mothership.mnemonic);
     const masterHDNode: HDNode = hdnode.fromSeed(rootSeed);
-    const mothership: HDNode = hdnode.derivePath(masterHDNode, fullNodePath);
+    const mothership: HDNode = hdnode.derivePath(
+      masterHDNode,
+      campaignData.mothership.fullNodePath,
+    );
     const account: HDNode = hdnode.derivePath(masterHDNode, `m/44'/145'/0'`);
 
     if (!Array.isArray(utxos)) {
@@ -72,7 +59,7 @@ const main = async (): Promise<void> => {
 
       const byteCount: number = bitcoinCash.getByteCount(
         { P2PKH: 1 },
-        { P2PKH: ticketCount },
+        { P2PKH: campaignData.tickets.count },
       );
 
       const sendAmount: number = originalAmount - byteCount;
@@ -80,7 +67,11 @@ const main = async (): Promise<void> => {
       const tmpIterator = 20; // parseInt(iterator);
 
       const iterator: number = tmpIterator || 0;
-      for (let i: number = iterator; i < ticketCount + iterator; i++) {
+      for (
+        let i: number = iterator;
+        i < campaignData.tickets.count + iterator;
+        i++
+      ) {
         // derive the ith external change address HDNode
         const node: HDNode = hdnode.derivePath(account, `0/${i}`);
 
@@ -92,7 +83,7 @@ const main = async (): Promise<void> => {
         // add output w/ address and amount to send
         transactionBuilder.addOutput(
           cashAddress,
-          Math.floor(sendAmount / ticketCount),
+          Math.floor(sendAmount / campaignData.tickets.count),
         );
       }
 

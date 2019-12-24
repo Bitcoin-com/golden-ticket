@@ -2,12 +2,12 @@ import fs from 'fs-extra';
 import QRCode from 'qrcode';
 import { getLogger } from 'log4js';
 import { sleep, colorOutput, OutputStyles } from '../helpers';
-import { Campaign } from '../interfaces';
-import defaultTemplate from '../templates/default';
+import defaultTemplate from '../../templates/default';
 import settings from '../../settings.json';
-import { locales } from '../i18n';
+import { getLocales } from '../i18n';
 
 const logger = getLogger('generateHTML');
+const strings = getLocales(settings.locale);
 
 /**
  * Generates HTML files
@@ -21,35 +21,37 @@ const generateHTML = async (
   campaignData: Campaign,
 ): Promise<void> => {
   try {
-    const strings = locales[settings.defaultLocale];
-
     const { title } = campaignData;
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_HTML,
+        item: strings.CREATE_TICKETS.INFO_GENERATING_HTML,
         value: title,
         style: OutputStyles.Start,
       }),
     );
 
-    wifs.forEach(async wif => {
+    wifs.forEach(async (wif: string) => {
       await sleep(settings.timer);
-      const filename = `${settings.outDir}/${title}/html/${wifs[wif]}.html`;
+
+      const filename = `${settings.outDir}/${title}/html/${wif}.html`;
       QRCode.toDataURL(
-        wifs[wif],
+        wif,
         { margin: 0 },
         (_err: Error, wifQR: string): Promise<void> =>
           fs.writeFile(filename, defaultTemplate(campaignData, wifQR)),
       );
       logger.info(
-        colorOutput({ item: strings.INFO_GENERATED_HTML, value: filename }),
+        colorOutput({
+          item: strings.CREATE_TICKETS.INFO_GENERATED_HTML,
+          value: filename,
+        }),
       );
     });
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_HTML_COMPLETE,
+        item: strings.CREATE_TICKETS.INFO_GENERATING_HTML_COMPLETE,
         value: title,
         style: OutputStyles.Complete,
       }),

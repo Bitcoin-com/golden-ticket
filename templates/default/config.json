@@ -1,0 +1,11 @@
+{
+  "pdf": {
+    "height": "260mm",
+    "width": "170mm"
+  },
+  "qrcode": {
+    "size": "34.5mm",
+    "left": "68mm",
+    "top": "102mm"
+  }
+}

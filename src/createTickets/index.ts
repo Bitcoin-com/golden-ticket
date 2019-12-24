@@ -16,7 +16,7 @@ const logger = getLogger('createTickets');
 const main = async (): Promise<void> => {
   try {
     const campaignData = await selectCampaign();
-
+    if (!campaignData) return;
     const { title } = campaignData;
 
     // create needed directory structure

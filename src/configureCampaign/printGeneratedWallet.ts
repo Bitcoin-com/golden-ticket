@@ -1,11 +1,10 @@
 import { getLogger } from 'log4js';
 import { colorOutput, OutputStyles, sleep } from '../helpers';
 import settings from '../../settings.json';
-import { locales } from '../i18n';
-import { Campaign } from '../interfaces';
+import { getLocales } from '../i18n';
 
 const logger = getLogger('printGeneratedWallet');
-const strings = locales[settings.defaultLocale];
+const strings = getLocales(settings.locale);
 
 /**
  * Prints out campaign information
@@ -30,32 +29,39 @@ const displayCampaignInfo = async ({
     logger.debug('generateWallet:printGeneratedWallet()');
 
     const {
-      mnemonic,
-      hdpath,
       title,
-      mothership: { fullNodePath, address },
+      mothership: { fullNodePath, address, mnemonic, hdpath },
     } = data;
 
     logger.info(
       colorOutput({
-        item: strings.INFO_CAMPAIGN,
+        item: strings.CAMPAIGN.INFO_CAMPAIGN,
         value: title,
         style: OutputStyles.Highlight,
       }),
     );
     await sleep(settings.timer);
-    logger.info(colorOutput({ item: strings.INFO_MNEMONIC, value: mnemonic }));
-    await sleep(settings.timer);
-    logger.info(colorOutput({ item: strings.INFO_HDPATH, value: hdpath }));
-    await sleep(settings.timer);
     logger.info(
-      colorOutput({ item: strings.INFO_HDNODE, value: fullNodePath }),
+      colorOutput({ item: strings.CAMPAIGN.INFO_MNEMONIC, value: mnemonic }),
     );
     await sleep(settings.timer);
-    logger.info(colorOutput({ item: strings.INFO_ADDRESS, value: address }));
+    logger.info(
+      colorOutput({ item: strings.CAMPAIGN.INFO_HDPATH, value: hdpath }),
+    );
     await sleep(settings.timer);
     logger.info(
-      colorOutput({ item: strings.INFO_WRITE_SUCCESS, value: filename }),
+      colorOutput({ item: strings.CAMPAIGN.INFO_HDNODE, value: fullNodePath }),
+    );
+    await sleep(settings.timer);
+    logger.info(
+      colorOutput({ item: strings.CAMPAIGN.INFO_ADDRESS, value: address }),
+    );
+    await sleep(settings.timer);
+    logger.info(
+      colorOutput({
+        item: strings.CAMPAIGN.INFO_WRITE_SUCCESS,
+        value: filename,
+      }),
       '\n',
     );
   } catch (error) {

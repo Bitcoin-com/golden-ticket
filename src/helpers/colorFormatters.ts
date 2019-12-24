@@ -23,6 +23,7 @@ export enum OutputStyles {
   Error = 'error',
   Default = 'default',
   Information = 'information',
+  Question = 'question',
 }
 
 /**
@@ -35,11 +36,11 @@ export enum OutputStyles {
  */
 export const colorOutput = ({
   item,
-  value,
+  value = '',
   style = OutputStyles.Default,
 }: {
   item: string;
-  value: string;
+  value?: string;
   style?:
     | 'highlight'
     | 'complete'
@@ -47,15 +48,25 @@ export const colorOutput = ({
     | 'waiting'
     | 'default'
     | 'start'
-    | 'information';
+    | 'information'
+    | 'question';
 }): string => {
   switch (style) {
+    case OutputStyles.Question: {
+      const strings = [
+        emoji.grey_question,
+        '',
+        chalk.yellow(item),
+        chalk.cyan(value),
+      ];
+      return strings.join(' ');
+    }
     case OutputStyles.Information: {
       const strings = [
         emoji.grey_question,
         '',
         chalk.cyan(item),
-        chalk.bgWhite(chalk.black(` ${value} `)),
+        value ? chalk.bgWhite(chalk.black(` ${value} `)) : '',
       ];
       return strings.join(' ');
     }

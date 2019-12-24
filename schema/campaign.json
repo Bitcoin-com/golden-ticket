@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Campaign Settings",
+  "description": "Campaign configuration schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "description": "Campaign Title",
+      "type": "string"
+    },
+    "mothership": {
+      "description": "Mothership wallet",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "fullNodePath": {
+          "type": "string",
+          "description": "Full HDNode path for mothership"
+        },
+        "address": {
+          "type": "string",
+          "description": "Mothership funding cashaddr"
+        },
+        "mnemonic": {
+          "type": "string",
+          "description": "The mothership mnemonic"
+        },
+        "hdpath": {
+          "type": "string",
+          "description": "HDPath of mothership"
+        }
+      },
+      "required": ["fullNodePath", "address", "mnemonic", "hdpath"]
+    },
+    "tickets": {
+      "description": "Campaign ticket configuration",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "description": "Number of tickets in the campaign",
+          "type": "number"
+        },
+        "spread": {
+          "description": "Ticket funding distribution spread",
+          "minProperties": 1,
+          "maxProperties": 10,
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(0|[1-9][0-9]*)$",
+            "type": "string"
+          }
+        }
+      },
+      "required": ["count", "spread"]
+    }
+  },
+  "required": ["title", "mothership", "tickets"]
+}

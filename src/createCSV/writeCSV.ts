@@ -1,7 +1,6 @@
 import fs from 'fs-extra';
 import { json2csvAsync } from 'json-2-csv';
 import { getLogger } from 'log4js';
-import { CSV } from '../interfaces';
 
 const logger = getLogger('createCSV');
 

@@ -20,12 +20,24 @@
     }
   },
   "ERRORS": {
-    "NO_CAMPAIGNS": "No campaigns found, creating one"
+    "NO_CAMPAIGNS": "No campaigns found, create one?"
   },
   "CAMPAIGN": {
-    "TITLE": "Campaign title:",
+    "TITLE": "Choose Campaign title:",
     "TITLE_DEFAULT": "GoldenTicket",
-    "TICKETS_NUMBER": "Number of tickets:"
+    "TICKETS_NUMBER": "Number of tickets:",
+    "NO_CAMPAIGNS": "No campaigns found, create one?",
+    "MNEMONIC": "Enter your own mnemoic?",
+    "MNEMONIC_ENTER": "Enter your mnemoic",
+    "MNEMONIC_ENTER_DEFAULT": "return nothing to cancel",
+    "MNEMONIC_DEFAULT": "no to auto-generate",
+    "INFO_CAMPAIGN": "Campign:",
+    "INFO_MNEMONIC": "Mnemonic:",
+    "INFO_HDPATH": "HDPath:",
+    "INFO_HDNODE": "Mothership's HDPath:",
+    "INFO_ADDRESS": "Mothership's cash address:",
+    "INFO_WRITE_SUCCESS": "Wallet Created:",
+    "INFO_DONE": "All done!"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",

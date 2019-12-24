@@ -1,80 +1,61 @@
-const webpack = require("webpack");
-const path = require("path");
+const webpack = require('webpack');
+const path = require('path');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+const entry = {
+  start: ['./src/start.ts'],
+  configureCampaign: ['./src/configureCampaign/index.ts'],
+};
+
+const rules = [
+  {
+    test: /\.(png|jpe?g|gif|txt)$/i,
+    exclude: /node_modules/,
+    use: [
+      {
+        loader: 'file-loader',
+        options: {
+          name: file =>
+            NODE_ENV === 'development'
+              ? '[path][name].[ext]'
+              : '[contenthash].[ext]',
+        },
+      },
+    ],
+  },
+  {
+    test: /\.(ts|js)x?$/,
+    loader: 'ts-loader',
+    options: {
+      transpileOnly: true,
+    },
+  },
+];
+
+const stats = {
+  colors: true,
+};
 
 module.exports = {
-  mode: "production",
-  target: "node",
-  context: process.cwd(),
-  entry: {
-    start: ["./src/start.ts"],
-    configureCampaign: ["./src/configureCampaign/index.ts"]
-  },
+  mode: NODE_ENV,
+  target: 'node',
+  entry,
+  watch: NODE_ENV === 'development' ? true : false,
   output: {
-    path: path.join(process.cwd(), "dist"),
-    filename: "[name].js"
+    path: path.join(process.cwd(), 'dist'),
+    filename: '[name].js',
   },
-  node: {
-    fs: "empty"
-  },
-
+  stats,
   resolve: {
-    // Add '.ts' and '.tsx' as resolvable extensions.
-    extensions: [".ts", ".tsx", ".js"]
+    extensions: ['.ts', '.tsx', '.js', '.json'],
   },
 
-  module: {
-    rules: [
-      {
-        test: /\.(png|jpe?g|gif|txt)$/i,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name(file) {
-                if (process.env.NODE_ENV === "development") {
-                  return "[path][name].[ext]";
-                }
+  module: { rules },
 
-                return "[contenthash].[ext]";
-              }
-            }
-          }
-        ]
-      },
-      {
-        test: /\.ts(x?)$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: true,
-              allowTsInNodeModules: true
-            }
-          }
-        ]
-      },
-      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "source-map-loader"
-      }
-    ]
-  },
-  externals: {
-    react: "React",
-    "react-dom": "ReactDOM",
-    "bitbox-sdk": {
-      "lib/Address": "Address",
-      "lib/ECPair": "ECPair",
-      "lib/Mnemonic": "Mnemonic"
-    },
-    lib4js: {
-      configure: "configure",
-      getLogger: "getLogger"
-    }
-  },
-  plugins: [new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/])]
+  plugins: [
+    new webpack.WatchIgnorePlugin([/\.js$/, /\.d\.ts$/]),
+    new ForkTsCheckerWebpackPlugin(),
+  ],
 };

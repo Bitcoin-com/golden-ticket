@@ -1,12 +1,12 @@
 import fs from 'fs-extra';
 import pdf from 'html-pdf';
 import { getLogger } from 'log4js';
-import { Campaign } from '../interfaces';
 import { sleep, colorOutput, OutputStyles } from '../helpers';
 import settings from '../../settings.json';
-import { locales } from '../i18n';
+import { getLocales } from '../i18n';
 
 const logger = getLogger('generatePDF');
+const strings = getLocales(settings.locale);
 
 /**
  * Generates and saves PDF Files
@@ -20,12 +20,11 @@ const generatePDF = async (
   campaignData: Campaign,
 ): Promise<void> => {
   try {
-    const strings = locales[settings.defaultLocale];
-    const { title } = campaignData;
+    const { title, template } = campaignData;
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_PDF,
+        item: strings.CREATE_TICKETS.INFO_GENERATING_PDF,
         value: title,
         style: OutputStyles.Start,
       }),
@@ -33,39 +32,24 @@ const generatePDF = async (
 
     wifs.forEach(async wif => {
       await sleep(settings.timer);
-      const htmlFilename = `${settings.outDir}/${title}/html/${wifs[wif]}.html`;
-      const pdfFilename = `${settings.outDir}/${title}/pdf/${wifs[wif]}.pdf`;
+      const htmlFilename = `${settings.outDir}/${title}/html/${wif}.html`;
+      const pdfFilename = `${settings.outDir}/${title}/pdf/${wif}.pdf`;
 
       // get html file
       const privKeyWIFsHtml: string = fs.readFileSync(htmlFilename, 'utf8');
 
-      pdf.create(privKeyWIFsHtml, settings.pdfConfig).toFile(pdfFilename);
+      pdf.create(privKeyWIFsHtml, template.pdf).toFile(pdfFilename);
       logger.info(
-        colorOutput({ item: strings.INFO_GENERATED_PDF, value: pdfFilename }),
+        colorOutput({
+          item: strings.CREATE_TICKETS.INFO_GENERATED_PDF,
+          value: pdfFilename,
+        }),
       );
     });
-    /* 
-    for (const wif in wifs) {
-      await sleep(settings.timer);
-      const htmlFilename = `${settings.outDir}/${title}/html/${wifs[wif]}.html`;
-      const pdfFilename = `${settings.outDir}/${title}/pdf/${wifs[wif]}.pdf`;
-
-      // get html file
-      const privKeyWIFsHtml: string = fs.readFileSync(htmlFilename, 'utf8');
-
-      pdf
-        .create(privKeyWIFsHtml, settings.pdfConfig)
-        .toFile(pdfFilename, (err: any) => {
-          if (err) return logger.error(err.message);
-        });
-      logger.info(
-        colorOutput({ item: strings.INFO_GENERATED_PDF, value: pdfFilename }),
-      );
-    } */
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_PDF_COMPLETE,
+        item: strings.CREATE_TICKETS.INFO_GENERATING_PDF_COMPLETE,
         value: title,
         style: OutputStyles.Complete,
       }),

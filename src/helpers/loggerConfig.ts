@@ -8,12 +8,6 @@ const loggerConfig = {
       maxLogSize: 10485760,
       numBackups: 3,
     },
-    configureCampaign: {
-      type: 'file',
-      filename: 'log/configureCampaign.log',
-      maxLogSize: 10485760,
-      numBackups: 3,
-    },
     errorFile: {
       type: 'file',
       filename: 'log/errors.log',
@@ -31,10 +25,6 @@ const loggerConfig = {
     },
   },
   categories: {
-    configureCampaign: {
-      appenders: ['console', 'configureCampaign', 'errors'],
-      level: 'DEBUG',
-    },
     default: {
       appenders: ['console', 'app', 'errors'],
       level: settings.debug ? 'DEBUG' : 'INFO',

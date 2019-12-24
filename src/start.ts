@@ -4,27 +4,29 @@ import path from 'path';
 import fs from 'fs-extra';
 import chalk from 'chalk';
 import readlineSync from 'readline-sync';
+// import ajv from 'ajv';
 import { colorOutput, OutputStyles } from './helpers';
 import { getLocales } from './i18n';
 import settings from '../settings.json';
-import banner from '../assets/banner.txt';
-import { Locale } from './interfaces';
 import loggerConfig from './helpers/loggerConfig';
 
-const logger = getLogger('start');
+import banner from '../assets/banner.txt';
+import goodbye from '../assets/goodbye.txt';
+
+const logger = getLogger();
 configure(loggerConfig);
 
-const { SCRIPTS } = getLocales(settings.defaultLocale as Locale);
+const { SCRIPTS } = getLocales(settings.locale as Locale);
 
-type ScriptsMap = {
-  +readonly [K in keyof typeof SCRIPTS.NAMES]+?: typeof SCRIPTS.NAMES[K];
-};
-
-const showBanner = (): void => {
+const showBanner = (end?: boolean): void => {
   // display the golden ticket ascii text
   const bannerString: string = fs
-    .readFileSync(path.resolve('dist', banner))
+    .readFileSync(path.resolve('dist', end ? goodbye : banner))
     .toString();
+
+  // eslint-disable-next-line no-console
+  console.clear();
+
   logger.info(chalk.yellowBright(bannerString));
 };
 
@@ -67,7 +69,7 @@ const init = async (): Promise<void> => {
     logger.debug('start:init');
     showBanner();
 
-    const scripts: ScriptsMap = {
+    const scripts = {
       [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
       [SCRIPTS.NAMES.CREATE_TICKETS]: 'createTickets',
       [SCRIPTS.NAMES.CREATE_CSV]: 'createCSV',
@@ -109,6 +111,7 @@ const init = async (): Promise<void> => {
         init();
       });
     }
+    showBanner(true);
   } catch (error) {
     logger.error(error.message);
     throw error;

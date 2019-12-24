@@ -1,4 +1,6 @@
-import { Address } from 'bitbox-sdk';
+/* eslint-disable prefer-destructuring */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Address = require('bitbox-sdk').Address;
 
 /**
  * Get utxos from single address

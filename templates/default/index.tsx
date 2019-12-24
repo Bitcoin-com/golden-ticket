@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import bgBase64 from '../../assets/bgBase64';
+import config from './config.json';
 import settings from '../../settings.json';
-import { Campaign } from '../interfaces';
 
 /**
  * Template for HTML page generation
@@ -15,8 +15,8 @@ const template = ({ title }: Campaign, wifQR: string): string => {
   const bodyStyle = {
     padding: 0,
     margin: 0,
-    height: settings.pdfConfig.height,
-    width: settings.pdfConfig.width,
+    height: config.pdf.height,
+    width: config.pdf.width,
   };
 
   const containerStyle = {
@@ -26,16 +26,16 @@ const template = ({ title }: Campaign, wifQR: string): string => {
     backgroundImage: `url(${bgBase64})`,
   };
 
-  const { left, top, height } = settings.qrcode;
+  const { left, top, size } = config.qrcode;
   const imageStyle = {
     position: 'absolute' as 'absolute',
     top,
     left,
-    height,
+    height: size,
   };
 
   const html = (
-    <html lang={settings.defaultLocale}>
+    <html lang={settings.locale}>
       <head>
         <title>{title}</title>
       </head>

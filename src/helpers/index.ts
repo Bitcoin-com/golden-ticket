@@ -6,4 +6,3 @@ export { default as getTieredValue } from './getTieredValue';
 export { default as getCampaignWIFs } from './getCampaignWIFs';
 export { default as getUTXOs } from './getUTXOs';
 export { default as createObject } from './createObject';
-export { default as getMnemonic } from './getMnemonic';

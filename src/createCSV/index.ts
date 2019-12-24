@@ -8,9 +8,11 @@ import {
 import selectCampaign from '../helpers/prompts/selectCampaign';
 import writeCSV from './writeCSV';
 import settings from '../../settings.json';
-import { locales } from '../i18n';
+import { getLocales } from '../i18n';
 
 const logger = getLogger('createCSV');
+const strings = getLocales(settings.locale);
+
 /**
  * Open the wallet generated with generate-wallet.
  *
@@ -18,9 +20,8 @@ const logger = getLogger('createCSV');
  */
 const main = async (): Promise<void> => {
   try {
-    const strings = locales[settings.defaultLocale];
-
     const campaignData = await selectCampaign();
+    if (!campaignData) return;
 
     const wifs = await getCampaignWIFs(campaignData.title);
     const addresses = await createObject(wifs);
@@ -28,7 +29,7 @@ const main = async (): Promise<void> => {
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_CSV,
+        item: strings.CREATE_CSV.INFO_GENERATING_CSV,
         value: campaignData.title,
         style: OutputStyles.Start,
       }),
@@ -38,7 +39,7 @@ const main = async (): Promise<void> => {
 
     logger.info(
       colorOutput({
-        item: strings.INFO_GENERATING_CSV_COMPLETE,
+        item: strings.CREATE_CSV.INFO_GENERATING_CSV_COMPLETE,
         value: filename,
         style: OutputStyles.Complete,
       }),

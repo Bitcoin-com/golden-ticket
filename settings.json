@@ -1,28 +1,15 @@
 {
-  "defaultLocale": "en",
   "debug": true,
+  "locale": "en",
   "outDir": "output",
+  "templateDir": "templates",
   "hdpath": "m/44'/145'",
   "timer": 50,
-  "defaultTickets": 10,
-  "ticketSpread": {
-    "0-2": 1,
-    "3": 5,
-    "4-9": 10
-  },
-  "pdfConfig": {
-    "height": "260mm",
-    "width": "170mm"
-  },
-  "qrcode": {
-    "height": "34.5mm",
-    "left": "68mm",
-    "top": "102mm"
-  },
+  "tickets": 10,
   "languages": {
     "en": "english",
     "ja": "japanese",
-    "zh-Hans": "chinese_simplified",
+    "zh-Hast": "chinese_simplified",
     "zh": "chinese_traditional",
     "fr": "french",
     "it": "italian",

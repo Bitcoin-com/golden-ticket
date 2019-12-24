@@ -1,5 +1,4 @@
 import { getLogger } from 'log4js';
-import { CSV } from '../interfaces';
 import { sleep, getCashAddress, colorOutput, getTieredValue } from '.';
 import settings from '../../settings.json';
 
