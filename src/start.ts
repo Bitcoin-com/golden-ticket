@@ -84,7 +84,7 @@ const init = async (): Promise<void> => {
 
     const index = readlineSync.keyInSelect(
       scriptKeys.map(key => chalk.cyan(key)),
-      SCRIPTS.PROMPT_SCRIPT,
+      colorOutput({ item: SCRIPTS.PROMPT_SCRIPT }),
       { cancel: chalk.red(SCRIPTS.EXIT) },
     );
 
@@ -107,11 +107,12 @@ const init = async (): Promise<void> => {
             style: OutputStyles.Complete,
           }),
         );
-        readlineSync.keyInPause(SCRIPTS.CONTINUE);
+        // readlineSync.keyInPause(SCRIPTS.CONTINUE);
         init();
       });
+    } else {
+      showBanner(true);
     }
-    showBanner(true);
   } catch (error) {
     logger.error(error.message);
     throw error;

@@ -12,7 +12,11 @@ export const colorQuestion = (
   question: string,
   defaultAnswer: string,
 ): string => {
-  return [question, chalk.blackBright(` [${defaultAnswer}]`), ': '].join('');
+  return [
+    chalk.green(question),
+    chalk.blackBright(` [${defaultAnswer}]`),
+    ': ',
+  ].join('');
 };
 
 export enum OutputStyles {
@@ -24,6 +28,8 @@ export enum OutputStyles {
   Default = 'default',
   Information = 'information',
   Question = 'question',
+  Title = 'title',
+  Warning = 'warning',
 }
 
 /**
@@ -49,9 +55,13 @@ export const colorOutput = ({
     | 'default'
     | 'start'
     | 'information'
+    | 'title'
+    | 'warning'
     | 'question';
 }): string => {
   switch (style) {
+    case OutputStyles.Warning:
+      return chalk.bgRed(chalk.white(item));
     case OutputStyles.Question: {
       const strings = [
         emoji.grey_question,
@@ -63,9 +73,7 @@ export const colorOutput = ({
     }
     case OutputStyles.Information: {
       const strings = [
-        emoji.grey_question,
-        '',
-        chalk.cyan(item),
+        chalk.bgWhite(chalk.black(item)),
         value ? chalk.bgWhite(chalk.black(` ${value} `)) : '',
       ];
       return strings.join(' ');
@@ -97,6 +105,10 @@ export const colorOutput = ({
       ];
       return strings.join(' ');
     }
+    case OutputStyles.Title: {
+      const strings = [chalk.bgGreen(chalk.black(` === ${item} === `))];
+      return strings.join('');
+    }
     case OutputStyles.Highlight: {
       const strings = [
         chalk.green(item),
@@ -104,10 +116,8 @@ export const colorOutput = ({
       ];
       return strings.join(' ');
     }
-    default: {
-      const strings = [chalk.green(item), chalk.cyan(value)];
-      return strings.join(' ');
-    }
+    default:
+      return `${chalk.whiteBright(item)} ${chalk.cyan(value)}`;
   }
 };
 

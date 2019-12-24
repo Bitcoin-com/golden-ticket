@@ -17,7 +17,7 @@ const createObject = async (wifs: string[]): Promise<CSV[]> => {
 
       const claimed = false;
       const cashAddress = getCashAddress(wif);
-      const value = getTieredValue(i, settings.ticketSpread);
+      const value = getTieredValue(i, {});
 
       const obj: CSV = { cashAddress, wif, claimed, value };
 

@@ -1,9 +1,8 @@
 import { getLogger, configure } from 'log4js';
-import writeFile from './writeFile';
-import settings from '../../settings.json';
-import selectCampaign from '../helpers/prompts/selectCampaign';
+import readlineSync from 'readline-sync';
+import selectCampaign from '../prompts/selectCampaign';
 import loggerConfig from '../helpers/loggerConfig';
-
+import createCampaign from '../prompts/createCampaign';
 /**
  * Starts campaign configuration
  *
@@ -15,16 +14,17 @@ const init = async (): Promise<void> => {
   logger.debug('init');
 
   try {
-    // get input from user
-    const campaignData = await selectCampaign();
+    // user selects campaign
+    const selectedCampaign = await selectCampaign();
+    if (!selectedCampaign) return;
 
-    if (!campaignData) return;
+    /*     // confirm overwrite
+    if (!readlineSync.keyInYNStrict('overwrite?')) return;
 
-    // prepare for writting wallet to file
-    const filename = `${settings.outDir}/${campaignData.title}/wallet.json`;
-
-    // write file and print results
-    await writeFile(filename, campaignData);
+    // go through new campaign wizard with selected campaign
+    const campaign = await createCampaign(selectedCampaign);
+    if (!campaign) return; */
+    logger.info('selected campaign', selectCampaign);
   } catch (error) {
     throw logger.error(error);
   }

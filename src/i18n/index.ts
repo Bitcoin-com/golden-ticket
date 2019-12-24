@@ -1,18 +1,33 @@
 import enStrings from './en.json';
 
-const locales = {
+type Locales = {
+  +readonly [K in keyof typeof enStrings]: typeof enStrings[K];
+};
+
+const locales: {
+  [key: string]: Locales;
+} = {
   en: enStrings,
   ja: enStrings,
   ko: enStrings,
   zh: enStrings,
-  zhHans: enStrings,
+  'zh-Hans': enStrings,
   es: enStrings,
   fr: enStrings,
   it: enStrings,
 };
 
-export type Locales = {
-  +readonly [K in keyof typeof enStrings]: typeof enStrings[K];
+const languageMap: {
+  [key: string]: string;
+} = {
+  en: 'english',
+  ja: 'japanese',
+  'zh-Hans': 'chinese_simplified',
+  zh: 'chinese_traditional',
+  fr: 'french',
+  it: 'italian',
+  ko: 'korean',
+  es: 'spanish',
 };
 
 /**
@@ -25,8 +40,18 @@ export const getLocales = (locale: string): Locales => {
   if (Object.keys(locales).includes(locale))
     return {
       ...locales.en,
-      ...locales[locale],
+      ...locales[locale as Locale],
     };
 
   return locales.en;
+};
+
+/**
+ * Returns mnemonic friendly language
+ *
+ * @param {Locale} locale
+ * @returns {string}
+ */
+export const getLanguage = (locale: Locale): string => {
+  return languageMap[locale];
 };

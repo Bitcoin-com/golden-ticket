@@ -71,8 +71,8 @@
     "ws": "^7.2.1"
   },
   "scripts": {
-    "build": "yarn clean && yarn lint && cross-env NODE_ENV=production webpack --progress --colors",
-    "dev": "webpack --progress",
+    "build": "yarn clean && yarn lint && cross-env NODE_ENV=production webpack",
+    "dev": "webpack",
     "clean": "rimraf dist log",
     "start": "node dist/start.js",
     "lint": "yarn eslint --ext .js,.tsx,.ts src/**",

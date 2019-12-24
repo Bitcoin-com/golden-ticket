@@ -5,7 +5,7 @@ import {
   createObject,
   getCampaignWIFs,
 } from '../helpers';
-import selectCampaign from '../helpers/prompts/selectCampaign';
+import selectCampaign from '../prompts/selectCampaign';
 import writeCSV from './writeCSV';
 import settings from '../../settings.json';
 import { getLocales } from '../i18n';

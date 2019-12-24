@@ -3,9 +3,6 @@ import { colorOutput, OutputStyles, sleep } from '../helpers';
 import settings from '../../settings.json';
 import { getLocales } from '../i18n';
 
-const logger = getLogger('printGeneratedWallet');
-const strings = getLocales(settings.locale);
-
 /**
  * Prints out campaign information
  *
@@ -18,20 +15,15 @@ const strings = getLocales(settings.locale);
  * }
  * @returns {Promise<void>}
  */
-const displayCampaignInfo = async ({
-  data,
-  filename,
-}: {
-  data: Campaign;
-  filename: string;
-}): Promise<void> => {
+const displayCampaign = async (campaign: Campaign): Promise<void> => {
+  const logger = getLogger('printGeneratedWallet');
+  const strings = getLocales(settings.locale);
+  logger.debug('generateWallet:printGeneratedWallet()');
   try {
-    logger.debug('generateWallet:printGeneratedWallet()');
-
     const {
       title,
       mothership: { fullNodePath, address, mnemonic, hdpath },
-    } = data;
+    } = campaign;
 
     logger.info(
       colorOutput({
@@ -56,18 +48,10 @@ const displayCampaignInfo = async ({
     logger.info(
       colorOutput({ item: strings.CAMPAIGN.INFO_ADDRESS, value: address }),
     );
-    await sleep(settings.timer);
-    logger.info(
-      colorOutput({
-        item: strings.CAMPAIGN.INFO_WRITE_SUCCESS,
-        value: filename,
-      }),
-      '\n',
-    );
   } catch (error) {
     logger.error(error.message);
     throw error;
   }
 };
 
-export default displayCampaignInfo;
+export default displayCampaign;

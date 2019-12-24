@@ -5,15 +5,5 @@
   "templateDir": "templates",
   "hdpath": "m/44'/145'",
   "timer": 50,
-  "tickets": 10,
-  "languages": {
-    "en": "english",
-    "ja": "japanese",
-    "zh-Hast": "chinese_simplified",
-    "zh": "chinese_traditional",
-    "fr": "french",
-    "it": "italian",
-    "ko": "korean",
-    "es": "spanish"
-  }
+  "tickets": 10
 }

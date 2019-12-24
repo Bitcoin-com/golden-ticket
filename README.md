@@ -1,6 +1,4 @@
-# Golden Ticket
-
-![Golden Ticket](images/gts.jpg)
+# Golden Ticket v3.0
 
 Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) event paper wallet generator. Use it to create amazing golden tickets for your next event.
 

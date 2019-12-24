@@ -1,18 +1,6 @@
 // Type definitions for Golden Ticket v3.0
 // Project: golden-ticket
 // Definitions by: Paul Bergamo <paul@bitcoin.com>
-declare module 'to-regex-range';
-declare module 'qrcode-terminal';
-
-declare module '*.txt' {
-  const content: string;
-  export = content;
-}
-
-declare module '*.png' {
-  const content: string;
-  export = content;
-}
 
 interface AddressUtxoResult {
   legacyAddress: string;
@@ -30,18 +18,6 @@ interface Utxo {
   confirmations: number;
 }
 
-type ScriptName =
-  | 'CHECK_TICKETS'
-  | 'CREATE_CSV'
-  | 'CREATE_TICKETS'
-  | 'FUND_MOTHERSHIP'
-  | 'FUND_TICKETS'
-  | 'GENERATE_STATE'
-  | 'GENERATE_WALLETS'
-  | 'RECLAIM_FUNDS';
-
-type Locale = 'en' | 'zh' | 'ko' | 'zh' | 'zhHans' | 'es' | 'fr' | 'it';
-
 interface Settings {
   defaultLocale: string;
   debug: boolean;
@@ -50,9 +26,6 @@ interface Settings {
   hdpath: string;
   timer: number;
   defaultTickets: number;
-  languages: {
-    [any: string]: string;
-  };
 }
 
 interface Mothership {
@@ -66,17 +39,17 @@ interface Campaign {
   title: string;
   mothership: Mothership;
   tickets: Tickets;
-  template: Template;
+  template: string;
 }
 
 interface Tickets {
   count: number;
-  spread: {
-    [number: string]: number;
-  };
+  spread: Spread;
 }
+type Spread = { '0': number; [number: string]: number };
 
 interface Template {
+  title: string;
   pdf: PDF;
   qrcode: QRCode;
   csv: CSV;
@@ -99,3 +72,15 @@ interface CSV {
   claimed: boolean;
   value?: number;
 }
+
+type ScriptName =
+  | 'CHECK_TICKETS'
+  | 'CREATE_CSV'
+  | 'CREATE_TICKETS'
+  | 'FUND_MOTHERSHIP'
+  | 'FUND_TICKETS'
+  | 'GENERATE_STATE'
+  | 'GENERATE_WALLETS'
+  | 'RECLAIM_FUNDS';
+
+type Locale = 'en' | 'zh' | 'ko' | 'zh' | 'zh-Hans' | 'es' | 'fr' | 'it';
