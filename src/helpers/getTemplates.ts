@@ -1,7 +1,7 @@
 import { getLogger } from 'log4js';
 import fs from 'fs-extra';
 import path from 'path';
-import getSettings from '../getSettings';
+import getSettings from './getSettings';
 
 /**
  * Returns object containing templates

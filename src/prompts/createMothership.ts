@@ -3,7 +3,7 @@ import { HDNode } from 'bitcoincashjs-lib';
 import { getLogger } from 'log4js';
 import createMnemonic from './createMnemonic';
 import { getLanguage } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 /**
  * Generate mothership wallet

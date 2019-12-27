@@ -3,7 +3,7 @@ import qrcode from 'qrcode-terminal';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 const main = async (): Promise<void> => {
   const logger = getLogger('fundMothership');

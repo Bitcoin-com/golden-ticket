@@ -4,7 +4,7 @@ import fs from 'fs-extra';
 import path from 'path';
 import bgImage from './background.png';
 import config from './config.json';
-import getSettings from '../../src/getSettings';
+import getSettings from '../../src/helpers/getSettings';
 
 /**
  * Template for HTML page generation
@@ -24,7 +24,7 @@ const template = ({ title }: Campaign, wifQR: string): string => {
   const containerStyle = {
     height: '100%',
     position: 'relative' as 'relative',
-    backgroundSize: 'cover',
+    backgroundSize: 'contain',
     backgroundImage: `url(data:image/png;base64,${fs
       .readFileSync(path.resolve(process.cwd(), `dist/${bgImage}`))
       .toString('base64')})`,

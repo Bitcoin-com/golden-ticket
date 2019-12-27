@@ -4,8 +4,10 @@ import { getLogger } from 'log4js';
 import { OutputStyles, colorOutput } from './colorFormatters';
 import defaultTemplate from '../../templates/default';
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from './getSettings';
 import sleep from './sleep';
+import getWIFS from './getWIFs';
+import getCashAddress from './getCashAddress';
 
 const logger = getLogger('generateHTML');
 const settings = getSettings();
@@ -50,12 +52,11 @@ const displayInfo = ({
  * @param {Campaign} campaignData
  * @returns {Promise<void>}
  */
-const generateHTML = async (
-  wifs: string[],
-  campaignData: Campaign,
-): Promise<void> => {
+const generateHTML = async (campaignData: Campaign): Promise<void> => {
   try {
     const { title } = campaignData;
+    const wifs = getWIFS(campaignData.title);
+
     const path = `${settings.outDir}/${title}/html/`;
 
     fs.ensureDirSync(path);
@@ -63,16 +64,21 @@ const generateHTML = async (
     for (let i = 0; i < wifs.length; i++) {
       await sleep(settings.timer);
       const wif = wifs[i];
-      const filename = `${path}${wif}.html`;
+      const address = getCashAddress(wif).replace(/bitcoincash:/, '');
+      const filename = `${address}.html`;
+
       QRCode.toDataURL(
         wif,
         { margin: 0 },
         (_err: Error, wifQR: string): void => {
-          fs.writeFileSync(filename, defaultTemplate(campaignData, wifQR));
+          fs.writeFileSync(
+            `${path}${filename}`,
+            defaultTemplate(campaignData, wifQR),
+          );
         },
       );
 
-      displayInfo({ title, filename: `${wif}.html` });
+      displayInfo({ title, filename });
     }
   } catch (error) {
     throw logger.error(error);

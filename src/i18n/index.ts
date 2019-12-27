@@ -1,5 +1,5 @@
 import en from './en.json';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 const settings = getSettings();
 

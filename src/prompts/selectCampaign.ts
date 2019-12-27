@@ -6,7 +6,7 @@ import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import createCampaign from './createCampaign';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 /**
  * Prompts user to select campaign from list

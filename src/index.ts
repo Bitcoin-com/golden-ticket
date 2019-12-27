@@ -11,7 +11,7 @@ import { getLocales } from './i18n';
 import loggerConfig from './helpers/loggerConfig';
 import banner from './assets/banner.txt';
 import goodbye from './assets/goodbye.txt';
-import getSettings from './getSettings';
+import getSettings from './helpers/getSettings';
 
 const logger = getLogger();
 configure(loggerConfig);
@@ -68,8 +68,6 @@ const init = (): void => {
 
   const scripts: { [any: string]: string } = {
     [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
-    [SCRIPTS.NAMES.CREATE_TICKETS]: 'createTickets',
-    [SCRIPTS.NAMES.CREATE_CSV]: 'createCSV',
     [SCRIPTS.NAMES.FUND_MOTHERSHIP]: 'fundMothership',
     [SCRIPTS.NAMES.FUND_TICKETS]: 'fundTickets',
     [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',

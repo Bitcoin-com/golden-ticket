@@ -6,7 +6,7 @@ import { getLogger } from 'log4js';
 import { getLocales } from '../i18n';
 import { colorOutput, OutputStyles } from './colorFormatters';
 import sleep from './sleep';
-import getSettings from '../getSettings';
+import getSettings from './getSettings';
 
 const logger = getLogger();
 const settings = getSettings();
@@ -42,13 +42,13 @@ const displayInfo = ({ wif }: { wif: string }): void => {
  *   tickets,
  *   title,
  * }
- * @returns {Promise<string[]>}
+ * @returns {Promise<void>}
  */
 const generateWIFs = async ({
   mothership: { mnemonic, hdpath },
   tickets,
   title,
-}: Campaign): Promise<string[]> => {
+}: Campaign): Promise<void> => {
   try {
     const bbMnemonic = new Mnemonic();
     const hdnode = new BBHDNode();
@@ -69,9 +69,6 @@ const generateWIFs = async ({
     const privKeyWifs = `${settings.outDir}/${title}/privKeyWIFs`;
 
     fs.writeFileSync(privKeyWifs, wifs.join('\n'));
-    fs.ensureFileSync(privKeyWifs);
-
-    return wifs;
   } catch (error) {
     throw logger.error(error);
   }

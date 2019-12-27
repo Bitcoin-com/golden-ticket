@@ -1,5 +1,5 @@
 import fs from 'fs-extra';
-import getSettings from '../getSettings';
+import getSettings from './getSettings';
 
 /**
  * Get list of WIFs used in campaign

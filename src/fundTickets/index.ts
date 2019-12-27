@@ -13,7 +13,7 @@ import { getLogger } from 'log4js';
 import getUTXOs from '../helpers/getUTXOs';
 import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 // Open the wallet generated with generate-wallet.
 const main = async (): Promise<void> => {

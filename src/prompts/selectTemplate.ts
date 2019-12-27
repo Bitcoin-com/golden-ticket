@@ -5,7 +5,7 @@ import path from 'path';
 import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 /**
  * Promps user to select a template

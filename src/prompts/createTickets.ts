@@ -5,7 +5,7 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import createSpread from './createSpread';
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 
 /**
  * Takes user through ticket configuration

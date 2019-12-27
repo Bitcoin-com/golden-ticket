@@ -1,7 +1,7 @@
 import { getLogger } from 'log4js';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 import formatSpread from '../helpers/formatSpread';
 
 /**

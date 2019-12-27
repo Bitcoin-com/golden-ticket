@@ -1,6 +1,6 @@
 import Ajv from 'ajv';
-import settingsJSON from '../settings.json';
-import settingsSchema from './schema/settings.json';
+import settingsJSON from '../../settings.json';
+import settingsSchema from '../schema/settings.json';
 
 const getSettings = (): Settings => {
   const ajv = new Ajv();

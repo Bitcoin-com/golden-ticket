@@ -3,7 +3,7 @@ import readlineSync from 'readline-sync';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import { getLocales } from '../i18n';
-import getSettings from '../getSettings';
+import getSettings from '../helpers/getSettings';
 import formatSpread from '../helpers/formatSpread';
 
 const logger = getLogger();
