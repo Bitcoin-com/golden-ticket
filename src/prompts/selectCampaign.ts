@@ -1,12 +1,12 @@
+import chalk from 'chalk';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import readlineSync from 'readline-sync';
 import path from 'path';
-import chalk from 'chalk';
-import settings from '../../settings.json';
+import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import createCampaign from './createCampaign';
-import { colorOutput, OutputStyles } from '../helpers';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import settings from '../../settings.json';
 
 /**
  * Prompts user to select campaign from list

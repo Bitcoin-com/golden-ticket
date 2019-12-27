@@ -1,18 +1,18 @@
+import chalk from 'chalk';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import readlineSync from 'readline-sync';
 import path from 'path';
-import chalk from 'chalk';
-import settings from '../../settings.json';
+import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from '../helpers';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import settings from '../../settings.json';
 
 /**
  * Promps user to select a template
  *
  * @returns {(Promise<Template | null>)}
  */
-const selectTemplate = async (): Promise<Template | null> => {
+const selectTemplate = (): Template | null => {
   const logger = getLogger('selectTemplate');
   const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale as Locale);
 

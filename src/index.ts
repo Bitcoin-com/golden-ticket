@@ -1,22 +1,20 @@
-import childProcess from 'child_process';
-import { getLogger, configure } from 'log4js';
-import path from 'path';
-import fs from 'fs-extra';
-import chalk from 'chalk';
-import readlineSync from 'readline-sync';
 // import ajv from 'ajv';
-import { colorOutput, OutputStyles } from './helpers';
-import { getLocales } from './i18n';
-import settings from '../settings.json';
-import loggerConfig from './helpers/loggerConfig';
+import { configure, getLogger } from 'log4js';
+import chalk from 'chalk';
+import childProcess from 'child_process';
+import fs from 'fs-extra';
+import path from 'path';
+import readlineSync from 'readline-sync';
+import { OutputStyles, colorOutput } from './helpers/colorFormatters';
 
-import banner from '../assets/banner.txt';
-import goodbye from '../assets/goodbye.txt';
+import { getLocales } from './i18n';
+import getSettings from './settings';
+import loggerConfig from './helpers/loggerConfig';
+import banner from './assets/banner.txt';
+import goodbye from './assets/goodbye.txt';
 
 const logger = getLogger();
 configure(loggerConfig);
-
-const { SCRIPTS } = getLocales(settings.locale as Locale);
 
 const showBanner = (end?: boolean): void => {
   // display the golden ticket ascii text
@@ -64,32 +62,34 @@ const runScript = (
  *
  * @returns {Promise<void>}
  */
-const init = async (): Promise<void> => {
+const init = (): void => {
+  const { locale } = getSettings();
+  const { SCRIPTS } = getLocales(locale);
+
+  const scripts: { [any: string]: string } = {
+    [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
+    [SCRIPTS.NAMES.CREATE_TICKETS]: 'createTickets',
+    [SCRIPTS.NAMES.CREATE_CSV]: 'createCSV',
+    [SCRIPTS.NAMES.FUND_MOTHERSHIP]: 'fundMothership',
+    [SCRIPTS.NAMES.FUND_TICKETS]: 'fundTickets',
+    [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
+    [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
+    [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
+  };
+
   try {
     logger.debug('start:init');
     showBanner();
 
     // validate
     // validate template config with schema
-    /*     const ajv = new Ajv();
+    /* const ajv = new Ajv();
     const validate = ajv.compile(schema);
-    if (!validate(template)) throw Error('Invalid Template');
- */
-
-    const scripts = {
-      [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
-      [SCRIPTS.NAMES.CREATE_TICKETS]: 'createTickets',
-      [SCRIPTS.NAMES.CREATE_CSV]: 'createCSV',
-      [SCRIPTS.NAMES.FUND_MOTHERSHIP]: 'fundMothership',
-      [SCRIPTS.NAMES.FUND_TICKETS]: 'fundTickets',
-      [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
-      [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
-      [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
-    };
+    if (!validate(template)) throw Error('Invalid Template'); */
 
     const scriptKeys: string[] = Object.keys(scripts);
 
-    const index = readlineSync.keyInSelect(
+    const index: number = readlineSync.keyInSelect(
       scriptKeys.map(key => chalk.cyan(key)),
       colorOutput({
         item: SCRIPTS.PROMPT_SCRIPT,
@@ -99,7 +99,9 @@ const init = async (): Promise<void> => {
     );
 
     if (index !== -1) {
-      const script = path.resolve('dist', scripts[scriptKeys[index]]);
+      const key = scriptKeys[index];
+
+      const script = path.resolve('dist', scripts[key]);
 
       logger.info(
         colorOutput({
@@ -117,7 +119,6 @@ const init = async (): Promise<void> => {
             style: OutputStyles.Complete,
           }),
         );
-        // readlineSync.keyInPause(SCRIPTS.CONTINUE);
         init();
       });
     } else {

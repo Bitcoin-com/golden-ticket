@@ -1,10 +1,11 @@
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import settings from '../../settings.json';
-import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from '../helpers';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
-const createSpread = async (count: number): Promise<Spread | null> => {
+import { getLocales } from '../i18n';
+import settings from '../../settings.json';
+
+const createSpread = (count: number): Spread | null => {
   const logger = getLogger();
   const { CAMPAIGN, TITLES } = getLocales(settings.locale);
 
@@ -15,7 +16,7 @@ const createSpread = async (count: number): Promise<Spread | null> => {
     // setup the ticket spread
     let lastRange = 0;
     let lastValue = 0;
-    let spread: Spread = { '0': 1 };
+    let spread: Spread = { 0: 1 };
 
     while (lastRange < count) {
       // eslint-disable-next-line no-console

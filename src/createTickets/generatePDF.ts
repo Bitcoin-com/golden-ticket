@@ -1,10 +1,11 @@
 import fs from 'fs-extra';
-import pdf from 'html-pdf';
 import { getLogger } from 'log4js';
-import { sleep, colorOutput, OutputStyles } from '../helpers';
-import settings from '../../settings.json';
+import pdf from 'html-pdf';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
 import { getLocales } from '../i18n';
 import getTemplates from '../helpers/getTemplates';
+import settings from '../../settings.json';
 
 const logger = getLogger('generatePDF');
 const strings = getLocales(settings.locale);
@@ -16,10 +17,7 @@ const strings = getLocales(settings.locale);
  * @param {Campaign} campaignData
  * @returns {Promise<void>}
  */
-const generatePDF = async (
-  wifs: string[],
-  campaignData: Campaign,
-): Promise<void> => {
+const generatePDF = (wifs: string[], campaignData: Campaign): void => {
   try {
     const { title, template } = campaignData;
 
@@ -31,8 +29,7 @@ const generatePDF = async (
       }),
     );
 
-    wifs.forEach(async wif => {
-      await sleep(settings.timer);
+    wifs.forEach((wif: string): void => {
       const htmlFilename = `${settings.outDir}/${title}/html/${wif}.html`;
       const pdfFilename = `${settings.outDir}/${title}/pdf/${wif}.pdf`;
 
@@ -40,7 +37,7 @@ const generatePDF = async (
       const privKeyWIFsHtml: string = fs.readFileSync(htmlFilename, 'utf8');
 
       pdf
-        .create(privKeyWIFsHtml, await getTemplates()[template].pdf)
+        .create(privKeyWIFsHtml, getTemplates()[template].pdf)
         .toFile(pdfFilename);
       logger.info(
         colorOutput({

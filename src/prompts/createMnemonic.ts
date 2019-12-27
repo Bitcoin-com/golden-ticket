@@ -2,7 +2,7 @@ import { Mnemonic } from 'bitbox-sdk';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import settings from '../../settings.json';
 
 /**

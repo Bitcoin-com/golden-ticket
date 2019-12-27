@@ -1,13 +1,14 @@
-import fs from 'fs-extra';
-import { Mnemonic, HDNode as BitboxHDNode } from 'bitbox-sdk';
+import { HDNode as BitboxHDNode, Mnemonic } from 'bitbox-sdk';
+
 import { HDNode } from 'bitcoincashjs-lib';
-import { getLogger } from 'log4js';
 import chalk from 'chalk';
+import fs from 'fs-extra';
+import { getLogger } from 'log4js';
 import generateMnemonic from './createMnemonic';
 import { getLanguage, getLocales } from '../i18n';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import rocket from '../assets/rocket.txt';
 import settings from '../../settings.json';
-import { colorOutput, OutputStyles } from '../helpers';
-import rocket from '../../assets/rocket.txt';
 
 /**
  * Generate mothership wallet
@@ -61,7 +62,12 @@ const createMothership = async (
       }),
     );
 
-    return { fullNodePath, address, mnemonic, hdpath };
+    return {
+      fullNodePath,
+      address,
+      mnemonic,
+      hdpath,
+    };
   } catch (error) {
     throw logger.error(error);
   }

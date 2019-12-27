@@ -1,13 +1,14 @@
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import settings from '../../settings.json';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
 import createMothership from './createMothership';
-import selectTemplate from './selectTemplate';
-import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
 import createTickets from './createTickets';
 import displayCampaign from './displayCampaign';
+import { getLocales } from '../i18n';
+import selectTemplate from './selectTemplate';
+import settings from '../../settings.json';
 
 /**
  * Takes user through campaign configuration

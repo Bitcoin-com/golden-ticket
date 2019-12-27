@@ -1,10 +1,10 @@
-import fs from 'fs-extra';
 import QRCode from 'qrcode';
+import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import { sleep, colorOutput, OutputStyles } from '../helpers';
-import defaultTemplate from '../../templates/default';
-import settings from '../../settings.json';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import defaultTemplate from '../templates/default';
 import { getLocales } from '../i18n';
+import settings from '../../settings.json';
 
 const logger = getLogger('generateHTML');
 const strings = getLocales(settings.locale);
@@ -16,10 +16,7 @@ const strings = getLocales(settings.locale);
  * @param {Campaign} campaignData
  * @returns {Promise<void>}
  */
-const generateHTML = async (
-  wifs: string[],
-  campaignData: Campaign,
-): Promise<void> => {
+const generateHTML = (wifs: string[], campaignData: Campaign): void => {
   try {
     const { title } = campaignData;
 
@@ -31,15 +28,14 @@ const generateHTML = async (
       }),
     );
 
-    wifs.forEach(async (wif: string) => {
-      await sleep(settings.timer);
-
+    wifs.forEach((wif: string): void => {
       const filename = `${settings.outDir}/${title}/html/${wif}.html`;
       QRCode.toDataURL(
         wif,
         { margin: 0 },
-        (_err: Error, wifQR: string): Promise<void> =>
-          fs.writeFile(filename, defaultTemplate(campaignData, wifQR)),
+        (_err: Error, wifQR: string): void => {
+          fs.writeFileSync(filename, defaultTemplate(campaignData, wifQR));
+        },
       );
       logger.info(
         colorOutput({

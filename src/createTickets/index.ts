@@ -4,7 +4,7 @@ import generateWIFs from './generateWIFs';
 import generateHTML from './generateHTML';
 import generatePDF from './generatePDF';
 import settings from '../../settings.json';
-import { selectCampaign } from '../helpers';
+import selectCampaign from '../prompts/selectCampaign';
 
 const logger = getLogger('createTickets');
 
@@ -27,9 +27,9 @@ const main = async (): Promise<void> => {
     const wifs = await generateWIFs(campaignData);
 
     logger.info('============================================================');
-    await generateHTML(wifs, campaignData);
+    generateHTML(wifs, campaignData);
     logger.info('============================================================');
-    await generatePDF(wifs, campaignData);
+    generatePDF(wifs, campaignData);
     logger.info('============================================================');
   } catch (error) {
     logger.error(error.message);

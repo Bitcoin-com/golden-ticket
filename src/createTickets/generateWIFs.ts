@@ -1,10 +1,12 @@
+import { HDNode } from 'bitcoincashjs-lib';
+import { HDNode as BBHDNode, Mnemonic } from 'bitbox-sdk';
+
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import { Mnemonic, HDNode as BBHDNode } from 'bitbox-sdk';
-import { HDNode } from 'bitcoincashjs-lib';
-import { sleep, colorOutput, OutputStyles } from '../helpers';
-import settings from '../../settings.json';
 import { getLocales } from '../i18n';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import sleep from '../helpers/sleep';
+import settings from '../../settings.json';
 
 const logger = getLogger('generateWallets');
 const strings = getLocales(settings.locale);

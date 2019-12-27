@@ -1,4 +1,4 @@
-import settings from '../../settings.json';
+import getSettings from '../settings';
 
 const loggerConfig = {
   appenders: {
@@ -27,7 +27,7 @@ const loggerConfig = {
   categories: {
     default: {
       appenders: ['console', 'app', 'errors'],
-      level: settings.debug ? 'DEBUG' : 'INFO',
+      level: getSettings().debug ? 'DEBUG' : 'INFO',
     },
   },
 };

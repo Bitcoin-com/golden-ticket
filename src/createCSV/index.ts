@@ -1,14 +1,13 @@
 import { getLogger } from 'log4js';
-import {
-  colorOutput,
-  OutputStyles,
-  createObject,
-  getCampaignWIFs,
-} from '../helpers';
-import selectCampaign from '../prompts/selectCampaign';
-import writeCSV from './writeCSV';
-import settings from '../../settings.json';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
+import createObject from '../helpers/createObject';
+import getCampaignWIFs from '../helpers/getCampaignWIFs';
+
 import { getLocales } from '../i18n';
+import selectCampaign from '../prompts/selectCampaign';
+import settings from '../../settings.json';
+import writeCSV from './writeCSV';
 
 const logger = getLogger('createCSV');
 const strings = getLocales(settings.locale);
@@ -23,7 +22,7 @@ const main = async (): Promise<void> => {
     const campaignData = await selectCampaign();
     if (!campaignData) return;
 
-    const wifs = await getCampaignWIFs(campaignData.title);
+    const wifs = getCampaignWIFs(campaignData.title);
     const addresses = await createObject(wifs);
     const filename = `${settings.outDir}/${campaignData.title}/addresses.csv`;
 

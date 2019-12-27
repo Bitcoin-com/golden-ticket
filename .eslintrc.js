@@ -1,62 +1,51 @@
 const path = require('path');
 
 module.exports = {
-  root: true,
-  parser: '@typescript-eslint/parser',
   env: { node: true },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    project: path.resolve(__dirname, './tsconfig.eslint.json'),
+    tsconfigRootDir: __dirname,
+    ecmaVersion: 2018,
+    sourceType: 'module',
     ecmaFeatures: {
-      jsx: true,
+      jsx: true, // Allows for the parsing of JSX
     },
   },
   settings: {
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        paths: ['src'],
       },
     },
+    react: {
+      version: 'detect',
+    },
   },
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: ['@typescript-eslint'],
   extends: [
+    'airbnb-typescript',
     'plugin:@typescript-eslint/recommended',
-    'airbnb',
-    'airbnb/hooks',
-    'plugin:prettier/recommended',
-    'prettier/react',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
+    'plugin:prettier/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
   ],
   rules: {
+    strict: 0,
     'no-plusplus': 0,
-    'import/no-extraneous-dependencies': [2, { devDependencies: true }],
-    'import/extensions': [
-      2,
-      { extensions: ['.js', '.jsx', '.json', '.ts', '.tsx', '.txt'] },
-    ],
     'react/prop-types': 0,
     'react/jsx-wrap-multilines': 0,
-    'react/jsx-filename-extension': [
-      2,
-      {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    ],
   },
   overrides: [
     {
-      files: ['*bitcoin-com-rest*'],
-      rules: { 'import/no-unresolved': 'off' },
-    },
-    {
-      files: ['*webpack.config.js'],
-      rules: {
-        '@typescript-eslint/no-var-requires': 0,
-        '@typescript-eslint/explicit-function-return-type': 0,
-      },
+      files: ['*.png', '*.txt'],
     },
     {
       files: ['*.json'],
       rules: {
-        'no-unused-expressions': 'off',
+        '@typescript-eslint/no-unused-expressions': 'off',
       },
     },
   ],

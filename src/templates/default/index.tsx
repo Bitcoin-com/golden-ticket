@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import bgBase64 from '../../assets/bgBase64';
+import bgBase64 from './background.png';
 import config from './config.json';
-import settings from '../../settings.json';
+import getSettings from '../../settings';
 
 /**
  * Template for HTML page generation
@@ -35,7 +35,7 @@ const template = ({ title }: Campaign, wifQR: string): string => {
   };
 
   const html = (
-    <html lang={settings.locale}>
+    <html lang={getSettings().locale}>
       <head>
         <title>{title}</title>
       </head>

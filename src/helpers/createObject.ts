@@ -1,5 +1,8 @@
 import { getLogger } from 'log4js';
-import { sleep, getCashAddress, colorOutput, getTieredValue } from '.';
+import { colorOutput } from './colorFormatters';
+import sleep from './sleep';
+import getCashAddress from './getCashAddress';
+import getTieredValue from './getTieredValue';
 import settings from '../../settings.json';
 
 /**
@@ -19,7 +22,12 @@ const createObject = async (wifs: string[]): Promise<CSV[]> => {
       const cashAddress = getCashAddress(wif);
       const value = getTieredValue(i, {});
 
-      const obj: CSV = { cashAddress, wif, claimed, value };
+      const obj: CSV = {
+        cashAddress,
+        wif,
+        claimed,
+        value,
+      };
 
       logger.info(
         colorOutput({

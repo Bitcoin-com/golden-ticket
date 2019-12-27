@@ -19,13 +19,13 @@ interface Utxo {
 }
 
 interface Settings {
-  defaultLocale: string;
   debug: boolean;
+  locale: string;
   outDir: string;
   templateDir: string;
   hdpath: string;
   timer: number;
-  defaultTickets: number;
+  tickets: number;
 }
 
 interface Mothership {

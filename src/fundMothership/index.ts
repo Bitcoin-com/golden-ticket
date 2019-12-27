@@ -1,6 +1,7 @@
-import qrcode from 'qrcode-terminal';
 import { getLogger } from 'log4js';
-import { colorOutput, OutputStyles, selectCampaign } from '../helpers';
+import qrcode from 'qrcode-terminal';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
 import settings from '../../settings.json';
 

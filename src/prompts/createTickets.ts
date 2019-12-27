@@ -1,10 +1,11 @@
+import chalk from 'chalk';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import chalk from 'chalk';
-import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
+import createSpread from './createSpread';
 import { getLocales } from '../i18n';
 import settings from '../../settings.json';
-import createSpread from './createSpread';
 
 /**
  * Takes user through ticket configuration

@@ -7,7 +7,7 @@ import settings from '../../settings.json';
  * @param {string} title campaign title
  * @returns {string[]}
  */
-const getCampaignWIFs = async (title: string): Promise<string[]> => {
+const getCampaignWIFs = (title: string): string[] => {
   try {
     const wifs = fs.readFileSync(
       `${settings.outDir}/${title}/privKeyWIFs`,

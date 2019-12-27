@@ -2,16 +2,16 @@
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import {
-  Mnemonic,
   HDNode as BBHDNode,
-  TransactionBuilder,
   BitcoinCash,
+  Mnemonic,
   RawTransactions,
+  TransactionBuilder,
 } from 'bitbox-sdk';
-import { HDNode, ECPair } from 'bitcoincashjs-lib';
+import { ECPair, HDNode } from 'bitcoincashjs-lib';
 import { getLogger } from 'log4js';
-import { selectCampaign, getUTXOs } from '../helpers';
-
+import getUTXOs from '../helpers/getUTXOs';
+import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
 import settings from '../../settings.json';
 

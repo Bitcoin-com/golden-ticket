@@ -1,7 +1,8 @@
 import { getLogger } from 'log4js';
-import { colorOutput, OutputStyles, sleep } from '../helpers';
-import settings from '../../settings.json';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+import sleep from '../helpers/sleep';
 import { getLocales } from '../i18n';
+import settings from '../../settings.json';
 
 /**
  * Prints out campaign information
