@@ -4,18 +4,43 @@ import { HDNode as BBHDNode, Mnemonic } from 'bitbox-sdk';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import { getLocales } from '../i18n';
-import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import sleep from '../helpers/sleep';
+import { colorOutput, OutputStyles } from './colorFormatters';
+import sleep from './sleep';
 import getSettings from '../getSettings';
 
+const logger = getLogger();
+const settings = getSettings();
+const { TITLES, INFO, QUESTIONS } = getLocales(settings.locale);
+
+const displayInfo = ({ wif }: { wif: string }): void => {
+  logger.info(
+    colorOutput({
+      item: TITLES.CAMPAIGN_WIFS,
+      style: OutputStyles.Title,
+      lineabreak: true,
+    }),
+  );
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_WIFS,
+      value: wif,
+      lineabreak: true,
+    }),
+  );
+  logger.info(
+    colorOutput({
+      item: QUESTIONS.WAIT,
+      style: OutputStyles.Question,
+    }),
+  );
+};
 /**
  * Generates, saves and returns wifs
  *
  * @param {Campaign} {
- *   mnemonic,
- *   hdpath,
- *   ticketCount,
- *   title
+ *   mothership: { mnemonic, hdpath },
+ *   tickets,
+ *   title,
  * }
  * @returns {Promise<string[]>}
  */
@@ -24,9 +49,6 @@ const generateWIFs = async ({
   tickets,
   title,
 }: Campaign): Promise<string[]> => {
-  const logger = getLogger('generateWallets');
-  const settings = getSettings();
-  const strings = getLocales(settings.locale);
   try {
     const bbMnemonic = new Mnemonic();
     const hdnode = new BBHDNode();
@@ -35,27 +57,13 @@ const generateWIFs = async ({
     const bip44: HDNode = hdnode.derivePath(masterHDNode, hdpath);
     const wifs = [];
 
-    logger.info(
-      colorOutput({
-        item: strings.CREATE_TICKETS.INFO_GENERATING_WIFS,
-        value: title,
-        style: OutputStyles.Start,
-      }),
-    );
-
     for (let i = 0; i < tickets.count; i++) {
-      // eslint-disable-next-line no-await-in-loop
       await sleep(settings.timer);
       const node: HDNode = hdnode.derivePath(bip44, `0/0/${i}`);
 
       const wif = hdnode.toWIF(node);
       wifs.push(wif);
-      logger.info(
-        colorOutput({
-          item: strings.CREATE_TICKETS.INFO_GENERATED_WIF,
-          value: wif,
-        }),
-      );
+      displayInfo({ wif });
     }
 
     const privKeyWifs = `${settings.outDir}/${title}/privKeyWIFs`;
@@ -63,17 +71,9 @@ const generateWIFs = async ({
     fs.writeFileSync(privKeyWifs, wifs.join('\n'));
     fs.ensureFileSync(privKeyWifs);
 
-    logger.info(
-      colorOutput({
-        item: strings.CREATE_TICKETS.INFO_GENERATED_WIFS,
-        value: privKeyWifs,
-        style: OutputStyles.Complete,
-      }),
-    );
-
     return wifs;
   } catch (error) {
-    return error;
+    throw logger.error(error);
   }
 };
 

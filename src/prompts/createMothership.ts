@@ -1,13 +1,8 @@
-import path from 'path';
 import { HDNode as BitboxHDNode, Mnemonic } from 'bitbox-sdk';
 import { HDNode } from 'bitcoincashjs-lib';
-import chalk from 'chalk';
-import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import generateMnemonic from './createMnemonic';
-import { getLanguage, getLocales } from '../i18n';
-import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import rocket from '../assets/rocket.txt';
+import createMnemonic from './createMnemonic';
+import { getLanguage } from '../i18n';
 import getSettings from '../getSettings';
 
 /**
@@ -24,23 +19,11 @@ const createMothership = async (
 ): Promise<Mothership | null> => {
   const logger = getLogger();
   const settings = getSettings();
-  const { TITLES } = getLocales(settings.locale);
   logger.debug(master);
   try {
     // asks user to enter mnemonic or eneter their own
-    const mnemonic = await generateMnemonic(
-      getLanguage(settings.locale),
-      master,
-    );
+    const mnemonic = await createMnemonic(getLanguage(settings.locale), master);
     if (!mnemonic) return null;
-
-    logger.info(
-      colorOutput({
-        item: TITLES.CREATE_MOTHERSHIP,
-        style: OutputStyles.Title,
-        lineabreak: true,
-      }),
-    );
 
     const bbMnemonic = new Mnemonic();
     const bbHdnode = new BitboxHDNode();
@@ -56,14 +39,6 @@ const createMothership = async (
 
     const address: string = bbHdnode.toCashAddress(motherHdNode); // bch cashaddr
     const fullNodePath = `${hdpath}/${account || 0}/${motherPath}`; // full hdnode path
-
-    logger.info(
-      colorOutput({
-        item: chalk.yellowBright(
-          fs.readFileSync(path.resolve('dist', rocket)).toString(),
-        ),
-      }),
-    );
 
     return {
       fullNodePath,

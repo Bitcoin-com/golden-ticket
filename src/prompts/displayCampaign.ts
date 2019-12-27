@@ -1,59 +1,60 @@
 import { getLogger } from 'log4js';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import sleep from '../helpers/sleep';
 import { getLocales } from '../i18n';
 import getSettings from '../getSettings';
+import formatSpread from '../helpers/formatSpread';
 
 /**
  * Prints out campaign information
  *
- * @param {{
- *   data: Campaign;
- *   filename: string;
- * }} {
- *   data,
- *   filename,
- * }
- * @returns {Promise<void>}
+ * @param {Campaign} campaign
  */
-const displayCampaign = async (campaign: Campaign): Promise<void> => {
+const displayCampaign = (campaign: Campaign): void => {
   const logger = getLogger();
   const settings = getSettings();
-  const strings = getLocales(settings.locale);
-  logger.debug('displayCampaign()');
-  try {
-    const {
-      title,
-      mothership: { fullNodePath, address, mnemonic, hdpath },
-    } = campaign;
+  const { TITLES, INFO } = getLocales(settings.locale);
+  const { title, mothership } = campaign;
+  const { fullNodePath, address, mnemonic, hdpath } = mothership;
 
-    logger.info(
-      colorOutput({
-        item: strings.CAMPAIGN.INFO_CAMPAIGN,
-        value: title,
-        style: OutputStyles.Highlight,
-      }),
-    );
-    await sleep(settings.timer);
-    logger.info(
-      colorOutput({ item: strings.CAMPAIGN.INFO_MNEMONIC, value: mnemonic }),
-    );
-    await sleep(settings.timer);
-    logger.info(
-      colorOutput({ item: strings.CAMPAIGN.INFO_HDPATH, value: hdpath }),
-    );
-    await sleep(settings.timer);
-    logger.info(
-      colorOutput({ item: strings.CAMPAIGN.INFO_HDNODE, value: fullNodePath }),
-    );
-    await sleep(settings.timer);
-    logger.info(
-      colorOutput({ item: strings.CAMPAIGN.INFO_ADDRESS, value: address }),
-    );
-  } catch (error) {
-    logger.error(error.message);
-    throw error;
-  }
+  logger.info(
+    colorOutput({
+      item: TITLES.CAMPAIGN_SUMMARY,
+      value: title,
+      style: OutputStyles.Title,
+      lineabreak: true,
+    }),
+  );
+
+  logger.info('=== tickets ===');
+
+  const { count, spread } = campaign.tickets;
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_TICKETS_COUNT,
+      value: campaign.tickets.count.toString(),
+    }),
+  );
+
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_TICKETS_SPREAD,
+    }),
+  );
+  formatSpread(spread).forEach(element => {
+    logger.info(colorOutput({ ...element, style: OutputStyles.Information }));
+  });
+
+  logger.info('=== mothership ===');
+  logger.info(colorOutput({ item: INFO.CAMPAIGN_MNEMONIC, value: mnemonic }));
+  logger.info(colorOutput({ item: INFO.CAMPAIGN_HDPATH, value: hdpath }));
+  logger.info(colorOutput({ item: INFO.CAMPAIGN_HDNODE, value: fullNodePath }));
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_ADDRESS,
+      value: address,
+      lineabreak: true,
+    }),
+  );
 };
 
 export default displayCampaign;

@@ -1,8 +1,8 @@
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import generateWIFs from './generateWIFs';
-import generateHTML from './generateHTML';
-import generatePDF from './generatePDF';
+import generateWIFs from '../helpers/generateWIFs';
+import generateHTML from '../helpers/generateHTML';
+import generatePDF from '../helpers/generatePDF';
 import selectCampaign from '../prompts/selectCampaign';
 import getSettings from '../getSettings';
 

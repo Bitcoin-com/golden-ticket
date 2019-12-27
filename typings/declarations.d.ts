@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'to-regex-range';
 declare module 'qrcode-terminal';
 
@@ -7,6 +8,6 @@ declare module '*.txt' {
 }
 
 declare module '*.png' {
-  const content: string;
-  export = content;
+  const value: any;
+  export = value;
 }

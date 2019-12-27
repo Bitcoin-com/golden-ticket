@@ -15,20 +15,20 @@ import getSettings from '../getSettings';
 const selectTemplate = (): Template | null => {
   const logger = getLogger('selectTemplate');
   const settings = getSettings();
-  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale);
+  const { SCRIPTS, QUESTIONS, TITLES } = getLocales(settings.locale);
 
   try {
     // prints title
     logger.info(
       colorOutput({
-        item: CAMPAIGN.TEMPLATES_TITLE,
+        item: TITLES.CAMPAIGN_TEMPLATE,
         style: OutputStyles.Title,
       }),
     );
 
     // gets list of directories
     const dirs = fs.readdirSync(path.resolve(settings.templateDir));
-    if (dirs.length === 0) throw Error('No templates');
+    if (dirs.length === 0) return null;
 
     // maps all available templates
     const templates = dirs.map(dir => {
@@ -44,7 +44,7 @@ const selectTemplate = (): Template | null => {
     const index = readlineSync.keyInSelect(
       templates.map(t => chalk.cyan(t.title)),
       colorOutput({
-        item: SCRIPTS.SELECT_TEMPLATE,
+        item: QUESTIONS.TEMPLATE_SELECT,
         style: OutputStyles.Question,
       }),
       { cancel: chalk.red(SCRIPTS.EXIT), defaultInput: '1' },

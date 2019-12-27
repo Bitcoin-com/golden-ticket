@@ -41,16 +41,16 @@ const runScript = (
   args: string[],
   callback: (props?: object | Error | null) => void,
 ): void => {
-  const process = childProcess.fork(modulePath, args);
+  const cp = childProcess.fork(modulePath, args);
   let invoked = false;
 
-  process.on('error', err => {
+  cp.on('error', err => {
     if (invoked) return;
     invoked = true;
     callback(err);
   });
 
-  process.on('exit', code => {
+  cp.on('exit', code => {
     if (invoked) return;
     invoked = true;
     const err = code === 0 ? null : new Error(`Exit code ${code}`);
@@ -64,7 +64,7 @@ const runScript = (
  * @returns {Promise<void>}
  */
 const init = (): void => {
-  const { SCRIPTS } = getLocales(settings.locale);
+  const { SCRIPTS, QUESTIONS } = getLocales(settings.locale);
 
   const scripts: { [any: string]: string } = {
     [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
@@ -92,7 +92,7 @@ const init = (): void => {
     const index: number = readlineSync.keyInSelect(
       scriptKeys.map(key => chalk.cyan(key)),
       colorOutput({
-        item: SCRIPTS.PROMPT_SCRIPT,
+        item: QUESTIONS.SCRIPTS_SELECT,
         style: OutputStyles.Question,
       }),
       { cancel: chalk.red(SCRIPTS.EXIT) },
@@ -105,7 +105,7 @@ const init = (): void => {
 
       logger.info(
         colorOutput({
-          item: SCRIPTS.LOG_RUNNING,
+          item: SCRIPTS.START_RUNNING,
           value: scriptKeys[index],
           style: OutputStyles.Start,
         }),
@@ -114,7 +114,7 @@ const init = (): void => {
       runScript(script, [], () => {
         logger.info(
           colorOutput({
-            item: SCRIPTS.FINISHED_RUNNING,
+            item: SCRIPTS.END_RUNNING,
             value: scriptKeys[index],
             style: OutputStyles.Complete,
           }),

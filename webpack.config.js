@@ -2,6 +2,7 @@ const path = require('path');
 const { ProgressPlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -10,7 +11,7 @@ const entry = {
   configureCampaign: [path.join(process.cwd(), './src/configureCampaign.ts')],
 };
 
-ForkTsCheckerWebpackPlugin.TWO_CPUS_FRE;
+ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE;
 
 const output = {
   path: path.join(process.cwd(), 'dist'),

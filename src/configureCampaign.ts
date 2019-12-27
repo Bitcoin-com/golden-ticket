@@ -16,14 +16,6 @@ const init = async (): Promise<void> => {
     // user selects campaign
     const selectedCampaign = await selectCampaign();
     if (!selectedCampaign) return;
-
-    /*     // confirm overwrite
-    if (!readlineSync.keyInYNStrict('overwrite?')) return;
-
-    // go through new campaign wizard with selected campaign
-    const campaign = await createCampaign(selectedCampaign);
-    if (!campaign) return; */
-    logger.info('selected campaign', selectCampaign);
   } catch (error) {
     throw logger.error(error);
   }

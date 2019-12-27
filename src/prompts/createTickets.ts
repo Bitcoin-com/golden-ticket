@@ -16,30 +16,41 @@ const createTickets = (master?: Campaign): Tickets | null => {
   const logger = getLogger();
   const settings = getSettings();
   const { locale, tickets } = settings;
-  const { CAMPAIGN, TITLES } = getLocales(locale);
+  const { QUESTIONS, TITLES, LIMITS, INFO } = getLocales(locale);
   logger.debug('createTickets');
   logger.debug(master);
   try {
+    const ticketCount = master && master.tickets.count;
+
     // prints title
     logger.info(
       colorOutput({
-        item: TITLES.CREATE_TICKETS,
+        item: TITLES.CAMPAIGN_TICKETS,
         style: OutputStyles.Title,
         lineabreak: true,
       }),
     );
 
+    if (ticketCount)
+      logger.info(
+        colorOutput({
+          item: INFO.CAMPAIGN_TICKETS_COUNT_CURRENT,
+          value: ticketCount.toString(),
+          lineabreak: true,
+        }),
+      );
+
     // get total number of tickets
     const count: number = readlineSync.questionInt(
       colorOutput({
-        item: CAMPAIGN.TICKETS_NUMBER,
+        item: QUESTIONS.CAMPAIGN_TICKETS,
         value: tickets.toString(),
         style: OutputStyles.Question,
       }),
       {
         defaultInput: tickets.toString(),
         limit: '^[0-9]{1,5}$',
-        limitMessage: chalk.red(CAMPAIGN.TICKET_LIMIT),
+        limitMessage: chalk.red(LIMITS.CAMPAIGN_TICKETS),
       },
     );
 
@@ -48,9 +59,6 @@ const createTickets = (master?: Campaign): Tickets | null => {
     const spread = createSpread(count);
     if (!spread) return null;
 
-    logger.info("Here's the spread", spread);
-
-    readlineSync.keyInPause('Hope you like it');
     return {
       count,
       spread,

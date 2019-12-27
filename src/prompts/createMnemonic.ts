@@ -5,6 +5,29 @@ import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../getSettings';
 
+const logger = getLogger();
+const settings = getSettings();
+const { INFO, TITLES, QUESTIONS } = getLocales(settings.locale);
+
+// prints title
+const showTitle = (value?: string): void => {
+  logger.info(
+    colorOutput({
+      item: TITLES.CAMPAIGN_MNEMONIC,
+      style: OutputStyles.Title,
+      lineabreak: true,
+    }),
+  );
+  if (value)
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_MNEMONIC_CURRENT,
+        value,
+        lineabreak: true,
+      }),
+    );
+};
+
 /**
  * Generates a mnemonic
  * @return {string} The wallet mnemonic string
@@ -13,38 +36,16 @@ const generateMnemonic = async (
   language: string,
   master?: Campaign,
 ): Promise<string | null> => {
-  const logger = getLogger();
-  const settings = getSettings();
-  const { CAMPAIGN, TITLES } = getLocales(settings.locale);
-
   try {
-    // prints title
-    const showTitle = (): void =>
-      logger.info(
-        colorOutput({
-          item: TITLES.CREATE_MNEMONIC,
-          style: OutputStyles.Title,
-          lineabreak: true,
-        }),
-      );
-    showTitle();
-
     // get and show user current mnemonic
     const mnemonic = master && master.mothership.mnemonic;
-    if (mnemonic) {
-      logger.info(
-        colorOutput({
-          item: CAMPAIGN.MNEMONIC_CURRENT,
-          value: mnemonic,
-          lineabreak: true,
-        }),
-      );
-    }
+
+    showTitle(mnemonic);
 
     // asks user if wallet should generate
     const shouldGenerate = readlineSync.keyInYN(
       colorOutput({
-        item: CAMPAIGN.MNEMONIC,
+        item: QUESTIONS.CAMPAIGN_MNEMONIC_GENERATE,
         style: OutputStyles.Question,
       }),
     );
@@ -55,20 +56,19 @@ const generateMnemonic = async (
       const wordList = await bbMnemonic.wordLists()[language.toLowerCase()];
       const generated = bbMnemonic.generate(256, wordList);
 
-      logger.info(
-        colorOutput({
-          item: 'Mnemonic generated',
-          value: generated,
-          style: OutputStyles.Information,
-        }),
+      showTitle(generated);
+
+      readlineSync.keyInPause(
+        colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),
       );
-      readlineSync.keyInPause();
       return generated;
     }
 
+    showTitle(mnemonic);
+
     const newMnemonic = readlineSync.question(
       colorOutput({
-        item: CAMPAIGN.MNEMONIC_ENTER,
+        item: QUESTIONS.CAMPAIGN_MNEMONIC_ENTER,
         value: mnemonic,
         style: OutputStyles.Question,
       }),

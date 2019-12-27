@@ -50,6 +50,7 @@ type Spread = { '0': number; [number: string]: number };
 
 interface Template {
   title: string;
+  name: string;
   pdf: PDF;
   qrcode: QRCode;
   csv: CSV;

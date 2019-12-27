@@ -9,6 +9,9 @@ import displayCampaign from './displayCampaign';
 import { getLocales } from '../i18n';
 import selectTemplate from './selectTemplate';
 import getSettings from '../getSettings';
+import generateWIFs from '../helpers/generateWIFs';
+import generateHTML from '../helpers/generateHTML';
+import generatePDF from '../helpers/generatePDF';
 
 /**
  * Takes user through campaign configuration
@@ -19,7 +22,7 @@ import getSettings from '../getSettings';
 const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
   const logger = getLogger();
   const settings = getSettings();
-  const { CAMPAIGN, TITLES } = getLocales(settings.locale);
+  const { DEFAULTS, TITLES, INFO, QUESTIONS } = getLocales(settings.locale);
 
   try {
     // template
@@ -28,7 +31,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
 
     logger.info(
       colorOutput({
-        item: TITLES.CREATE_CAMPAIGN,
+        item: TITLES.CAMPAIGN_TITLE,
         style: OutputStyles.Title,
         lineabreak: true,
       }),
@@ -38,7 +41,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     if (master) {
       logger.info(
         colorOutput({
-          item: CAMPAIGN.TITLE_CURRENT,
+          item: INFO.CAMPAIGN_TITLE_CURRENT,
           value: master.title,
           lineabreak: true,
         }),
@@ -48,11 +51,11 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     // the title
     const title: string = readlineSync.question(
       colorOutput({
-        item: CAMPAIGN.TITLE,
-        value: CAMPAIGN.TITLE_DEFAULT,
+        item: QUESTIONS.CAMPAIGN_TITLE,
+        value: DEFAULTS.CAMPAIGN_TITLE,
         style: OutputStyles.Question,
       }),
-      { defaultInput: master ? master.title : CAMPAIGN.TITLE_DEFAULT },
+      { defaultInput: master ? master.title : DEFAULTS.CAMPAIGN_TITLE },
     );
 
     // mothership
@@ -67,32 +70,76 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     const campaignData: Campaign = {
       title,
       tickets,
-      template: template.title,
+      template: template.name,
       mothership,
     };
 
     // display info and confirm
-    await displayCampaign(campaignData);
+    displayCampaign(campaignData);
 
     if (
       !readlineSync.keyInYNStrict(
-        colorOutput({ item: CAMPAIGN.CONFIRM, style: OutputStyles.Warning }),
+        colorOutput({
+          item: QUESTIONS.CAMPAIGN_CONFIRM,
+          style: OutputStyles.Question,
+        }),
       )
     )
       return null;
 
     // save the campaign details
-    const filename = `${settings.outDir}/${campaignData.title}/config.json`;
+    const path = `${settings.outDir}/${campaignData.title}`;
+    const filename = `${path}/config.json`;
     fs.outputFileSync(filename, JSON.stringify(campaignData));
+
+    const wifs = await generateWIFs(campaignData);
+    await generateHTML(wifs, campaignData);
+    await generatePDF(wifs, campaignData);
 
     logger.info(
       colorOutput({
-        item: CAMPAIGN.INFO_WRITE_SUCCESS,
+        item: TITLES.CAMPAIGN_CREATED,
+        style: OutputStyles.Title,
+        lineabreak: true,
+      }),
+    );
+
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_TITLE,
+        value: campaignData.title,
+      }),
+    );
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_CONFIG,
         value: filename,
       }),
-      '\n',
     );
-    readlineSync.keyInPause();
+
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_WIFS,
+        value: `${path}/privKeyWIFs`,
+      }),
+    );
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_PDF,
+        value: `${path}/pdf/`,
+      }),
+    );
+    logger.info(
+      colorOutput({
+        item: INFO.CAMPAIGN_HTML,
+        value: `${path}/html/`,
+        lineabreak: true,
+      }),
+    );
+
+    readlineSync.keyInPause(
+      colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),
+    );
     return campaignData;
   } catch (error) {
     throw logger.error(error);

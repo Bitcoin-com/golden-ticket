@@ -17,13 +17,13 @@ import getSettings from '../getSettings';
 const selectCampaign = async (): Promise<Campaign | null> => {
   const logger = getLogger('selectCampaign');
   const settings = getSettings();
-  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale);
+  const { QUESTIONS, TITLES, SCRIPTS } = getLocales(settings.locale);
 
   try {
     // print title
     logger.info(
       colorOutput({
-        item: CAMPAIGN.CAMPAIGNS_TITLE,
+        item: TITLES.CAMPAIGN_SELECT,
         style: OutputStyles.Title,
       }),
     );
@@ -39,7 +39,7 @@ const selectCampaign = async (): Promise<Campaign | null> => {
     const index = readlineSync.keyInSelect(
       dirs.map(d => chalk.cyan(d)),
       colorOutput({
-        item: SCRIPTS.SELECT_CAMPAIGN,
+        item: QUESTIONS.CAMPAIGN_SELECT,
         style: OutputStyles.Question,
       }),
       { cancel: chalk.red(SCRIPTS.EXIT) },
