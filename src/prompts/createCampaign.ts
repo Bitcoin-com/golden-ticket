@@ -8,7 +8,7 @@ import createTickets from './createTickets';
 import displayCampaign from './displayCampaign';
 import { getLocales } from '../i18n';
 import selectTemplate from './selectTemplate';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Takes user through campaign configuration
@@ -18,11 +18,12 @@ import settings from '../../settings.json';
  */
 const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
   const logger = getLogger();
-  const { CAMPAIGN, TITLES } = getLocales(settings.locale as Locale);
+  const settings = getSettings();
+  const { CAMPAIGN, TITLES } = getLocales(settings.locale);
 
   try {
     // template
-    const template = await selectTemplate();
+    const template = selectTemplate();
     if (!template) return null;
 
     logger.info(
@@ -59,7 +60,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     if (!mothership) return null;
 
     // tickets
-    const tickets = await createTickets(master);
+    const tickets = createTickets(master);
     if (!tickets) return null;
 
     // put it all together

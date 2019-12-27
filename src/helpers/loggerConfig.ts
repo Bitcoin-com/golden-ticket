@@ -1,4 +1,4 @@
-import getSettings from '../settings';
+import getSettings from '../getSettings';
 
 const loggerConfig = {
   appenders: {

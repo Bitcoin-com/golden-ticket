@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 const path = require('path');
 const { ProgressPlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -35,9 +33,12 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'file-loader',
         options: {
-          name: '[path][name].[ext]',
+          name: '[name].[ext]',
+          outputPath: 'assets',
+          publicPath: 'assets',
         },
       },
+
       {
         test: /\.(ts|js)x?$/,
         loader: 'ts-loader',

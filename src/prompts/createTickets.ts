@@ -5,17 +5,18 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import createSpread from './createSpread';
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Takes user through ticket configuration
  *
  * @returns {(Promise<Tickets | null>)}
  */
-const createTickets = async (master?: Campaign): Promise<Tickets | null> => {
+const createTickets = (master?: Campaign): Tickets | null => {
   const logger = getLogger();
+  const settings = getSettings();
   const { locale, tickets } = settings;
-  const { CAMPAIGN, TITLES } = getLocales(locale as Locale);
+  const { CAMPAIGN, TITLES } = getLocales(locale);
   logger.debug('createTickets');
   logger.debug(master);
   try {
@@ -44,7 +45,7 @@ const createTickets = async (master?: Campaign): Promise<Tickets | null> => {
 
     if (count === 0) return null;
 
-    const spread = await createSpread(count);
+    const spread = createSpread(count);
     if (!spread) return null;
 
     logger.info("Here's the spread", spread);

@@ -3,10 +3,11 @@ import readlineSync from 'readline-sync';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 const createSpread = (count: number): Spread | null => {
   const logger = getLogger();
+  const settings = getSettings();
   const { CAMPAIGN, TITLES } = getLocales(settings.locale);
 
   try {

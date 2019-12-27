@@ -5,7 +5,7 @@ import path from 'path';
 import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Promps user to select a template
@@ -14,7 +14,8 @@ import settings from '../../settings.json';
  */
 const selectTemplate = (): Template | null => {
   const logger = getLogger('selectTemplate');
-  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale as Locale);
+  const settings = getSettings();
+  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale);
 
   try {
     // prints title

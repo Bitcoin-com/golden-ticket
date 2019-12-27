@@ -6,10 +6,7 @@ import { getLogger } from 'log4js';
 import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import sleep from '../helpers/sleep';
-import settings from '../../settings.json';
-
-const logger = getLogger('generateWallets');
-const strings = getLocales(settings.locale);
+import getSettings from '../getSettings';
 
 /**
  * Generates, saves and returns wifs
@@ -27,6 +24,9 @@ const generateWIFs = async ({
   tickets,
   title,
 }: Campaign): Promise<string[]> => {
+  const logger = getLogger('generateWallets');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     const bbMnemonic = new Mnemonic();
     const hdnode = new BBHDNode();

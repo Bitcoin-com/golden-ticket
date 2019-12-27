@@ -1,5 +1,5 @@
+import path from 'path';
 import { HDNode as BitboxHDNode, Mnemonic } from 'bitbox-sdk';
-
 import { HDNode } from 'bitcoincashjs-lib';
 import chalk from 'chalk';
 import fs from 'fs-extra';
@@ -8,7 +8,7 @@ import generateMnemonic from './createMnemonic';
 import { getLanguage, getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import rocket from '../assets/rocket.txt';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Generate mothership wallet
@@ -23,12 +23,13 @@ const createMothership = async (
   account?: number,
 ): Promise<Mothership | null> => {
   const logger = getLogger();
+  const settings = getSettings();
   const { TITLES } = getLocales(settings.locale);
   logger.debug(master);
   try {
     // asks user to enter mnemonic or eneter their own
     const mnemonic = await generateMnemonic(
-      getLanguage(settings.locale as Locale),
+      getLanguage(settings.locale),
       master,
     );
     if (!mnemonic) return null;
@@ -58,7 +59,9 @@ const createMothership = async (
 
     logger.info(
       colorOutput({
-        item: chalk.yellowBright(fs.readFileSync(rocket).toString()),
+        item: chalk.yellowBright(
+          fs.readFileSync(path.resolve('dist', rocket)).toString(),
+        ),
       }),
     );
 

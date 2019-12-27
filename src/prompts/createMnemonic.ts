@@ -3,7 +3,7 @@ import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Generates a mnemonic
@@ -14,7 +14,8 @@ const generateMnemonic = async (
   master?: Campaign,
 ): Promise<string | null> => {
   const logger = getLogger();
-  const { CAMPAIGN, TITLES } = getLocales(settings.locale as Locale);
+  const settings = getSettings();
+  const { CAMPAIGN, TITLES } = getLocales(settings.locale);
 
   try {
     // prints title

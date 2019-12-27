@@ -3,12 +3,12 @@ import qrcode from 'qrcode-terminal';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
-
-const logger = getLogger('fundMothership');
-const strings = getLocales(settings.locale);
+import getSettings from '../getSettings';
 
 const main = async (): Promise<void> => {
+  const logger = getLogger('fundMothership');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     const campaignData = await selectCampaign();
     if (!campaignData) return;

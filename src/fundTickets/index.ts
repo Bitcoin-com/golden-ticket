@@ -13,12 +13,13 @@ import { getLogger } from 'log4js';
 import getUTXOs from '../helpers/getUTXOs';
 import selectCampaign from '../prompts/selectCampaign';
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
-const logger = getLogger('fundTickets');
-const strings = getLocales(settings.locale);
 // Open the wallet generated with generate-wallet.
 const main = async (): Promise<void> => {
+  const logger = getLogger('fundTickets');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     logger.debug('fundTickets');
 

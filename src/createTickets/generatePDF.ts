@@ -5,10 +5,7 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import { getLocales } from '../i18n';
 import getTemplates from '../helpers/getTemplates';
-import settings from '../../settings.json';
-
-const logger = getLogger('generatePDF');
-const strings = getLocales(settings.locale);
+import getSettings from '../getSettings';
 
 /**
  * Generates and saves PDF Files
@@ -18,6 +15,9 @@ const strings = getLocales(settings.locale);
  * @returns {Promise<void>}
  */
 const generatePDF = (wifs: string[], campaignData: Campaign): void => {
+  const logger = getLogger('generatePDF');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     const { title, template } = campaignData;
 

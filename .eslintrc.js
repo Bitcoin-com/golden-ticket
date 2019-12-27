@@ -48,5 +48,12 @@ module.exports = {
         '@typescript-eslint/no-unused-expressions': 'off',
       },
     },
+    {
+      files: ['webpack.config.js'],
+      rules: {
+        '@typescript-eslint/no-unused-expressions': 'off',
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
   ],
 };

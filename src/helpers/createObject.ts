@@ -3,7 +3,7 @@ import { colorOutput } from './colorFormatters';
 import sleep from './sleep';
 import getCashAddress from './getCashAddress';
 import getTieredValue from './getTieredValue';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Creates CSV object from array of wifs
@@ -13,7 +13,7 @@ import settings from '../../settings.json';
  */
 const createObject = async (wifs: string[]): Promise<CSV[]> => {
   const logger = getLogger('createCSV');
-
+  const settings = getSettings();
   const addresses = await Promise.all(
     wifs.map(async (wif, i) => {
       await sleep(settings.timer);

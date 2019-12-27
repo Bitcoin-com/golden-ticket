@@ -2,7 +2,7 @@ import { getLogger } from 'log4js';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import sleep from '../helpers/sleep';
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Prints out campaign information
@@ -18,6 +18,7 @@ import settings from '../../settings.json';
  */
 const displayCampaign = async (campaign: Campaign): Promise<void> => {
   const logger = getLogger();
+  const settings = getSettings();
   const strings = getLocales(settings.locale);
   logger.debug('displayCampaign()');
   try {

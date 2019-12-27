@@ -2,12 +2,9 @@ import QRCode from 'qrcode';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import defaultTemplate from '../templates/default';
+import defaultTemplate from '../../templates/default';
 import { getLocales } from '../i18n';
-import settings from '../../settings.json';
-
-const logger = getLogger('generateHTML');
-const strings = getLocales(settings.locale);
+import getSettings from '../getSettings';
 
 /**
  * Generates HTML files
@@ -17,6 +14,9 @@ const strings = getLocales(settings.locale);
  * @returns {Promise<void>}
  */
 const generateHTML = (wifs: string[], campaignData: Campaign): void => {
+  const logger = getLogger('generateHTML');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     const { title } = campaignData;
 

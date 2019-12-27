@@ -6,11 +6,8 @@ import getCampaignWIFs from '../helpers/getCampaignWIFs';
 
 import { getLocales } from '../i18n';
 import selectCampaign from '../prompts/selectCampaign';
-import settings from '../../settings.json';
 import writeCSV from './writeCSV';
-
-const logger = getLogger('createCSV');
-const strings = getLocales(settings.locale);
+import getSettings from '../getSettings';
 
 /**
  * Open the wallet generated with generate-wallet.
@@ -18,6 +15,9 @@ const strings = getLocales(settings.locale);
  * @returns {Promise<any>}
  */
 const main = async (): Promise<void> => {
+  const logger = getLogger('createCSV');
+  const settings = getSettings();
+  const strings = getLocales(settings.locale);
   try {
     const campaignData = await selectCampaign();
     if (!campaignData) return;

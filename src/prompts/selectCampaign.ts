@@ -6,7 +6,7 @@ import readlineSync from 'readline-sync';
 import { getLocales } from '../i18n';
 import createCampaign from './createCampaign';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Prompts user to select campaign from list
@@ -16,7 +16,8 @@ import settings from '../../settings.json';
  */
 const selectCampaign = async (): Promise<Campaign | null> => {
   const logger = getLogger('selectCampaign');
-  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale as Locale);
+  const settings = getSettings();
+  const { SCRIPTS, CAMPAIGN } = getLocales(settings.locale);
 
   try {
     // print title

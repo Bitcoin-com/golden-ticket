@@ -1,6 +1,6 @@
 import fs from 'fs-extra';
 import path from 'path';
-import settings from '../../settings.json';
+import getSettings from '../getSettings';
 
 /**
  * Returns object containing templates
@@ -8,6 +8,7 @@ import settings from '../../settings.json';
  * @returns {{ [key: string]: Template }}
  */
 const getTemplates = (): { [key: string]: Template } => {
+  const settings = getSettings();
   const dirs = fs.readdirSync(path.resolve(settings.templateDir));
   if (dirs.length === 0) throw Error('No templates');
 

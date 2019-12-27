@@ -3,10 +3,8 @@ import { getLogger } from 'log4js';
 import generateWIFs from './generateWIFs';
 import generateHTML from './generateHTML';
 import generatePDF from './generatePDF';
-import settings from '../../settings.json';
 import selectCampaign from '../prompts/selectCampaign';
-
-const logger = getLogger('createTickets');
+import getSettings from '../getSettings';
 
 /**
  * Starts create tickets
@@ -14,6 +12,8 @@ const logger = getLogger('createTickets');
  * @returns {Promise<void>}
  */
 const main = async (): Promise<void> => {
+  const logger = getLogger('createTickets');
+  const settings = getSettings();
   try {
     const campaignData = await selectCampaign();
     if (!campaignData) return;

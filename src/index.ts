@@ -8,13 +8,14 @@ import readlineSync from 'readline-sync';
 import { OutputStyles, colorOutput } from './helpers/colorFormatters';
 
 import { getLocales } from './i18n';
-import getSettings from './settings';
 import loggerConfig from './helpers/loggerConfig';
 import banner from './assets/banner.txt';
 import goodbye from './assets/goodbye.txt';
+import getSettings from './getSettings';
 
 const logger = getLogger();
 configure(loggerConfig);
+const settings = getSettings();
 
 const showBanner = (end?: boolean): void => {
   // display the golden ticket ascii text
@@ -63,8 +64,7 @@ const runScript = (
  * @returns {Promise<void>}
  */
 const init = (): void => {
-  const { locale } = getSettings();
-  const { SCRIPTS } = getLocales(locale);
+  const { SCRIPTS } = getLocales(settings.locale);
 
   const scripts: { [any: string]: string } = {
     [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
@@ -125,8 +125,7 @@ const init = (): void => {
       showBanner(true);
     }
   } catch (error) {
-    logger.error(error.message);
-    throw error;
+    throw logger.error(error);
   }
 };
 

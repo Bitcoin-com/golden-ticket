@@ -1,5 +1,5 @@
 import en from './en.json';
-import getSettings from '../settings';
+import getSettings from '../getSettings';
 
 const settings = getSettings();
 
@@ -43,7 +43,7 @@ export const getLocales = (locale: string = settings.locale): Locales => {
  * @param {Locale} locale
  * @returns {string}
  */
-export const getLanguage = (locale: Locale): string => {
+export const getLanguage = (locale: string): string => {
   const languageMap: {
     [key: string]: string;
   } = {

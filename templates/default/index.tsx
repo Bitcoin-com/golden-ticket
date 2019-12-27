@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import bgBase64 from './background.png';
 import config from './config.json';
-import getSettings from '../../settings';
+import getSettings from '../../src/getSettings';
 
 /**
  * Template for HTML page generation
