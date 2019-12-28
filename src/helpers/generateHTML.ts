@@ -1,50 +1,15 @@
 import QRCode from 'qrcode';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import { OutputStyles, colorOutput } from './colorFormatters';
 import defaultTemplate from '../../templates/default';
-import { getLocales } from '../i18n';
 import getSettings from './getSettings';
 import sleep from './sleep';
 import getWIFS from './getWIFs';
 import getCashAddress from './getCashAddress';
+import logGenerateHTML from '../logger/logGenerateHTML';
 
 const logger = getLogger('generateHTML');
 const settings = getSettings();
-const { TITLES, QUESTIONS, INFO } = getLocales(settings.locale);
-
-const displayInfo = ({
-  title,
-  filename,
-}: {
-  title: string;
-  filename: string;
-}): void => {
-  logger.info(
-    colorOutput({
-      item: TITLES.CAMPAIGN_HTML,
-      value: title,
-      style: OutputStyles.Title,
-      lineabreak: true,
-    }),
-  );
-
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_HTML,
-      value: filename,
-      lineabreak: true,
-    }),
-  );
-
-  logger.info(
-    colorOutput({
-      item: QUESTIONS.WAIT,
-      style: OutputStyles.Question,
-    }),
-  );
-};
-
 /**
  * Generates HTML files
  *
@@ -78,7 +43,7 @@ const generateHTML = async (campaignData: Campaign): Promise<void> => {
         },
       );
 
-      displayInfo({ title, filename });
+      logGenerateHTML({ title, filename });
     }
   } catch (error) {
     throw logger.error(error);

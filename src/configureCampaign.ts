@@ -11,13 +11,13 @@ import createCampaign from './prompts/createCampaign';
 const init = async (): Promise<void> => {
   const logger = getLogger();
   configure(loggerConfig);
-  logger.debug('init');
 
   try {
     // user selects campaign
     const campaignData = await selectCampaign();
     if (!campaignData) return;
 
+    // take user through campaign configuration
     await createCampaign(campaignData);
   } catch (error) {
     throw logger.error(error);

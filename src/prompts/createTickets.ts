@@ -1,10 +1,12 @@
 import chalk from 'chalk';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
+import { getLocales } from '../i18n';
 
 import createSpread from './createSpread';
-import { getLocales } from '../i18n';
+
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 
 import logTickets from '../logger/logTickets';
@@ -36,16 +38,13 @@ const createTickets = (master?: Campaign): Tickets | null => {
         limitMessage: chalk.red(LIMITS.CAMPAIGN_TICKETS),
       },
     );
-
     if (count === 0) return null;
 
+    // get spread
     const spread = createSpread(count);
     if (!spread) return null;
 
-    return {
-      count,
-      spread,
-    };
+    return { count, spread };
   } catch (error) {
     throw logger.error(error);
   }

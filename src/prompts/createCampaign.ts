@@ -1,12 +1,14 @@
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
+
+import { getLocales } from '../i18n';
 
 import createMothership from './createMothership';
 import createTickets from './createTickets';
-import { getLocales } from '../i18n';
 import selectTemplate from './selectTemplate';
+
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 import generateWIFs from '../helpers/generateWIFs';
 import generateHTML from '../helpers/generateHTML';
@@ -17,10 +19,6 @@ import logCampaignOutput from '../logger/logCampaignOutput';
 import logCampaignCreate from '../logger/logCampaignCreate';
 import logCampaignSummary from '../logger/logCampaignSummary';
 
-const logger = getLogger();
-const settings = getSettings();
-const { DEFAULTS, QUESTIONS } = getLocales(settings.locale);
-
 /**
  * Takes user through campaign configuration
  *
@@ -28,6 +26,10 @@ const { DEFAULTS, QUESTIONS } = getLocales(settings.locale);
  * @returns {(Promise<Campaign | null>)}
  */
 const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
+  const logger = getLogger();
+  const settings = getSettings();
+  const { DEFAULTS, QUESTIONS } = getLocales(settings.locale);
+
   try {
     // template
     const template = selectTemplate();

@@ -3,10 +3,13 @@ import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import path from 'path';
 import readlineSync from 'readline-sync';
+
 import { getLocales } from '../i18n';
-import createCampaign from './createCampaign';
+
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
+
+import createCampaign from './createCampaign';
 
 /**
  * Prompts user to select campaign from list

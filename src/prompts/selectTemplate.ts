@@ -3,7 +3,9 @@ import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import path from 'path';
 import readlineSync from 'readline-sync';
+
 import { getLocales } from '../i18n';
+
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 
@@ -13,7 +15,7 @@ import getSettings from '../helpers/getSettings';
  * @returns {(Promise<Template | null>)}
  */
 const selectTemplate = (): Template | null => {
-  const logger = getLogger('selectTemplate');
+  const logger = getLogger();
   const settings = getSettings();
   const { SCRIPTS, QUESTIONS, TITLES } = getLocales(settings.locale);
 

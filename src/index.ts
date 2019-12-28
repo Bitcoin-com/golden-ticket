@@ -1,82 +1,41 @@
 // import ajv from 'ajv';
 import { configure, getLogger } from 'log4js';
 import chalk from 'chalk';
-import childProcess from 'child_process';
-import fs from 'fs-extra';
 import path from 'path';
-import readlineSync from 'readline-sync';
-import { OutputStyles, colorOutput } from './helpers/colorFormatters';
+import { keyInSelect } from 'readline-sync';
 
 import { getLocales } from './i18n';
+
+import { OutputStyles, colorOutput } from './helpers/colorFormatters';
 import loggerConfig from './helpers/loggerConfig';
-import banner from './assets/banner.txt';
-import goodbye from './assets/goodbye.txt';
 import getSettings from './helpers/getSettings';
+import runScript from './helpers/runScript';
 
-const logger = getLogger();
-configure(loggerConfig);
-const settings = getSettings();
-
-const showBanner = (end?: boolean): void => {
-  // display the golden ticket ascii text
-  const bannerString: string = fs
-    .readFileSync(path.resolve('dist', end ? goodbye : banner))
-    .toString();
-
-  // eslint-disable-next-line no-console
-  console.clear();
-
-  logger.info(chalk.yellowBright(bannerString));
-};
-
-/**
- * Runs a node child proccess with chosen script
- *
- * @param {string} modulePath
- * @param {string[]} args
- * @param {((props?: object | Error | null) => void)} callback
- */
-const runScript = (
-  modulePath: string,
-  args: string[],
-  callback: (props?: object | Error | null) => void,
-): void => {
-  const cp = childProcess.fork(modulePath, args);
-  let invoked = false;
-
-  cp.on('error', err => {
-    if (invoked) return;
-    invoked = true;
-    callback(err);
-  });
-
-  cp.on('exit', code => {
-    if (invoked) return;
-    invoked = true;
-    const err = code === 0 ? null : new Error(`Exit code ${code}`);
-    callback(err);
-  });
-};
+import logBanner from './logger/logBanner';
+import logRunScript from './logger/logRunScript';
 
 /**
  * Initializes scripts selection and launches selected script
  *
  * @returns {Promise<void>}
  */
-const init = (): void => {
-  const { SCRIPTS, QUESTIONS } = getLocales(settings.locale);
-
-  const scripts: { [any: string]: string } = {
-    [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: 'configureCampaign',
-    [SCRIPTS.NAMES.FUND_CAMPAIGN]: 'fundCampaign',
-    [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
-    [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
-    [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
-  };
+const selectScript = (): void => {
+  const logger = getLogger();
+  configure(loggerConfig);
 
   try {
-    logger.debug('start:init');
-    showBanner();
+    const settings = getSettings();
+    const { SCRIPTS, QUESTIONS } = getLocales(settings.locale);
+
+    const scripts: { [any: string]: string } = {
+      [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: 'configureCampaign',
+      [SCRIPTS.NAMES.FUND_CAMPAIGN]: 'fundCampaign',
+      [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
+      [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
+      [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
+    };
+
+    logBanner();
 
     // validate
     // validate template config with schema
@@ -84,9 +43,11 @@ const init = (): void => {
     const validate = ajv.compile(schema);
     if (!validate(template)) throw Error('Invalid Template'); */
 
+    // array of script titles
     const scriptKeys: string[] = Object.keys(scripts);
 
-    const index: number = readlineSync.keyInSelect(
+    // prompt user to select a script
+    const index: number = keyInSelect(
       scriptKeys.map(key => chalk.cyan(key)),
       colorOutput({
         item: QUESTIONS.SCRIPTS_SELECT,
@@ -95,35 +56,28 @@ const init = (): void => {
       { cancel: chalk.red(SCRIPTS.EXIT) },
     );
 
-    if (index !== -1) {
-      const key = scriptKeys[index];
-
-      const script = path.resolve('dist', scripts[key]);
-
-      logger.info(
-        colorOutput({
-          item: SCRIPTS.START_RUNNING,
-          value: scriptKeys[index],
-          style: OutputStyles.Start,
-        }),
-      );
-
-      runScript(script, [], () => {
-        logger.info(
-          colorOutput({
-            item: SCRIPTS.END_RUNNING,
-            value: scriptKeys[index],
-            style: OutputStyles.Complete,
-          }),
-        );
-        init();
-      });
-    } else {
-      showBanner(true);
+    // user exits
+    if (index === -1) {
+      logBanner(true);
+      return;
     }
+
+    // get module path
+    const key = scriptKeys[index];
+    const modulePath = path.resolve('dist', scripts[key]);
+
+    logRunScript(scriptKeys[index]);
+
+    // run selected script
+    runScript(modulePath, [], () => {
+      logRunScript(scriptKeys[index], true);
+
+      // script finished. restart this
+      selectScript();
+    });
   } catch (error) {
     throw logger.error(error);
   }
 };
 
-export default init();
+export default selectScript();

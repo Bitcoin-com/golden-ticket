@@ -1,15 +1,13 @@
 import { Mnemonic } from 'bitbox-sdk';
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
+
 import { getLocales } from '../i18n';
+
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 
 import logMnemonic from '../logger/logMnemonic';
-
-const logger = getLogger();
-const settings = getSettings();
-const { QUESTIONS } = getLocales(settings.locale);
 
 /**
  * Generates a mnemonic
@@ -19,6 +17,10 @@ const generateMnemonic = async (
   language: string,
   master?: Campaign,
 ): Promise<string | null> => {
+  const logger = getLogger();
+  const settings = getSettings();
+  const { QUESTIONS } = getLocales(settings.locale);
+
   try {
     // get and show user current mnemonic
     const mnemonic = master && master.mothership.mnemonic;
@@ -49,6 +51,7 @@ const generateMnemonic = async (
 
     logMnemonic(mnemonic);
 
+    // promps user to enter own mnemonic
     const newMnemonic = readlineSync.question(
       colorOutput({
         item: QUESTIONS.CAMPAIGN_MNEMONIC_ENTER,
@@ -57,7 +60,8 @@ const generateMnemonic = async (
       }),
       { defaultInput: mnemonic },
     );
-    // this needs work
+
+    // this needs work... no checks in place to see if valid
     return newMnemonic;
   } catch (error) {
     throw logger.error(error);

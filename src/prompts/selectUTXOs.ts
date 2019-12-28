@@ -1,16 +1,22 @@
-import { getLogger, configure } from 'log4js';
+import { getLogger } from 'log4js';
 import { keyIn } from 'readline-sync';
 
-import loggerConfig from '../helpers/loggerConfig';
-import getSettings from '../helpers/getSettings';
 import { getLocales } from '../i18n';
+
+import getSettings from '../helpers/getSettings';
 import getUTXOs from '../helpers/getUTXOs';
 import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
+
 import logFundAddress from '../logger/logFundAddress';
 
+/**
+ * Promps user with funding address. Returns UTXO set when user is satisfied
+ *
+ * @param {string} address
+ * @returns {(Promise<Utxo[] | null>)}
+ */
 const updateFunds = async (address: string): Promise<Utxo[] | null> => {
   const logger = getLogger();
-  configure(loggerConfig);
   const settings = getSettings();
   const { QUESTIONS } = getLocales(settings.locale);
 
@@ -39,13 +45,14 @@ const updateFunds = async (address: string): Promise<Utxo[] | null> => {
         }),
         { guide: false },
       );
-      if (keypress === 'x') waiting = false;
+      if (keypress === 'x') return null;
 
       // refresh utxos
       utxosResult = await getUTXOs(address);
       if (Array.isArray(utxosResult) || !Array.isArray(utxosResult.utxos))
         return null;
 
+      // continue
       if (utxosResult.utxos[0] && keypress === 'c') waiting = false;
     }
     return utxos;

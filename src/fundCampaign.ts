@@ -24,15 +24,15 @@ import logFundConfirm from './logger/logFundConfirm';
 const fundCampaign = async (): Promise<void> => {
   const logger = getLogger();
   configure(loggerConfig);
-  const settings = getSettings();
-  const { QUESTIONS } = getLocales(settings.locale);
-
-  const bbRawTransaction = new RawTransactions();
 
   try {
+    const settings = getSettings();
+    const { QUESTIONS } = getLocales(settings.locale);
+
     // get campaign to use
     const campaign = await selectCampaign();
     if (!campaign) return;
+
     const {
       mothership: { address, wif },
     } = campaign;
@@ -68,6 +68,7 @@ const fundCampaign = async (): Promise<void> => {
     const txhex = await getTransactionHex(utxos, wif, distribution);
 
     // send transaction
+    const bbRawTransaction = new RawTransactions();
     const txid: string = await bbRawTransaction.sendRawTransaction(txhex);
 
     // log confirmation

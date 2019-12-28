@@ -1,17 +1,24 @@
 import { getLogger } from 'log4js';
 import readlineSync from 'readline-sync';
-import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import { getLocales } from '../i18n';
+
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 
 import logSpread from '../logger/logSpread';
 
-const logger = getLogger();
-const settings = getSettings();
-const { QUESTIONS } = getLocales(settings.locale);
-
+/**
+ * Guides user through creating the campaign ticket spread
+ *
+ * @param {number} count
+ * @returns {(Spread | null)}
+ */
 const createSpread = (count: number): Spread | null => {
+  const logger = getLogger();
+  const settings = getSettings();
+  const { QUESTIONS } = getLocales(settings.locale);
+
   try {
     // setup the ticket spread
     let lastRange = 0;

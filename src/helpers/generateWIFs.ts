@@ -3,37 +3,10 @@ import { HDNode as BBHDNode, Mnemonic } from 'bitbox-sdk';
 
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from './colorFormatters';
 import sleep from './sleep';
 import getSettings from './getSettings';
+import logGenerateWIFs from '../logger/logGenerateWIFs';
 
-const logger = getLogger();
-const settings = getSettings();
-const { TITLES, INFO, QUESTIONS } = getLocales(settings.locale);
-
-const displayInfo = ({ wif }: { wif: string }): void => {
-  logger.info(
-    colorOutput({
-      item: TITLES.CAMPAIGN_WIFS,
-      style: OutputStyles.Title,
-      lineabreak: true,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_WIFS,
-      value: wif,
-      lineabreak: true,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: QUESTIONS.WAIT,
-      style: OutputStyles.Question,
-    }),
-  );
-};
 /**
  * Generates, saves and returns wifs
  *
@@ -49,6 +22,8 @@ const generateWIFs = async ({
   tickets,
   title,
 }: Campaign): Promise<void> => {
+  const logger = getLogger();
+  const settings = getSettings();
   try {
     const bbMnemonic = new Mnemonic();
     const hdnode = new BBHDNode();
@@ -63,7 +38,7 @@ const generateWIFs = async ({
 
       const wif = hdnode.toWIF(node);
       wifs.push(wif);
-      displayInfo({ wif });
+      logGenerateWIFs({ wif });
     }
 
     const privKeyWifs = `${settings.outDir}/${title}/privKeyWIFs`;
