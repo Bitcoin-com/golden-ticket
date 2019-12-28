@@ -1,8 +1,5 @@
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import fs from 'fs-extra';
-import path from 'path';
-import bgImage from './background.png';
 import config from './config.json';
 import getSettings from '../../src/helpers/getSettings';
 
@@ -25,9 +22,7 @@ const template = ({ title }: Campaign, wifQR: string): string => {
     height: '100%',
     position: 'relative' as 'relative',
     backgroundSize: '100% 100%',
-    backgroundImage: `url(data:image/png;base64,${fs
-      .readFileSync(path.resolve(process.cwd(), `dist/${bgImage}`))
-      .toString('base64')})`,
+    backgroundImage: `url(../../../templates/default/background.png)`,
   };
 
   const { left, top, size } = config.qrcode;
