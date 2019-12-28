@@ -69,7 +69,7 @@ const generateHTML = async (campaignData: Campaign): Promise<void> => {
 
       QRCode.toDataURL(
         wif,
-        { margin: 0 },
+        { margin: 2 },
         (_err: Error, wifQR: string): void => {
           fs.writeFileSync(
             `${path}${filename}`,

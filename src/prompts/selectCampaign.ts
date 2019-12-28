@@ -58,6 +58,8 @@ const selectCampaign = async (): Promise<Campaign | null> => {
 
     return campaign;
   } catch (error) {
+    logger.error(error);
+    readlineSync.keyInPause();
     throw logger.error(error);
   }
 };

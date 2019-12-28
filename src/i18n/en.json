@@ -34,7 +34,8 @@
     "CAMPAIGN_PDF": "Generating PDF",
     "CAMPAIGN_WIFS": "Generating WIFs",
     "CAMPAIGN_CSV": "Generating CSV",
-    "FUND_MOTHERSHIP": "Fund Mothership"
+    "FUND_MOTHERSHIP": "Fund Mothership",
+    "FUND_TICKETS": "Fund Tickets"
   },
   "QUESTIONS": {
     "SCRIPTS_SELECT": "Select a script to run",
@@ -48,6 +49,8 @@
     "CAMPAIGN_SPREAD_VALUE": "Choose a value",
     "SPREAD_SUMMARY": "Here's your spread...",
     "CONTINUE": "Continue...",
+    "FUND_UPDATE": "Fund mothership address",
+    "FUND_CONFIRM": "Fund tickets?",
     "WAIT": "Please Wait...",
     "CAMPAIGN_TICKETS": "Number of tickets"
   },
@@ -55,7 +58,8 @@
     "CAMPAIGN_TICKETS": "Must be between 1 and 10,000 (0 to exit)"
   },
   "DEFAULTS": {
-    "CAMPAIGN_TITLE": "GoldenTicket"
+    "CAMPAIGN_TITLE": "GoldenTicket",
+    "FUND_UPDATE": "x:exit/c:continue/r:refresh"
   },
   "INFO": {
     "CAMPAIGN_TITLE": "Title",
@@ -80,21 +84,11 @@
     "CAMPAIGN_ADDRESS": "Funding address",
     "CAMPAIGN_HDNODE": "Funding node path",
     "CAMPAIGN_WIF": "Funding WIF",
-    "FUND_MOTHERSHIP": "Send funds to"
+    "FUND_ADDRESS": "Send funds to",
+    "FUND_EXPLORER": "Explorer",
+    "FUND_ADDRESS_FUNDS": "Address funds"
   },
-  "GENERATE_WALLETS": {
-    "PROMPT_TITLE_DESCRIPTION": "Campaign title",
-    "PROMPT_TITLE_DEFAULT": "GoldenTicket",
-    "PROMPT_TITLE_LIMIT_MESSAGE": "Campaign already exists",
-    "PROMPT_TITLE_OVERWRITE": "CURRENT CAMPAIGN DATA WILL BE OVERWRITTEN! Are you sure?",
-    "INFO_CAMPAIGN": "Campign:",
-    "INFO_MNEMONIC": "Mnemonic:",
-    "INFO_HDPATH": "HDPath:",
-    "INFO_HDNODE": "Mothership's HDPath:",
-    "INFO_ADDRESS": "Mothership's cash address:",
-    "INFO_WRITE_SUCCESS": "Wallet Created:",
-    "INFO_DONE": "All done!"
-  },
+
   "CREATE_TICKETS": {
     "PROMPT_TITLE_DESCRIPTION": "Select campaign to manage:",
     "PROMPT_TITLE_DEFAULT": "GoldenTicket",

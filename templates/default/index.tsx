@@ -24,7 +24,7 @@ const template = ({ title }: Campaign, wifQR: string): string => {
   const containerStyle = {
     height: '100%',
     position: 'relative' as 'relative',
-    backgroundSize: 'contain',
+    backgroundSize: '100% 100%',
     backgroundImage: `url(data:image/png;base64,${fs
       .readFileSync(path.resolve(process.cwd(), `dist/${bgImage}`))
       .toString('base64')})`,

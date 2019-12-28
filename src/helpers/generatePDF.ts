@@ -74,11 +74,12 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
       displayInfo({ title, filename });
 
       // get html file
-      const privKeyWIFsHtml: string = fs.readFileSync(htmlPath, 'utf8');
+      const privKeyWIFsHtml: string = fs
+        .readFileSync(htmlPath, 'utf8')
+        .toString();
 
       const pdfOptions = {
         ...getTemplates()[template].pdf,
-        base: path.resolve(process.cwd()),
         script: path.resolve(
           'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
         ),
@@ -90,7 +91,7 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
       await new Promise((resolve, reject) => {
         const create = pdf.create(privKeyWIFsHtml, pdfOptions);
         create.toFile(pdfPath, (err: Error): void => {
-          if (err) reject(err);
+          if (err) throw reject(err);
           resolve();
         });
       });

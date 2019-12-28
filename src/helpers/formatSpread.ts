@@ -1,3 +1,5 @@
+import { BitcoinCash } from 'bitbox-sdk';
+
 /**
  * Formats spread for logger
  *
@@ -12,22 +14,28 @@
 const formatSpread = (
   spread: { [any: string]: number },
   range?: number,
+  adjustment?: number,
 ): {
   item: string;
   value: string;
   index: string;
 }[] => {
-  const spreads = Object.keys(spread).reverse();
+  const spreadKeys = Object.keys(spread).reverse();
 
-  const reduced = spreads.reduce(
+  const reduced = spreadKeys.reduce(
     (prev, from, index) => {
       const val = spread[from];
 
       const newRange = range && range.toString() !== from ? range : '?';
       const to = prev[index - 1] ? prev[index - 1].index : newRange;
 
+      const bitcoinCash = new BitcoinCash();
       const item = ` Tickets: ${Number(from) + 1}-${to} `;
-      const value = `Value: ${val || '?'}`;
+      const value = `Value: ${
+        adjustment
+          ? `${bitcoinCash.toBitcoinCash(adjustment * val)} BCH`
+          : val || '?'
+      }`;
 
       return [
         ...prev,

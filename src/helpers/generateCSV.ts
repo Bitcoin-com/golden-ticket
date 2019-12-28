@@ -53,7 +53,10 @@ const displayInfo = ({
  */
 const generateCSV = async (campaignData: Campaign): Promise<void> => {
   try {
-    const { title } = campaignData;
+    const {
+      title,
+      tickets: { spread },
+    } = campaignData;
     const wifs = getWIFS(campaignData.title);
     const filename = `${settings.outDir}/${title}/campaign.csv`;
 
@@ -63,7 +66,7 @@ const generateCSV = async (campaignData: Campaign): Promise<void> => {
       const wif = wifs[i];
       const claimed = false;
       const cashAddress = getCashAddress(wif);
-      const value = getTieredValue(i, {});
+      const value = getTieredValue(i, spread);
       const obj: CSV = {
         cashAddress,
         wif,

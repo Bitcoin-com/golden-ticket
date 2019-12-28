@@ -46,7 +46,7 @@ export const colorOutput = ({
   lineabreak = false,
 }: {
   item: string;
-  value?: string;
+  value?: string | number;
   lineabreak?: boolean;
   style?:
     | 'highlight'

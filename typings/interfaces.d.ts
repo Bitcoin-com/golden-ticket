@@ -72,7 +72,7 @@ interface CSV {
   cashAddress: string;
   wif: string;
   claimed: boolean;
-  value?: number;
+  value: number;
 }
 
 type ScriptName =

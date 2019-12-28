@@ -9,7 +9,7 @@ const Address = require('bitbox-sdk').Address;
  * @returns {(Promise<AddressUtxoResult | AddressUtxoResult[]>)}
  */
 const getUTXOs = async (
-  mothershipAddress: string,
+  mothershipAddress: string | string[],
 ): Promise<AddressUtxoResult | AddressUtxoResult[]> => {
   try {
     const address = new Address();

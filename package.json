@@ -17,6 +17,7 @@
   "main": "./dist/start.ts",
   "dependencies": {
     "ajv": "^6.10.2",
+    "bchaddrjs-slp": "^0.2.8",
     "bitbox-sdk": "8.11.2",
     "bitcoincashjs-lib": "^3.3.3",
     "chalk": "^3.0.0",
@@ -33,6 +34,8 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "readline-sync": "^1.4.10",
+    "slp-sdk": "^4.14.0",
+    "slpjs": "^0.23.0",
     "to-regex-range": "^5.0.1",
     "touch": "^3.1.0"
   },
