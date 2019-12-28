@@ -88,6 +88,7 @@
     "FUND_EXPLORER": "Explorer",
     "FUND_ADDRESS_FUNDS": "Address funds",
     "FUND_ADDRESS_TYPE": "Choose funding type",
-    "FUND_ADDRESS_INSTRUCTION": "Fund address & refresh. Once funded, continue"
+    "FUND_ADDRESS_INSTRUCTION": "Fund address & refresh. Once funded, continue",
+    "FUND_TXID": "Transaction ID"
   }
 }

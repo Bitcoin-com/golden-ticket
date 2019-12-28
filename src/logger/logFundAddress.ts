@@ -14,10 +14,7 @@ const { TITLES, INFO } = getLocales(settings.locale);
  *
  * @param {string} address
  */
-const displayFundAddress = (
-  address: string,
-  utxos?: AddressUtxoResult | AddressUtxoResult[],
-): void => {
+const displayFundAddress = (address: string, utxos?: Utxo[]): void => {
   const bitcoinCash = new BitcoinCash();
 
   logger.info(
@@ -42,13 +39,9 @@ const displayFundAddress = (
     }),
   );
 
-  const value =
-    utxos && !Array.isArray(utxos) && utxos.utxos[0]
-      ? utxos.utxos.reduce(
-          (p: number, c: { satoshis: number }) => p + c.satoshis,
-          0,
-        )
-      : 0;
+  const value = utxos
+    ? utxos.reduce((p: number, c: { satoshis: number }) => p + c.satoshis, 0)
+    : 0;
 
   logger.info(
     colorOutput({

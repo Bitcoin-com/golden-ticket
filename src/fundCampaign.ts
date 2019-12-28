@@ -1,21 +1,20 @@
 import { getLogger, configure } from 'log4js';
-import { keyIn } from 'readline-sync';
-import bchaddr from 'bchaddrjs-slp';
+import readlineSync, { keyIn } from 'readline-sync';
+import { RawTransactions } from 'bitbox-sdk';
 
 import loggerConfig from './helpers/loggerConfig';
 import selectCampaign from './prompts/selectCampaign';
 import { colorOutput, OutputStyles } from './helpers/colorFormatters';
 import getSettings from './helpers/getSettings';
 import { getLocales } from './i18n';
-import displayFundAddress from './logger/displayFundAddress';
-import getUTXOs from './helpers/getUTXOs';
-import fundTickets from './helpers/fundTickets';
-import displayFundType from './logger/displayFundType';
+import getTicketDistribution from './helpers/getTicketDistribution';
+import getTransactionHex from './helpers/getTransactionHex';
 
-const logger = getLogger();
-configure(loggerConfig);
-const settings = getSettings();
-const { QUESTIONS } = getLocales(settings.locale);
+import selectUTXOs from './prompts/selectUTXOs';
+
+import logFundType from './logger/logFundType';
+import confirmFundTickets from './prompts/confirmFundTickets';
+import logFundConfirm from './logger/logFundConfirm';
 
 /**
  * Starts campaign configuration
@@ -23,18 +22,24 @@ const { QUESTIONS } = getLocales(settings.locale);
  * @returns {Promise<void>}
  */
 const fundCampaign = async (): Promise<void> => {
-  logger.debug('init');
+  const logger = getLogger();
+  configure(loggerConfig);
+  const settings = getSettings();
+  const { QUESTIONS } = getLocales(settings.locale);
+
+  const bbRawTransaction = new RawTransactions();
 
   try {
+    // get campaign to use
     const campaign = await selectCampaign();
     if (!campaign) return;
-
     const {
-      mothership: { address },
+      mothership: { address, wif },
     } = campaign;
 
-    displayFundType();
+    logFundType();
 
+    // ask user for bch or slp address
     const slp = keyIn(
       colorOutput({
         item: QUESTIONS.FUND_ADDRESS_TYPE,
@@ -43,35 +48,33 @@ const fundCampaign = async (): Promise<void> => {
       }),
       { defaultInput: 'b' },
     );
+    if (slp === 't') return;
 
-    const displayAddress =
-      slp === 't' ? bchaddr.toSlpAddress(address) : address;
+    // get utxos set
+    const utxos = await selectUTXOs(address);
+    if (!utxos) return;
 
-    let utxos = await getUTXOs(address);
-    displayFundAddress(displayAddress, utxos);
+    // get ticket distribution and adjustment value
+    const { adjustment, distribution } = getTicketDistribution({
+      utxos,
+      campaign,
+    });
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      displayFundAddress(displayAddress, utxos);
-      const keypress = keyIn(
-        colorOutput({
-          item: QUESTIONS.FUND_UPDATE,
-          value: 'r/c/x',
-          style: OutputStyles.Question,
-        }),
-        { guide: false },
-      );
-      if (keypress === 'x') break;
+    // get user confirmation
+    const confirmFund = confirmFundTickets({ adjustment, utxos, campaign });
+    if (!confirmFund) return;
 
-      utxos = await getUTXOs(address);
+    // build the transaction
+    const txhex = await getTransactionHex(utxos, wif, distribution);
 
-      if (!Array.isArray(utxos)) {
-        if (utxos.utxos[0] && keypress === 'c') {
-          await fundTickets(campaign);
-          break;
-        }
-      }
-    }
+    // send transaction
+    const txid: string = await bbRawTransaction.sendRawTransaction(txhex);
+
+    // log confirmation
+    logFundConfirm(txid);
+    readlineSync.keyInPause(
+      colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),
+    );
   } catch (error) {
     throw logger.error(error);
   }
