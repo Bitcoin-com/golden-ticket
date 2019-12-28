@@ -39,12 +39,14 @@ const createMothership = async (
 
     const address: string = bbHdnode.toCashAddress(motherHdNode); // bch cashaddr
     const fullNodePath = `${hdpath}/${account || 0}/${motherPath}`; // full hdnode path
+    const wif: string = bbHdnode.toWIF(motherHdNode);
 
     return {
       fullNodePath,
       address,
       mnemonic,
       hdpath,
+      wif,
     };
   } catch (error) {
     throw logger.error(error);

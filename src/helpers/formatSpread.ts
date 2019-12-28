@@ -26,10 +26,8 @@ const formatSpread = (
       const newRange = range && range.toString() !== from ? range : '?';
       const to = prev[index - 1] ? prev[index - 1].index : newRange;
 
-      const item = ` Tickets: ${from}-${to} `;
-      const value = ` Value: ${
-        val === 1 && index !== spreads.length ? '?' : val
-      } `;
+      const item = ` Tickets: ${Number(from) + 1}-${to} `;
+      const value = `Value: ${val || '?'}`;
 
       return [
         ...prev,

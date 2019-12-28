@@ -57,15 +57,16 @@
     "CAMPAIGN_TITLE": "GoldenTicket"
   },
   "INFO": {
-    "CAMPAIGN_TITLE": "Campaign title",
+    "CAMPAIGN_TITLE": "Title",
+    "CAMPAIGN_TEMPLATE": "Template",
     "CAMPAIGN_CONFIG": "Campaign config",
     "CAMPAIGN_PATH": "Campaign directory",
     "CAMPAIGN_WIFS": "WIFs file",
     "CAMPAIGN_CSV": "CSV file",
-    "CAMPAIGN_HTML": "HTML files",
-    "CAMPAIGN_PDF": "PDF files",
-    "CAMPAIGN_TICKETS_COUNT": "Ticket count",
-    "CAMPAIGN_TICKETS_SPREAD": "Ticket spread",
+    "CAMPAIGN_HTML": "HTML file(s)",
+    "CAMPAIGN_PDF": "PDF file(s)",
+    "CAMPAIGN_TICKETS_COUNT": "Count",
+    "CAMPAIGN_TICKETS_SPREAD": "Spread",
     "CAMPAIGN_MNEMONIC_CURRENT": "Current mnemonic",
     "CAMPAIGN_TITLE_CURRENT": "Current title",
     "CAMPAIGN_TICKETS_COUNT_CURRENT": "Current ticket count",
@@ -75,8 +76,9 @@
     "CAMPAIGN_SPREAD_TOTALS": "Total spreads",
     "CAMPAIGN_MNEMONIC": "Mnemonic",
     "CAMPAIGN_HDPATH": "HDPath",
-    "CAMPAIGN_ADDRESS": "Address",
-    "CAMPAIGN_HDNODE": "Full Node Path"
+    "CAMPAIGN_ADDRESS": "Funding address",
+    "CAMPAIGN_HDNODE": "Funding node path",
+    "CAMPAIGN_WIF": "Funding WIF"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",

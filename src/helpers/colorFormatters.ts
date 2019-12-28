@@ -70,8 +70,8 @@ export const colorOutput = ({
     }
     case OutputStyles.Information: {
       const strings = [
-        chalk.bgWhite(chalk.black(item)),
-        value ? chalk.bgWhite(chalk.black(` ${value} `)) : '',
+        chalk.bgCyanBright(chalk.black(item)),
+        value ? chalk.bgCyanBright(chalk.black(` ${value} `)) : '',
       ];
       return strings.join(' ');
     }

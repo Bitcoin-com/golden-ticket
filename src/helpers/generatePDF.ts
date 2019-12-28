@@ -62,13 +62,13 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
 
     for (let i = 0; i < wifs.length; i++) {
       const wif = wifs[i];
-      const address = getCashAddress(wif).replace(/bitcoincash:/, '');
+      const address = getCashAddress(wif).replace(/:/, '_');
       const filename = `${address}.pdf`;
       const pdfPath = `${baseDir}/pdf/${filename}`;
 
       const htmlPath = path.resolve(
         process.cwd(),
-        `${baseDir}/html/${wif}.html`,
+        `${baseDir}/html/${address}.html`,
       );
 
       displayInfo({ title, filename });
@@ -83,7 +83,7 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
           'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
         ),
         phantomPath: path.resolve(
-          'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs.exe',
+          'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs',
         ),
       };
 

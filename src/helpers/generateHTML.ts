@@ -64,7 +64,7 @@ const generateHTML = async (campaignData: Campaign): Promise<void> => {
     for (let i = 0; i < wifs.length; i++) {
       await sleep(settings.timer);
       const wif = wifs[i];
-      const address = getCashAddress(wif).replace(/bitcoincash:/, '');
+      const address = getCashAddress(wif).replace(/:/, '_');
       const filename = `${address}.html`;
 
       QRCode.toDataURL(

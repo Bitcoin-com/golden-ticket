@@ -5,7 +5,7 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import createMothership from './createMothership';
 import createTickets from './createTickets';
-import displayCampaign from './displayCampaign';
+import displayCampaignSummary from '../helpers/displayCampaignSummary';
 import { getLocales } from '../i18n';
 import selectTemplate from './selectTemplate';
 import getSettings from '../helpers/getSettings';
@@ -13,59 +13,11 @@ import generateWIFs from '../helpers/generateWIFs';
 import generateHTML from '../helpers/generateHTML';
 import generatePDF from '../helpers/generatePDF';
 import generateCSV from '../helpers/generateCSV';
-import getWIFS from '../helpers/getWIFs';
+import displayCampaignOutput from '../helpers/displayCampaignOutput';
 
 const logger = getLogger();
 const settings = getSettings();
 const { DEFAULTS, TITLES, INFO, QUESTIONS } = getLocales(settings.locale);
-
-const displayInfo = (campaignData: Campaign, path: string): void => {
-  logger.info(
-    colorOutput({
-      item: TITLES.CAMPAIGN_CREATED,
-      style: OutputStyles.Title,
-      lineabreak: true,
-    }),
-  );
-
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_TITLE,
-      value: campaignData.title,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_CONFIG,
-      value: `${path}/config.json`,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_WIFS,
-      value: `${path}/privKeyWIFs`,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_CSV,
-      value: `${path}/campaign.csv`,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_PDF,
-      value: `${path}/pdf/`,
-    }),
-  );
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_HTML,
-      value: `${path}/html/`,
-      lineabreak: true,
-    }),
-  );
-};
 
 /**
  * Takes user through campaign configuration
@@ -125,7 +77,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     };
 
     // display info and confirm
-    displayCampaign(campaignData);
+    displayCampaignSummary(campaignData);
 
     if (
       !readlineSync.keyInYNStrict(
@@ -148,7 +100,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     await generateHTML(campaignData);
     await generatePDF(campaignData);
 
-    displayInfo(campaignData, path);
+    displayCampaignOutput(campaignData, path);
 
     readlineSync.keyInPause(
       colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),

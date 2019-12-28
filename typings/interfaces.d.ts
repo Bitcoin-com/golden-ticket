@@ -33,6 +33,7 @@ interface Mothership {
   address: string;
   mnemonic: string;
   hdpath: string;
+  wif: string;
 }
 
 interface Campaign {
