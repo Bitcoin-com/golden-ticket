@@ -30,7 +30,7 @@ const formatSpread = (
       const to = prev[index - 1] ? prev[index - 1].index : newRange;
 
       const bitcoinCash = new BitcoinCash();
-      const item = ` Tickets: ${Number(from) + 1}-${to} `;
+      const item = `Tickets: ${Number(from) + 1}-${to}`;
       const value = `Value: ${
         adjustment
           ? `${bitcoinCash.toBitcoinCash(adjustment * val)} BCH`

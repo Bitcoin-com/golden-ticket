@@ -49,8 +49,9 @@
     "CAMPAIGN_SPREAD_VALUE": "Choose a value",
     "SPREAD_SUMMARY": "Here's your spread...",
     "CONTINUE": "Continue...",
-    "FUND_UPDATE": "Fund mothership address",
+    "FUND_UPDATE": "Refresh(r), Continue(c), Exit(x)",
     "FUND_CONFIRM": "Fund tickets?",
+    "FUND_ADDRESS_TYPE": "Bitcoin Cash BCH(b) or SLP Token(t)",
     "WAIT": "Please Wait...",
     "CAMPAIGN_TICKETS": "Number of tickets"
   },
@@ -58,8 +59,7 @@
     "CAMPAIGN_TICKETS": "Must be between 1 and 10,000 (0 to exit)"
   },
   "DEFAULTS": {
-    "CAMPAIGN_TITLE": "GoldenTicket",
-    "FUND_UPDATE": "x:exit/c:continue/r:refresh"
+    "CAMPAIGN_TITLE": "GoldenTicket"
   },
   "INFO": {
     "CAMPAIGN_TITLE": "Title",
@@ -86,31 +86,8 @@
     "CAMPAIGN_WIF": "Funding WIF",
     "FUND_ADDRESS": "Send funds to",
     "FUND_EXPLORER": "Explorer",
-    "FUND_ADDRESS_FUNDS": "Address funds"
-  },
-
-  "CREATE_TICKETS": {
-    "PROMPT_TITLE_DESCRIPTION": "Select campaign to manage:",
-    "PROMPT_TITLE_DEFAULT": "GoldenTicket",
-    "PROMPT_COUNT_DESCRIPTION": "Number of tickets to create:",
-    "INFO_GENERATING_WIFS": "Generating wifs",
-    "INFO_GENERATED_WIFS": "WIFs generated and saved to",
-    "INFO_GENERATED_WIF": "Generated wif",
-    "INFO_GENERATING_HTML": "Generating HTML for",
-    "INFO_GENERATING_HTML_COMPLETE": "HTML generation complete",
-    "INFO_GENERATED_HTML": "Generated HTML",
-    "INFO_GENERATING_PDF": "Generating PDF for",
-    "INFO_GENERATING_PDF_COMPLETE": "PDF generation complete",
-    "INFO_GENERATED_PDF": "Generated PDF",
-    "ERROR_NO_CAMPAIGNS": "No campaigns found, return to main menu?"
-  },
-  "CREATE_CSV": {
-    "INFO_GENERATING_CSV": "Generating CSV for",
-    "INFO_GENERATING_CSV_COMPLETE": "CSV generation complete",
-    "INFO_WRITE_SUCCESS": "CSV Created:"
-  },
-  "FUND_MOTHERSHIP": {
-    "INFO_SEND_TO_MOTHERSHIP": "Send funds to:",
-    "INFO_CHECK_MOTHERSHIP": "Check address on the explorer:"
+    "FUND_ADDRESS_FUNDS": "Address funds",
+    "FUND_ADDRESS_TYPE": "Choose funding type",
+    "FUND_ADDRESS_INSTRUCTION": "Fund address & refresh. Once funded, continue"
   }
 }

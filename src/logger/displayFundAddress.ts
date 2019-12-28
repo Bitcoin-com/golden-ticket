@@ -1,8 +1,8 @@
 import { getLogger } from 'log4js';
 import qrcode from 'qrcode-terminal';
 import { BitcoinCash } from 'bitbox-sdk';
-import { colorOutput, OutputStyles } from './colorFormatters';
-import getSettings from './getSettings';
+import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
+import getSettings from '../helpers/getSettings';
 import { getLocales } from '../i18n';
 
 const logger = getLogger();
@@ -42,18 +42,29 @@ const displayFundAddress = (
     }),
   );
 
-  if (utxos && !Array.isArray(utxos) && utxos.utxos.length > 0) {
-    const value = utxos.utxos.reduce(
-      (p: number, c: { satoshis: number }) => p + c.satoshis,
-      0,
-    );
-    logger.info(
-      colorOutput({
-        item: INFO.FUND_ADDRESS_FUNDS,
-        value: `${bitcoinCash.toBitcoinCash(value)} BCH\n`,
-      }),
-    );
-  }
+  const value =
+    utxos && !Array.isArray(utxos) && utxos.utxos[0]
+      ? utxos.utxos.reduce(
+          (p: number, c: { satoshis: number }) => p + c.satoshis,
+          0,
+        )
+      : 0;
+
+  logger.info(
+    colorOutput({
+      item: INFO.FUND_ADDRESS_FUNDS,
+      value: `${bitcoinCash.toBitcoinCash(value)} BCH`,
+      lineabreak: true,
+    }),
+  );
+
+  logger.info(
+    colorOutput({
+      item: INFO.FUND_ADDRESS_INSTRUCTION,
+      style: OutputStyles.Information,
+      lineabreak: true,
+    }),
+  );
 };
 
 export default displayFundAddress;

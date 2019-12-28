@@ -5,28 +5,11 @@ import { getLocales } from '../i18n';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 
+import logMnemonic from '../logger/logMnemonic';
+
 const logger = getLogger();
 const settings = getSettings();
-const { INFO, TITLES, QUESTIONS } = getLocales(settings.locale);
-
-// prints title
-const showTitle = (value?: string): void => {
-  logger.info(
-    colorOutput({
-      item: TITLES.CAMPAIGN_MNEMONIC,
-      style: OutputStyles.Title,
-      lineabreak: true,
-    }),
-  );
-  if (value)
-    logger.info(
-      colorOutput({
-        item: INFO.CAMPAIGN_MNEMONIC_CURRENT,
-        value,
-        lineabreak: true,
-      }),
-    );
-};
+const { QUESTIONS } = getLocales(settings.locale);
 
 /**
  * Generates a mnemonic
@@ -40,7 +23,7 @@ const generateMnemonic = async (
     // get and show user current mnemonic
     const mnemonic = master && master.mothership.mnemonic;
 
-    showTitle(mnemonic);
+    logMnemonic(mnemonic);
 
     // asks user if wallet should generate
     const shouldGenerate = readlineSync.keyInYN(
@@ -56,7 +39,7 @@ const generateMnemonic = async (
       const wordList = await bbMnemonic.wordLists()[language.toLowerCase()];
       const generated = bbMnemonic.generate(256, wordList);
 
-      showTitle(generated);
+      logMnemonic(generated);
 
       readlineSync.keyInPause(
         colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),
@@ -64,7 +47,7 @@ const generateMnemonic = async (
       return generated;
     }
 
-    showTitle(mnemonic);
+    logMnemonic(mnemonic);
 
     const newMnemonic = readlineSync.question(
       colorOutput({

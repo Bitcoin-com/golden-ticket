@@ -1,8 +1,8 @@
 import path from 'path';
 import { getLogger } from 'log4js';
-import getSettings from './getSettings';
+import getSettings from '../helpers/getSettings';
 import { getLocales } from '../i18n';
-import { OutputStyles, colorOutput } from './colorFormatters';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 const logger = getLogger();
 const settings = getSettings();

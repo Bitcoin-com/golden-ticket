@@ -1,18 +1,24 @@
 import { getLogger } from 'log4js';
-import getSettings from './getSettings';
+import getSettings from '../helpers/getSettings';
 import { getLocales } from '../i18n';
-import { colorOutput, OutputStyles } from './colorFormatters';
-import formatSpread from './formatSpread';
+import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
+import formatSpread from '../helpers/formatSpread';
 
 const logger = getLogger();
 const settings = getSettings();
 const { TITLES, INFO } = getLocales(settings.locale);
 
-const displayFundTickets = (
-  funds: string,
-  { tickets }: Campaign,
-  adjustment?: number,
-): void => {
+const displayFundTickets = ({
+  tickets,
+  title,
+  funds,
+  adjustment,
+}: {
+  title: string;
+  funds: string;
+  adjustment: number;
+  tickets: Tickets;
+}): void => {
   // title banner
   logger.info(
     colorOutput({
@@ -21,6 +27,9 @@ const displayFundTickets = (
       lineabreak: true,
     }),
   );
+
+  // campaign title
+  logger.info(colorOutput({ item: INFO.CAMPAIGN_TITLE, value: title }));
 
   // available funds
   logger.info(

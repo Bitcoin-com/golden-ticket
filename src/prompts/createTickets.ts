@@ -7,6 +7,8 @@ import createSpread from './createSpread';
 import { getLocales } from '../i18n';
 import getSettings from '../helpers/getSettings';
 
+import logTickets from '../logger/logTickets';
+
 /**
  * Takes user through ticket configuration
  *
@@ -16,29 +18,10 @@ const createTickets = (master?: Campaign): Tickets | null => {
   const logger = getLogger();
   const settings = getSettings();
   const { locale, tickets } = settings;
-  const { QUESTIONS, TITLES, LIMITS, INFO } = getLocales(locale);
-  logger.debug('createTickets');
-  logger.debug(master);
+  const { QUESTIONS, LIMITS } = getLocales(locale);
+
   try {
-    const ticketCount = master && master.tickets.count;
-
-    // prints title
-    logger.info(
-      colorOutput({
-        item: TITLES.CAMPAIGN_TICKETS,
-        style: OutputStyles.Title,
-        lineabreak: true,
-      }),
-    );
-
-    if (ticketCount)
-      logger.info(
-        colorOutput({
-          item: INFO.CAMPAIGN_TICKETS_COUNT_CURRENT,
-          value: ticketCount.toString(),
-          lineabreak: true,
-        }),
-      );
+    logTickets(master && master.tickets.count);
 
     // get total number of tickets
     const count: number = readlineSync.questionInt(

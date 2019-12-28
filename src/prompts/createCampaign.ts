@@ -5,7 +5,6 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import createMothership from './createMothership';
 import createTickets from './createTickets';
-import displayCampaignSummary from '../helpers/displayCampaignSummary';
 import { getLocales } from '../i18n';
 import selectTemplate from './selectTemplate';
 import getSettings from '../helpers/getSettings';
@@ -13,11 +12,14 @@ import generateWIFs from '../helpers/generateWIFs';
 import generateHTML from '../helpers/generateHTML';
 import generatePDF from '../helpers/generatePDF';
 import generateCSV from '../helpers/generateCSV';
-import displayCampaignOutput from '../helpers/displayCampaignOutput';
+
+import logCampaignOutput from '../logger/logCampaignOutput';
+import logCampaignCreate from '../logger/logCampaignCreate';
+import logCampaignSummary from '../logger/logCampaignSummary';
 
 const logger = getLogger();
 const settings = getSettings();
-const { DEFAULTS, TITLES, INFO, QUESTIONS } = getLocales(settings.locale);
+const { DEFAULTS, QUESTIONS } = getLocales(settings.locale);
 
 /**
  * Takes user through campaign configuration
@@ -31,24 +33,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     const template = selectTemplate();
     if (!template) return null;
 
-    logger.info(
-      colorOutput({
-        item: TITLES.CAMPAIGN_TITLE,
-        style: OutputStyles.Title,
-        lineabreak: true,
-      }),
-    );
-
-    // display current title if editing campaign
-    if (master) {
-      logger.info(
-        colorOutput({
-          item: INFO.CAMPAIGN_TITLE_CURRENT,
-          value: master.title,
-          lineabreak: true,
-        }),
-      );
-    }
+    logCampaignCreate(master);
 
     // the title
     const title: string = readlineSync.question(
@@ -77,7 +62,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     };
 
     // display info and confirm
-    displayCampaignSummary(campaignData);
+    logCampaignSummary(campaignData);
 
     if (
       !readlineSync.keyInYNStrict(
@@ -100,7 +85,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     await generateHTML(campaignData);
     await generatePDF(campaignData);
 
-    displayCampaignOutput(campaignData, path);
+    logCampaignOutput(campaignData, path);
 
     readlineSync.keyInPause(
       colorOutput({ item: QUESTIONS.CONTINUE, style: OutputStyles.Question }),

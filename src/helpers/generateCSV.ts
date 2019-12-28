@@ -61,12 +61,14 @@ const generateCSV = async (campaignData: Campaign): Promise<void> => {
     const filename = `${settings.outDir}/${title}/campaign.csv`;
 
     const addresses = [];
+    let lastValue = 1;
     for (let i = 0; i < wifs.length; i++) {
       await sleep(settings.timer);
+      lastValue = spread[i] || lastValue;
       const wif = wifs[i];
       const claimed = false;
       const cashAddress = getCashAddress(wif);
-      const value = getTieredValue(i, spread);
+      const value = lastValue;
       const obj: CSV = {
         cashAddress,
         wif,

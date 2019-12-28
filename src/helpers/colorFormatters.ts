@@ -1,23 +1,6 @@
 import chalk from 'chalk';
 import { emoji } from 'node-emoji';
 
-/**
- * Colors and formats a question and default answer
- *
- * @param {string} question
- * @param {string} defaultAnswer
- * @returns {string} Formatted question - `question [defaultAnswer]`
- */
-/* export const colorQuestion = (
-  question: string,
-  defaultAnswer?: string,
-): string => {
-  const q = chalk.green(question);
-  const a = defaultAnswer ? chalk.blackBright(`[${defaultAnswer}]`) : '';
-
-  return `${q} ${a}`;
-}; */
-
 export enum OutputStyles {
   Highlight = 'highlight',
   Waiting = 'waiting',
@@ -70,10 +53,10 @@ export const colorOutput = ({
     }
     case OutputStyles.Information: {
       const strings = [
-        chalk.bgCyanBright(chalk.black(item)),
+        chalk.bgCyanBright(chalk.black(` ${item} `)),
         value ? chalk.bgCyanBright(chalk.black(` ${value} `)) : '',
-      ];
-      return strings.join(' ');
+      ].join(' ');
+      return lineabreak ? `${strings}\n` : strings;
     }
     case OutputStyles.Waiting: {
       const strings = [
@@ -121,12 +104,3 @@ export const colorOutput = ({
       }`;
   }
 };
-
-/**
- * Colurs number display
- *
- * @param {string} display
- * @returns {string}
- */
-export const colorDisplay = (display: string): string =>
-  display.replace(/\W\d\W/g, (x: string) => chalk.green(x));

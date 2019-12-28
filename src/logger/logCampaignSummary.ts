@@ -1,8 +1,8 @@
 import { getLogger } from 'log4js';
-import { OutputStyles, colorOutput } from './colorFormatters';
+import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import { getLocales } from '../i18n';
-import getSettings from './getSettings';
-import formatSpread from './formatSpread';
+import getSettings from '../helpers/getSettings';
+import formatSpread from '../helpers/formatSpread';
 
 /**
  * Prints campaign information

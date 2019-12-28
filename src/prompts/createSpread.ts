@@ -4,62 +4,12 @@ import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 
 import { getLocales } from '../i18n';
 import getSettings from '../helpers/getSettings';
-import formatSpread from '../helpers/formatSpread';
+
+import logSpread from '../logger/logSpread';
 
 const logger = getLogger();
 const settings = getSettings();
-const { INFO, QUESTIONS, TITLES } = getLocales(settings.locale);
-
-/**
- * Show spread information
- *
- * @param {{
- *   count: number;
- *   spread: { [any: string]: number };
- *   lastRange?: number;
- * }} props
- */
-const showInfo = (props: {
-  count: number;
-  spread: { [any: string]: number };
-  range?: number;
-}): void => {
-  // show current spread status
-  const { count, range = 0, spread } = props;
-  const totals = Object.keys(spread).length;
-
-  // the title
-  logger.info(
-    colorOutput({
-      item: TITLES.CAMPAIGN_SPREAD,
-      style: OutputStyles.Title,
-      lineabreak: true,
-    }),
-  );
-
-  // remaining tickets
-  if (count !== range)
-    logger.info(
-      colorOutput({
-        item: INFO.CAMPAIGN_SPREAD_TICKETS,
-        value: `${count - range}/${count}`,
-      }),
-    );
-
-  // total spreads
-  logger.info(
-    colorOutput({
-      item: INFO.CAMPAIGN_SPREAD_TOTALS,
-      value: `${totals}\n`,
-    }),
-  );
-
-  formatSpread(spread, range).forEach(element => {
-    logger.info(colorOutput({ ...element, style: OutputStyles.Information }));
-  });
-
-  logger.info('\n');
-};
+const { QUESTIONS } = getLocales(settings.locale);
 
 const createSpread = (count: number): Spread | null => {
   try {
@@ -70,7 +20,7 @@ const createSpread = (count: number): Spread | null => {
 
     while (lastRange < count) {
       // display info
-      showInfo({
+      logSpread({
         count,
         range: lastRange,
         spread,
@@ -92,7 +42,7 @@ const createSpread = (count: number): Spread | null => {
       spread = { ...spread, [`${lastRange}`]: value };
 
       // display info
-      showInfo({
+      logSpread({
         count,
         range: lastRange,
         spread,
@@ -114,7 +64,7 @@ const createSpread = (count: number): Spread | null => {
     }
 
     // display info
-    showInfo({
+    logSpread({
       count,
       range: lastRange,
       spread,
