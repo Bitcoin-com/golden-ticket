@@ -11,10 +11,10 @@
     "ERROR": "Something went wrong!",
     "CAMPAIGN_OVERWRITE": "Previous campaign data will be overwritten, are you sure?",
     "NAMES": {
-      "CONFIGURE_CAMPAIGN": "Configure Campaign",
+      "CAMPAIGN_CONFIGURE": "Configure Campaign",
+      "FUND_CAMPAIGN": "Fund Campaign",
       "CREATE_TICKETS": "Create Tickets",
       "CREATE_CSV": "Create CSV",
-      "FUND_MOTHERSHIP": "Fund Mothership",
       "FUND_TICKETS": "Fund Tickets",
       "CHECK_TICKETS": "Check Tickets",
       "GENERATE_STATS": "Generate Stats",
@@ -33,7 +33,8 @@
     "CAMPAIGN_HTML": "Generating HTML",
     "CAMPAIGN_PDF": "Generating PDF",
     "CAMPAIGN_WIFS": "Generating WIFs",
-    "CAMPAIGN_CSV": "Generating CSV"
+    "CAMPAIGN_CSV": "Generating CSV",
+    "FUND_MOTHERSHIP": "Fund Mothership"
   },
   "QUESTIONS": {
     "SCRIPTS_SELECT": "Select a script to run",
@@ -78,7 +79,8 @@
     "CAMPAIGN_HDPATH": "HDPath",
     "CAMPAIGN_ADDRESS": "Funding address",
     "CAMPAIGN_HDNODE": "Funding node path",
-    "CAMPAIGN_WIF": "Funding WIF"
+    "CAMPAIGN_WIF": "Funding WIF",
+    "FUND_MOTHERSHIP": "Send funds to"
   },
   "GENERATE_WALLETS": {
     "PROMPT_TITLE_DESCRIPTION": "Campaign title",

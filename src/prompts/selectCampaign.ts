@@ -56,7 +56,7 @@ const selectCampaign = async (): Promise<Campaign | null> => {
     const rawFile = fs.readFileSync(campaignWallet).toString();
     const campaign = JSON.parse(rawFile);
 
-    return await createCampaign(campaign);
+    return campaign;
   } catch (error) {
     throw logger.error(error);
   }

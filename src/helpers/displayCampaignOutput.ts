@@ -1,3 +1,4 @@
+import path from 'path';
 import { getLogger } from 'log4js';
 import getSettings from './getSettings';
 import { getLocales } from '../i18n';
@@ -11,9 +12,12 @@ const { TITLES, INFO } = getLocales(settings.locale);
  * Prints campaign output information
  *
  * @param {Campaign} campaignData
- * @param {string} path
+ * @param {string} outputPath
  */
-const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
+const displayCampaignOutput = (
+  campaignData: Campaign,
+  outputPath: string,
+): void => {
   // banner
   logger.info(
     colorOutput({
@@ -35,7 +39,7 @@ const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
   logger.info(
     colorOutput({
       item: INFO.CAMPAIGN_PATH,
-      value: `${path}/`,
+      value: path.resolve(`${outputPath}/`),
     }),
   );
 
@@ -43,7 +47,7 @@ const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
   logger.info(
     colorOutput({
       item: INFO.CAMPAIGN_WIFS,
-      value: `${path}/privKeyWIFs`,
+      value: path.resolve(`${outputPath}/privKeyWIFs`),
     }),
   );
 
@@ -51,7 +55,7 @@ const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
   logger.info(
     colorOutput({
       item: INFO.CAMPAIGN_CSV,
-      value: `${path}/campaign.csv`,
+      value: path.resolve(`${outputPath}/campaign.csv`),
     }),
   );
 
@@ -59,7 +63,7 @@ const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
   logger.info(
     colorOutput({
       item: INFO.CAMPAIGN_HTML,
-      value: `${path}/html/`,
+      value: path.resolve(`${outputPath}/html/`),
     }),
   );
 
@@ -67,7 +71,7 @@ const displayCampaignOutput = (campaignData: Campaign, path: string): void => {
   logger.info(
     colorOutput({
       item: INFO.CAMPAIGN_PDF,
-      value: `${path}/pdf/`,
+      value: path.resolve(`${outputPath}/pdf/`),
       lineabreak: true,
     }),
   );

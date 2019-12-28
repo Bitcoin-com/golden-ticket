@@ -9,6 +9,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const entry = {
   start: [path.join(process.cwd(), './src/index.ts')],
   configureCampaign: [path.join(process.cwd(), './src/configureCampaign.ts')],
+  fundCampaign: [path.join(process.cwd(), './src/fundCampaign.ts')],
 };
 
 ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE;
@@ -39,15 +40,18 @@ module.exports = {
           publicPath: 'assets',
         },
       },
-
       {
         test: /\.(ts|js)x?$/,
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
+          allowTsInNodeModules: true,
         },
       },
     ],
+  },
+  externals: {
+    'qrcode-react': 'node_modules/qrcode-terminal/lib/main.js',
   },
   stats: {
     env: true,

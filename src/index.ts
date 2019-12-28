@@ -67,9 +67,8 @@ const init = (): void => {
   const { SCRIPTS, QUESTIONS } = getLocales(settings.locale);
 
   const scripts: { [any: string]: string } = {
-    [SCRIPTS.NAMES.CONFIGURE_CAMPAIGN]: 'configureCampaign',
-    [SCRIPTS.NAMES.FUND_MOTHERSHIP]: 'fundMothership',
-    [SCRIPTS.NAMES.FUND_TICKETS]: 'fundTickets',
+    [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: 'configureCampaign',
+    [SCRIPTS.NAMES.FUND_CAMPAIGN]: 'fundCampaign',
     [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
     [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
     [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
