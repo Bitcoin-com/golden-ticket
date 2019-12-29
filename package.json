@@ -28,6 +28,7 @@
     "log4js": "^6.1.0",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
+    "pkg": "^4.4.2",
     "prompt": "^1.0.0",
     "qrcode": "^1.2.0",
     "qrcode-terminal": "^0.12.0",
@@ -70,7 +71,6 @@
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
     "json5-loader": "^3.0.0",
-    "nexe": "^3.3.2",
     "prettier": "^1.19.1",
     "prettier-tslint": "^0.4.2",
     "rimraf": "^3.0.0",
@@ -84,9 +84,8 @@
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
-    "build": "yarn clean && yarn lint && cross-env NODE_ENV=production webpack",
-    "build:dev": "yarn clean && yarn lint && cross-env webpack",
-    "bundle": "yarn build && node scripts/bundle.js",
+    "build": "yarn clean && yarn lint && webpack",
+    "bundle": "yarn pkg dist/start.js --out-path bin --assets templates/**/*,settings.json,dist/**/*",
     "dev": "webpack --watch",
     "clean": "rimraf dist log",
     "start": "node dist/start.js",

@@ -9,8 +9,8 @@ import { colorOutput, OutputStyles } from '../helpers/colorFormatters';
 const logTickets = (ticketCount?: number): void => {
   const logger = getLogger();
   const settings = getSettings();
-  const { locale, tickets } = settings;
-  const { QUESTIONS, TITLES, LIMITS, INFO } = getLocales(locale);
+  const { locale } = settings;
+  const { TITLES, INFO } = getLocales(locale);
 
   // prints title
   logger.info(

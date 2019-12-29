@@ -10,6 +10,7 @@ const entry = {
   start: [path.join(process.cwd(), './src/index.ts')],
   configureCampaign: [path.join(process.cwd(), './src/configureCampaign.ts')],
   fundCampaign: [path.join(process.cwd(), './src/fundCampaign.ts')],
+  checkCampaign: [path.join(process.cwd(), './src/checkCampaign.ts')],
 };
 
 ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE;

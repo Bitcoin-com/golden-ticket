@@ -30,7 +30,7 @@ const selectScript = (): void => {
     const scripts: { [any: string]: string } = {
       [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: 'configureCampaign',
       [SCRIPTS.NAMES.FUND_CAMPAIGN]: 'fundCampaign',
-      [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkTickets',
+      [SCRIPTS.NAMES.CHECK_TICKETS]: 'checkCampaign',
       [SCRIPTS.NAMES.GENERATE_STATS]: 'generateStats',
       [SCRIPTS.NAMES.RECLAIM_FUNDS]: 'reclaimFunds',
     };

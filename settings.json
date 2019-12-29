@@ -4,6 +4,6 @@
   "outDir": "output",
   "templateDir": "templates",
   "hdpath": "m/44'/145'",
-  "timer": 250,
+  "timer": 50,
   "tickets": 10
 }

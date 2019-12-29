@@ -13,10 +13,10 @@
     "NAMES": {
       "CAMPAIGN_CONFIGURE": "Configure Campaign",
       "FUND_CAMPAIGN": "Fund Campaign",
+      "CHECK_TICKETS": "Check Campaign",
       "CREATE_TICKETS": "Create Tickets",
       "CREATE_CSV": "Create CSV",
       "FUND_TICKETS": "Fund Tickets",
-      "CHECK_TICKETS": "Check Tickets",
       "GENERATE_STATS": "Generate Stats",
       "RECLAIM_FUNDS": "Reclaim Funds"
     }
@@ -34,6 +34,7 @@
     "CAMPAIGN_PDF": "Generating PDF",
     "CAMPAIGN_WIFS": "Generating WIFs",
     "CAMPAIGN_CSV": "Generating CSV",
+    "CAMPAIGN_STATS": "Campaign Statistics",
     "FUND_MOTHERSHIP": "Fund Mothership",
     "FUND_TICKETS": "Fund Tickets"
   },
@@ -68,9 +69,11 @@
     "CAMPAIGN_PATH": "Campaign directory",
     "CAMPAIGN_WIFS": "WIFs file",
     "CAMPAIGN_CSV": "CSV file",
+    "CAMPAIGN_JSON": "JSON file",
     "CAMPAIGN_HTML": "HTML file(s)",
     "CAMPAIGN_PDF": "PDF file(s)",
     "CAMPAIGN_TICKETS_COUNT": "Count",
+    "CAMPAIGN_TICKETS_CLAIMED": "Claimed",
     "CAMPAIGN_TICKETS_SPREAD": "Spread",
     "CAMPAIGN_MNEMONIC_CURRENT": "Current mnemonic",
     "CAMPAIGN_TITLE_CURRENT": "Current title",
