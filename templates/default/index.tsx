@@ -7,7 +7,6 @@ import ReactDOMServer from 'react-dom/server';
 import config from './config.json';
 import getSettings from '../../src/helpers/getSettings';
 import bgImage from './background.png';
-
 /**
  * Template for HTML page generation
  *
@@ -19,17 +18,15 @@ const template = ({ title }: Campaign, wifQR: string): string => {
   const bodyStyle = {
     padding: 0,
     margin: 0,
-    height: config.pdf.height,
-    width: config.pdf.width,
+    height: config.pdf.size[0],
+    width: config.pdf.size[1],
   };
 
   const containerStyle = {
     height: '100%',
     position: 'relative' as 'relative',
     backgroundSize: '100% 100%',
-    backgroundImage: `url(data:image/png;base64,${fs
-      .readFileSync(path.resolve(process.cwd(), `dist/${bgImage}`))
-      .toString('base64')})`,
+    backgroundImage: `url(data:image/png;base64,${bgImage})`,
   };
 
   const { left, top, size } = config.qrcode;

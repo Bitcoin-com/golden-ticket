@@ -2,7 +2,7 @@
 import { configure, getLogger } from 'log4js';
 import chalk from 'chalk';
 import path from 'path';
-import { keyInSelect } from 'readline-sync';
+import { keyInSelect, keyInPause } from 'readline-sync';
 
 import { getLocales } from './i18n';
 
@@ -13,6 +13,8 @@ import runScript from './helpers/runScript';
 
 import logBanner from './logger/logBanner';
 import logRunScript from './logger/logRunScript';
+
+import './registerFiles';
 
 /**
  * Initializes scripts selection and launches selected script
@@ -62,14 +64,14 @@ const selectScript = (): void => {
       return;
     }
 
-    // get module path
     const key = scriptKeys[index];
-    const modulePath = path.resolve('dist', scripts[key]);
 
     logRunScript(scriptKeys[index]);
 
     // run selected script
-    runScript(modulePath, [], () => {
+    runScript(path.resolve(process.cwd(), 'dist', scripts[key]), [], err => {
+      if (err) throw logger.error(err);
+
       logRunScript(scriptKeys[index], true);
 
       // script finished. restart this

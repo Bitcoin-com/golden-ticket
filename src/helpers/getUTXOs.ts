@@ -1,8 +1,5 @@
 import { getLogger } from 'log4js';
-
-/* eslint-disable prefer-destructuring */
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const Address = require('bitbox-sdk').Address;
+import { Address } from 'bitbox-sdk';
 
 /**
  * Get utxos from single address

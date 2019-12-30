@@ -52,20 +52,36 @@ type Spread = { '0': number; [number: string]: number };
 interface Template {
   title: string;
   name: string;
+  image: string;
   pdf: PDF;
+  html: HTML;
   qrcode: QRCode;
   csv: CSV;
 }
 
-interface QRCode {
+interface HTML {
+  width: string;
   height: string;
-  left: string;
-  top: string;
+  qrSize: string;
+  qrLeft: string;
+  qrTop: string;
+}
+
+interface QRCode {
+  margin: number;
+  scale: number;
+  width: number;
+  color: {
+    dark: string;
+    light: string;
+  };
 }
 
 interface PDF {
-  height: string;
-  width: string;
+  size: number[];
+  qrWidth: number;
+  qrTop: number;
+  qrLeft: number;
 }
 
 interface CSV {

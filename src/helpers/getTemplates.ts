@@ -20,10 +20,9 @@ const getTemplates = (): { [key: string]: Template } => {
 
     // maps all available templates
     const templates = dirs.reduce((prev, curr) => {
+      const templateDir = `${settings.templateDir}/${curr}/config.json`;
       const template = JSON.parse(
-        fs
-          .readFileSync(`${settings.templateDir}/${curr}/config.json`)
-          .toString(),
+        fs.readFileSync(path.resolve(templateDir)).toString(),
       );
       return { ...prev, [curr]: template };
     }, {});

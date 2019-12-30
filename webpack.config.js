@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 const path = require('path');
 const { ProgressPlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -23,11 +24,15 @@ const output = {
 module.exports = {
   mode: NODE_ENV,
   target: 'node',
+  node: { __dirname: true, __filename: true },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
+    alias: {
+      fs: 'pdfkit/js/virtual-fs.js',
+    },
   },
   entry,
-  devtool: 'inline-source-map',
+  devtool: 'sourcemap',
   output,
   module: {
     rules: [
@@ -46,9 +51,25 @@ module.exports = {
         loader: 'ts-loader',
         options: {
           transpileOnly: true,
-          allowTsInNodeModules: true,
         },
       },
+      {
+        enforce: 'post',
+        test: /fontkit[/\\]index.js$/,
+        loader: 'transform-loader?brfs',
+      },
+      {
+        enforce: 'post',
+        test: /unicode-properties[/\\]index.js$/,
+        loader: 'transform-loader?brfs',
+      },
+      {
+        enforce: 'post',
+        test: /linebreak[/\\]src[/\\]linebreaker.js/,
+        loader: 'transform-loader?brfs',
+      },
+      { test: /assets/, loader: 'arraybuffer-loader' },
+      { test: /\.(afm|trie)$/, loader: 'raw-loader' },
     ],
   },
   externals: {

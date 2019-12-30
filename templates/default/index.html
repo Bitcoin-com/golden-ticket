@@ -1,0 +1,33 @@
+<html lang="{{locale}}">
+  <head>
+    <title>{{title}}</title>
+    <style>
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+      .container {
+        position: relative;
+        width: '{{width}}';
+        height: '{{height}}';
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-image: url({{image}});
+      }
+      .qrcode {
+        position: absolute;
+        top: '{{top}}';
+        left: '{{left}}';
+        width: '{{size}}';
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <img class="qrcode" src="{{qrcode}}" alt="WIF QR Code" />
+    </div>
+  </body>
+</html>

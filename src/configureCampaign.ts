@@ -1,8 +1,9 @@
 import { getLogger, configure } from 'log4js';
+import { keyInPause } from 'readline-sync';
 import selectCampaign from './prompts/selectCampaign';
 import loggerConfig from './helpers/loggerConfig';
 import createCampaign from './prompts/createCampaign';
-
+import './registerFiles';
 /**
  * Starts campaign configuration
  *
@@ -16,7 +17,6 @@ const init = async (): Promise<void> => {
     // user selects campaign
     const campaignData = await selectCampaign();
     if (!campaignData) return;
-
     // take user through campaign configuration
     await createCampaign(campaignData);
   } catch (error) {

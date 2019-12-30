@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
 import path from 'path';
-import readlineSync from 'readline-sync';
+import { keyInPause, keyInSelect } from 'readline-sync';
 
 import { getLocales } from '../i18n';
 
@@ -18,8 +18,9 @@ import createCampaign from './createCampaign';
  * @returns {Promise<Campaign>}
  */
 const selectCampaign = async (): Promise<Campaign | null> => {
-  const logger = getLogger('selectCampaign');
+  const logger = getLogger();
   const settings = getSettings();
+
   const { QUESTIONS, TITLES, SCRIPTS } = getLocales(settings.locale);
 
   try {
@@ -32,14 +33,14 @@ const selectCampaign = async (): Promise<Campaign | null> => {
     );
 
     // ensure output directory
-    fs.ensureDirSync(settings.outDir);
+    fs.ensureDirSync(path.resolve(settings.outDir));
 
     // get list of directories
     const dirs = fs.readdirSync(path.resolve(settings.outDir));
     dirs.push(chalk.green(SCRIPTS.ADD_NEW));
 
     // promp user to select directory
-    const index = readlineSync.keyInSelect(
+    const index = keyInSelect(
       dirs.map(d => chalk.cyan(d)),
       colorOutput({
         item: QUESTIONS.CAMPAIGN_SELECT,
@@ -61,6 +62,8 @@ const selectCampaign = async (): Promise<Campaign | null> => {
 
     return campaign;
   } catch (error) {
+    logger.error(error);
+    keyInPause();
     throw logger.error(error);
   }
 };

@@ -59,6 +59,22 @@ const displayCampaignOutput = (
     }),
   );
 
+  // json
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_JSON,
+      value: path.resolve(`${outputPath}/campaign.json`),
+    }),
+  );
+
+  // qr codes directory
+  logger.info(
+    colorOutput({
+      item: INFO.CAMPAIGN_QR,
+      value: path.resolve(`${outputPath}/qr/`),
+    }),
+  );
+
   // html directory
   logger.info(
     colorOutput({

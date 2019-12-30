@@ -2,6 +2,7 @@
 declare module 'to-regex-range';
 declare module 'qrcode-terminal';
 declare module 'bchaddrjs-slp';
+declare module 'log4js';
 
 declare module '*.txt' {
   const content: string;

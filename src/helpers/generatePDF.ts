@@ -1,12 +1,13 @@
 import path from 'path';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import pdf from 'html-pdf';
-import getTemplates from './getTemplates';
+import PDFDocument from 'pdfkit';
+/* import getTemplates from './getTemplates'; */
 import getSettings from './getSettings';
 import getWIFS from './getWIFs';
 import getCashAddress from './getCashAddress';
 import logGeneratePDF from '../logger/logGeneratePDF';
+import getTemplates from './getTemplates';
 
 /**
  * Generates and saves PDF Files
@@ -31,34 +32,39 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
       const filename = `${address}.pdf`;
       const pdfPath = `${baseDir}/pdf/${filename}`;
 
-      const htmlPath = path.resolve(
-        process.cwd(),
-        `${baseDir}/html/${address}.html`,
-      );
+      await new Promise((resolve, reject): void => {
+        try {
+          const { pdf, image } = getTemplates()[template];
+          const doc = new PDFDocument({
+            size: pdf.size,
+          });
+          const stream = fs.createWriteStream(pdfPath);
+          stream.on('end', () => resolve('end'));
+          stream.on('finish', () => resolve('finish'));
+          stream.on('error', error => reject(error));
 
-      logGeneratePDF({ title, filename });
+          logGeneratePDF({ title, filename });
 
-      // get html file
-      const privKeyWIFsHtml: string = fs
-        .readFileSync(htmlPath, 'utf8')
-        .toString();
+          doc.pipe(stream);
 
-      const pdfOptions = {
-        ...getTemplates()[template].pdf,
-        script: path.resolve(
-          'node_modules/html-pdf/lib/scripts/pdf_a4_portrait.js',
-        ),
-        phantomPath: path.resolve(
-          'node_modules/phantomjs-prebuilt/lib/phantom/bin/phantomjs',
-        ),
-      };
+          doc.image(path.resolve(settings.templateDir, template, image), 0, 0, {
+            fit: [pdf.size[0], pdf.size[1]],
+          });
 
-      await new Promise((resolve, reject) => {
-        const create = pdf.create(privKeyWIFsHtml, pdfOptions);
-        create.toFile(pdfPath, (err: Error): void => {
-          if (err) throw reject(err);
-          resolve();
-        });
+          doc.image(
+            path.resolve(`${baseDir}/qr/${address}.png`),
+            pdf.qrLeft,
+            pdf.qrTop,
+            {
+              align: 'center',
+              width: pdf.qrWidth,
+              height: pdf.qrWidth,
+            },
+          );
+          doc.end();
+        } catch (error) {
+          throw logger.error(error);
+        }
       });
     }
   } catch (error) {

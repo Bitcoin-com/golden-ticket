@@ -11,6 +11,7 @@ import selectTemplate from './selectTemplate';
 import { OutputStyles, colorOutput } from '../helpers/colorFormatters';
 import getSettings from '../helpers/getSettings';
 import generateWIFs from '../helpers/generateWIFs';
+import generateQR from '../helpers/generateQR';
 import generateHTML from '../helpers/generateHTML';
 import generatePDF from '../helpers/generatePDF';
 import generateCSV from '../helpers/generateCSV';
@@ -84,6 +85,7 @@ const createCampaign = async (master?: Campaign): Promise<Campaign | null> => {
     // generate the files
     await generateWIFs(campaignData);
     await generateCSV(campaignData);
+    await generateQR(campaignData);
     await generateHTML(campaignData);
     await generatePDF(campaignData);
 
