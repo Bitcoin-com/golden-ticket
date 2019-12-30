@@ -37,7 +37,9 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
           const { pdf, image } = getTemplates()[template];
           const doc = new PDFDocument({
             size: pdf.size,
+            autoFirstPage: false,
           });
+
           const stream = fs.createWriteStream(pdfPath);
           stream.on('end', () => resolve('end'));
           stream.on('finish', () => resolve('finish'));
@@ -47,10 +49,10 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
 
           doc.pipe(stream);
 
+          doc.addPage({ margin: 0 });
           doc.image(path.resolve(settings.templateDir, template, image), 0, 0, {
             fit: [pdf.size[0], pdf.size[1]],
           });
-
           doc.image(
             path.resolve(`${baseDir}/qr/${address}.png`),
             pdf.qrLeft,

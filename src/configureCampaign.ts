@@ -1,9 +1,8 @@
 import { getLogger, configure } from 'log4js';
-import { keyInPause } from 'readline-sync';
 import selectCampaign from './prompts/selectCampaign';
 import loggerConfig from './helpers/loggerConfig';
 import createCampaign from './prompts/createCampaign';
-import './registerFiles';
+
 /**
  * Starts campaign configuration
  *
@@ -24,4 +23,4 @@ const init = async (): Promise<void> => {
   }
 };
 
-export default init();
+export default init;

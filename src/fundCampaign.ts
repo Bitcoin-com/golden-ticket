@@ -16,7 +16,6 @@ import logFundType from './logger/logFundType';
 import confirmFundTickets from './prompts/confirmFundTickets';
 import logFundConfirm from './logger/logFundConfirm';
 
-import './registerFiles';
 /**
  * Starts campaign configuration
  *
@@ -82,4 +81,4 @@ const fundCampaign = async (): Promise<void> => {
   }
 };
 
-export default fundCampaign();
+export default fundCampaign;

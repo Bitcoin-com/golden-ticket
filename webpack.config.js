@@ -4,14 +4,12 @@ const { ProgressPlugin } = require('webpack');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const entry = {
-  start: [path.join(process.cwd(), './src/index.ts')],
-  configureCampaign: [path.join(process.cwd(), './src/configureCampaign.ts')],
-  fundCampaign: [path.join(process.cwd(), './src/fundCampaign.ts')],
-  checkCampaign: [path.join(process.cwd(), './src/checkCampaign.ts')],
+  index: [path.join(process.cwd(), './src/index.ts')],
 };
 
 ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE;
@@ -24,11 +22,11 @@ const output = {
 module.exports = {
   mode: NODE_ENV,
   target: 'node',
-  node: { __dirname: true, __filename: true },
+  node: { __dirname: true, __filename: true, fs: 'empty' },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      fs: 'pdfkit/js/virtual-fs.js',
+      fs: 'fs-extra',
     },
   },
   entry,
@@ -65,11 +63,16 @@ module.exports = {
       },
       {
         enforce: 'post',
+        test: /unicode-properties[/\\]data.trie$/,
+        loader: 'raw-loader',
+      },
+      {
+        enforce: 'post',
         test: /linebreak[/\\]src[/\\]linebreaker.js/,
         loader: 'transform-loader?brfs',
       },
       { test: /assets/, loader: 'arraybuffer-loader' },
-      { test: /\.(afm|trie)$/, loader: 'raw-loader' },
+      { test: /\.(afm)$/, loader: 'raw-loader' },
     ],
   },
   externals: {
@@ -90,5 +93,9 @@ module.exports = {
       reportFiles: ['src/**/*.{ts,tsx}', '!src/**/*.{json}'],
     }),
     new ProgressPlugin(),
+    new CopyPlugin([
+      { from: 'templates', to: 'templates' },
+      { from: 'settings.json', to: 'settings.json' },
+    ]),
   ],
 };

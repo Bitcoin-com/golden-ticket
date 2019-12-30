@@ -12,7 +12,7 @@ import getSettings from './helpers/getSettings';
 import logCampaignStats from './logger/logCampaignStats';
 import { colorOutput, OutputStyles } from './helpers/colorFormatters';
 import { getLocales } from './i18n';
-import './registerFiles';
+
 /**
  * Starts campaign configuration
  *
@@ -64,4 +64,4 @@ const init = async (): Promise<void> => {
   }
 };
 
-export default init();
+export default init;

@@ -13,3 +13,8 @@ declare module '*.png' {
   const value: any;
   export = value;
 }
+
+declare module '*.trie' {
+  const value: any;
+  export = value;
+}
