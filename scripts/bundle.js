@@ -9,11 +9,7 @@ const init = async () => {
   fs.copySync('templates', 'bin/templates');
   fs.copySync('settings.json', 'bin/settings.json');
 
-  fs.copySync('node_modules/pdfkit/js/data', 'bin/node_modules/pdfkit/js/data');
-  fs.copySync(
-    'node_modules/unicode-properties/data.trie',
-    'bin/node_modules/unicode-properties/data.trie',
-  );
+  fs.copySync('data', 'bin/data');
 };
 
 init();

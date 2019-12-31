@@ -14,11 +14,7 @@
       "CAMPAIGN_CONFIGURE": "Configure Campaign",
       "FUND_CAMPAIGN": "Fund Campaign",
       "CHECK_TICKETS": "Check Campaign",
-      "CREATE_TICKETS": "Create Tickets",
-      "CREATE_CSV": "Create CSV",
-      "FUND_TICKETS": "Fund Tickets",
-      "GENERATE_STATS": "Generate Stats",
-      "RECLAIM_FUNDS": "Reclaim Funds"
+      "RECLAIM_FUNDS": "Sweep Campaign"
     }
   },
   "TITLES": {
@@ -40,7 +36,7 @@
     "FUND_TICKETS": "Fund Tickets"
   },
   "QUESTIONS": {
-    "SCRIPTS_SELECT": "Select a script to run",
+    "SCRIPTS_SELECT": "Select an option",
     "CAMPAIGN_SELECT": "Select a campaign to manage",
     "TEMPLATE_SELECT": "Select a template to use",
     "CAMPAIGN_TITLE": "Choose a title",

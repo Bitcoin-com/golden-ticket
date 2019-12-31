@@ -1,7 +1,5 @@
-import QRCode from 'qrcode';
 import fs from 'fs-extra';
 import { getLogger } from 'log4js';
-import defaultTemplate from '../../templates/default';
 import getSettings from './getSettings';
 import sleep from './sleep';
 import getWIFS from './getWIFs';

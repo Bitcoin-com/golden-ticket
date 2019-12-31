@@ -35,6 +35,22 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /unicode-properties[/\\]unicode-properties.es.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          search: `__dirname + '/data.trie'`,
+          replace: `'data/data.trie'`,
+        },
+      },
+      {
+        test: /pdfkit.es5.js$/,
+        loader: 'string-replace-loader',
+        options: {
+          search: `__dirname + '/data/Helvetica.afm'`,
+          replace: `'data/Helvetica.afm'`,
+        },
+      },
+      {
         test: /\.(png|jpe?g|gif|txt)$/,
         exclude: /node_modules/,
         loader: 'file-loader',
@@ -63,16 +79,9 @@ module.exports = {
       },
       {
         enforce: 'post',
-        test: /unicode-properties[/\\]data.trie$/,
-        loader: 'raw-loader',
-      },
-      {
-        enforce: 'post',
         test: /linebreak[/\\]src[/\\]linebreaker.js/,
         loader: 'transform-loader?brfs',
       },
-      { test: /assets/, loader: 'arraybuffer-loader' },
-      { test: /\.(afm)$/, loader: 'raw-loader' },
     ],
   },
   externals: {
@@ -95,6 +104,7 @@ module.exports = {
     new ProgressPlugin(),
     new CopyPlugin([
       { from: 'templates', to: 'templates' },
+      { from: 'data', to: 'data' },
       { from: 'settings.json', to: 'settings.json' },
     ]),
   ],

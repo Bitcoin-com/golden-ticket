@@ -35,10 +35,11 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
       await new Promise((resolve, reject): void => {
         try {
           const { pdf, image } = getTemplates()[template];
-          const doc = new PDFDocument({
+          const opts = {
             size: pdf.size,
             autoFirstPage: false,
-          });
+          };
+          const doc = new PDFDocument(opts);
 
           const stream = fs.createWriteStream(pdfPath);
           stream.on('end', () => resolve('end'));

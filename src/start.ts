@@ -32,6 +32,7 @@ const start = async (): Promise<void> => {
       [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: configureCampaign,
       [SCRIPTS.NAMES.FUND_CAMPAIGN]: fundCampaign,
       [SCRIPTS.NAMES.CHECK_TICKETS]: checkCampaign,
+      [SCRIPTS.NAMES.RECLAIM_FUNDS]: checkCampaign,
     };
 
     logBanner();
