@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.json",
+    "scripts/**/*.js",
+    "typings/**/*.d.ts",
+    "settings.json",
+    "webpack.config.js"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false
+  }
+}

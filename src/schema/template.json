@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TemplateConfig",
+  "description": "Template configuration schema",
+  "type": "object",
+  "properties": {
+    "pdf": {
+      "description": "PDF Settings (cm, mm, in, px, pt, pc)",
+      "type": "object",
+      "required": ["height", "width"],
+      "properties": {
+        "height": {
+          "description": "Height",
+          "type": "string"
+        },
+        "width": {
+          "description": "Width",
+          "type": "string"
+        }
+      }
+    },
+    "qrcode": {
+      "description": "QR Code Settings (cm, mm, in, px, pt, pc)",
+      "type": "object",
+      "required": ["size", "top", "left"],
+      "properties": {
+        "size": {
+          "description": "Size of QR",
+          "type": "string"
+        },
+        "top": {
+          "description": "Distance from top",
+          "type": "string"
+        },
+        "left": {
+          "description": "Distance from left",
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": ["pdf", "qrcode"]
+}
