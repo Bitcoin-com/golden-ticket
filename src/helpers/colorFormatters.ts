@@ -17,9 +17,27 @@ export enum OutputStyles {
 /**
  * Colors and formats information
  *
- * @param {string} item
- * @param {string} value
- * @param {{ highlight?: boolean; emoji?: Emoji }} [extra]
+ * @param {({
+ *   item: string;
+ *   value?: string | number;
+ *   lineabreak?: boolean;
+ *   style?:
+ *     | 'highlight'
+ *     | 'complete'
+ *     | 'error'
+ *     | 'waiting'
+ *     | 'default'
+ *     | 'start'
+ *     | 'information'
+ *     | 'title'
+ *     | 'warning'
+ *     | 'question';
+ * })} {
+ *   item,
+ *   value = '',
+ *   style = OutputStyles.Default,
+ *   lineabreak = false,
+ * }
  * @returns {string}
  */
 export const colorOutput = ({

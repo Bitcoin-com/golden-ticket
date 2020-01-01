@@ -1,5 +1,5 @@
-import en from './en.json';
 import getSettings from '../helpers/getSettings';
+import en from './en.json';
 
 const settings = getSettings();
 
@@ -27,12 +27,11 @@ export const getLocales = (locale: string = settings.locale): Locales => {
     it: en,
   };
 
-  if (Object.keys(locales).includes(locale)) {
+  if (Object.keys(locales).includes(locale))
     return {
       ...en,
       ...locales[locale],
     };
-  }
 
   return locales.en;
 };

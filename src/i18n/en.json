@@ -2,12 +2,9 @@
   "SCRIPTS": {
     "EXIT": "EXIT",
     "ADD_NEW": "+ ADD NEW",
-
     "START_RUNNING": "Ok, starting",
     "END_RUNNING": "Finished running",
-
     "CONTINUE": "Continue",
-
     "ERROR": "Something went wrong!",
     "CAMPAIGN_OVERWRITE": "Previous campaign data will be overwritten, are you sure?",
     "NAMES": {

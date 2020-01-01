@@ -96,6 +96,6 @@ Wait while files generate.
 
 ### 6.2 View summary
 
-Finally a summary of the generated files.
+Finally a summary of the generated files. In your OS, Navigate to the campaign directory and inspect the generated files.
 
 ![Campaign sumamry](./images/campaign-summary.png)
