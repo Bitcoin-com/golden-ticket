@@ -14,6 +14,7 @@ import logRunScript from './logger/logRunScript';
 import configureCampaign from './configureCampaign';
 import fundCampaign from './fundCampaign';
 import checkCampaign from './checkCampaign';
+import sweepCampaign from './sweepCampaign';
 
 /**
  * Initializes scripts selection and launches selected script
@@ -32,7 +33,7 @@ const start = async (): Promise<void> => {
       [SCRIPTS.NAMES.CAMPAIGN_CONFIGURE]: configureCampaign,
       [SCRIPTS.NAMES.FUND_CAMPAIGN]: fundCampaign,
       [SCRIPTS.NAMES.CHECK_TICKETS]: checkCampaign,
-      [SCRIPTS.NAMES.RECLAIM_FUNDS]: checkCampaign,
+      [SCRIPTS.NAMES.RECLAIM_FUNDS]: sweepCampaign,
     };
 
     logBanner();
