@@ -31,7 +31,7 @@ Golden Ticket is [Bitcoin.com's](https://www.bitcoin.com) event paper wallet gen
 
 ## 🚀 Getting started
 
-1. Download [release]() and extract
+1. Download [release](../../releases) and extract
 2. Navigate to extracted directory and run (see [Usage](#usage) below)
    - Windows: double click `GoldenTicket.exe`
    - MacOS/Linux: run `./GoldenTicket-[macos|linux]`
