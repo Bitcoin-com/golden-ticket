@@ -3,7 +3,7 @@
   "locale": "en",
   "outDir": "output",
   "templateDir": "templates",
-  "hdpath": "m/44'/145'",
+  "hdpath": "m/44'/0'",
   "timer": 50,
   "tickets": 10
 }

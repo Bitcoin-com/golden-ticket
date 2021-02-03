@@ -36,7 +36,9 @@ const selectCampaign = async (): Promise<Campaign | null> => {
     fs.ensureDirSync(path.resolve(settings.outDir));
 
     // get list of directories
-    const dirs = fs.readdirSync(path.resolve(settings.outDir));
+    const dirs = fs
+      .readdirSync(path.resolve(settings.outDir))
+      .filter(i => i !== '.DS_Store');
     dirs.push(chalk.green(SCRIPTS.ADD_NEW));
 
     // promp user to select directory

@@ -8,6 +8,7 @@ import getWIFS from './getWIFs';
 import getCashAddress from './getCashAddress';
 import logGeneratePDF from '../logger/logGeneratePDF';
 import getTemplates from './getTemplates';
+// import SIZES from '../constants/SIZES';
 
 /**
  * Generates and saves PDF Files
@@ -36,7 +37,6 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
         try {
           const { pdf, image } = getTemplates()[template];
           const opts = {
-            size: pdf.size,
             autoFirstPage: false,
           };
           const doc = new PDFDocument(opts);
@@ -50,7 +50,7 @@ const generatePDF = async (campaignData: Campaign): Promise<void> => {
 
           doc.pipe(stream);
 
-          doc.addPage({ margin: 0 });
+          doc.addPage({ margin: 0, size: [pdf.size[0], pdf.size[1]] });
           doc.image(path.resolve(settings.templateDir, template, image), 0, 0, {
             fit: [pdf.size[0], pdf.size[1]],
           });
