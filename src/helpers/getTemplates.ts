@@ -12,9 +12,9 @@ const getTemplates = (): { [key: string]: Template } => {
   const logger = getLogger();
   const settings = getSettings();
   try {
-    const dirs = fs.readdirSync(
-      path.resolve(process.cwd(), settings.templateDir),
-    );
+    const dirs = fs
+      .readdirSync(path.resolve(process.cwd(), settings.templateDir))
+      .filter(i => i !== '.DS_Store');
 
     if (dirs.length === 0) throw Error('no templates');
 

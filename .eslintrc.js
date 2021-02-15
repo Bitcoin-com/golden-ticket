@@ -18,15 +18,12 @@ module.exports = {
         paths: ['src'],
       },
     },
-    react: {
-      version: 'detect',
-    },
   },
   plugins: ['@typescript-eslint'],
   extends: [
-    'airbnb-typescript',
+    'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
-    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    // 'plugin:@typescript-eslint/recommended-requiring-type-checking',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
     'plugin:import/errors',
@@ -36,9 +33,10 @@ module.exports = {
     strict: 0,
     'no-await-in-loop': 0,
     'no-plusplus': 0,
-    'react/prop-types': 0,
-    'react/jsx-wrap-multilines': 0,
-    'react/jsx-indent': 0,
+    '@typescript-eslint/camelcase': 0,
+    '@typescript-eslint/no-unsafe-assignment': 0,
+    '@typescript-eslint/no-unsafe-call': 0,
+    '@typescript-eslint/no-unsafe-member-acces': 0,
   },
   overrides: [
     {

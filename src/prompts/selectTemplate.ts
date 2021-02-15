@@ -29,7 +29,9 @@ const selectTemplate = (): Template | null => {
     );
 
     // gets list of directories
-    const dirs = fs.readdirSync(path.resolve(settings.templateDir));
+    const dirs = fs
+      .readdirSync(path.resolve(settings.templateDir))
+      .filter(i => i !== '.DS_Store');
     if (dirs.length === 0) return null;
 
     // maps all available templates
