@@ -15,7 +15,7 @@
     "bitbox-sdk": "8.4.0",
     "chalk": "^2.4.1",
     "csvtojson": "^2.0.8",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "json-2-csv": "^2.3.1",
     "mkdirp": "^0.5.1",
     "node-emoji": "^1.8.1",
