@@ -1,0 +1,9 @@
+{
+  "debug": true,
+  "locale": "en",
+  "outDir": "output",
+  "templateDir": "templates",
+  "hdpath": "m/44'/0'",
+  "timer": 50,
+  "tickets": 10
+}

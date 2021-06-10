@@ -1,0 +1,27 @@
+{
+  "title": "Default",
+  "name": "default",
+  "image": "background.png",
+  "pdf": {
+    "size": [6270, 9691],
+    "qrWidth": 1560,
+    "qrTop": 3600,
+    "qrLeft": 2355
+  },
+  "html": {
+    "width": "170mm",
+    "height": "260mm",
+    "qrSize": "38mm",
+    "qrLeft": "66mm",
+    "qrTop": "99mm"
+  },
+  "qrcode": {
+    "margin": 2,
+    "width": 500,
+    "scale": 4,
+    "color": {
+      "dark": "#000000ff",
+      "light": "#ffffffff"
+    }
+  }
+}

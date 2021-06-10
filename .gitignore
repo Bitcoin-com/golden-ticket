@@ -5,6 +5,8 @@
 npm-debug.log*
 .console_history
 yarn.lock
+yarn-error.log
+.vscode
 
 *.csv
 *.swp
@@ -17,9 +19,12 @@ goldenTicketWallet.json
 html/*
 pdf/*
 
+log
+dist
+output
+bin
+
 index.js
 index.js.map
-lib/**/*.js
-lib/**/*.js.map
 test/**/*.js
 test/**/*.js.map

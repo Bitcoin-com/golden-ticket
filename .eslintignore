@@ -1,0 +1,8 @@
+node_modules
+dist
+log
+output
+old
+
+*.png
+*.txt

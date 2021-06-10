@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "GoldenTicketSettings",
+  "description": "Golden Ticket master settings schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "debug": {
+      "description": "Print debug messages",
+      "type": "boolean"
+    },
+    "outDir": {
+      "description": "Output directory",
+      "type": "string"
+    },
+    "templateDir": {
+      "description": "Template directory",
+      "type": "string"
+    },
+    "locale": {
+      "description": "The language to use (must match key in languages)",
+      "pattern": "^[a-z]{2,3}(?:-[A-Z]{2,2}(?:-[a-zA-Z]{4})?|(?:-Cyrl|-Hast|-Hant|-Arab|-Latn)?)?$",
+      "type": "string"
+    },
+    "hdpath": {
+      "description": "Default hdpath used",
+      "type": "string"
+    },
+    "tickets": {
+      "description": "Default number of tickets for campaign generation",
+      "type": "number"
+    },
+    "timer": {
+      "description": "Sets processing speed in ms (0 to disable)",
+      "type": "number"
+    }
+  },
+  "required": [
+    "debug",
+    "locale",
+    "outDir",
+    "templateDir",
+    "hdpath",
+    "timer",
+    "tickets"
+  ]
+}
